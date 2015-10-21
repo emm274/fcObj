@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/SODBCore" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/SODBCore.Enums" />
+  <xs:complexType name="Geometry">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="MetaValues" nillable="true" type="q1:ArrayOfMetaValue" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Role" type="q2:GeomRole" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q3:EditableStatus" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Type" type="q4:GeometryType" />
+      <xs:element minOccurs="0" name="XMax" type="xs:double" />
+      <xs:element minOccurs="0" name="XMin" type="xs:double" />
+      <xs:element minOccurs="0" name="YMax" type="xs:double" />
+      <xs:element minOccurs="0" name="YMin" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Geometry" nillable="true" type="tns:Geometry" />
+  <xs:complexType name="Point">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Geometry">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="X" type="xs:double" />
+          <xs:element minOccurs="0" name="Y" type="xs:double" />
+          <xs:element minOccurs="0" name="Z" type="xs:double" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Point" nillable="true" type="tns:Point" />
+  <xs:complexType name="Polygon">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Geometry">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Area" type="xs:double" />
+          <xs:element minOccurs="0" name="IsMultiPolygon" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Perimeter" type="xs:double" />
+          <xs:element minOccurs="0" name="Rings" nillable="true" type="tns:ArrayOfRing" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Polygon" nillable="true" type="tns:Polygon" />
+  <xs:complexType name="ArrayOfRing">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Ring" nillable="true" type="tns:Ring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRing" nillable="true" type="tns:ArrayOfRing" />
+  <xs:complexType name="Ring">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PointCollection">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Area" type="xs:double" />
+          <xs:element minOccurs="0" name="IsInterior" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Perimeter" type="xs:double" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Ring" nillable="true" type="tns:Ring" />
+  <xs:complexType name="PointCollection">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Geometry">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Points" nillable="true" type="tns:ArrayOfPoint" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PointCollection" nillable="true" type="tns:PointCollection" />
+  <xs:complexType name="ArrayOfPoint">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Point" nillable="true" type="tns:Point" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPoint" nillable="true" type="tns:ArrayOfPoint" />
+  <xs:complexType name="Path">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PointCollection">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Length" type="xs:double" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Path" nillable="true" type="tns:Path" />
+  <xs:complexType name="Polyline">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Geometry">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Length" type="xs:double" />
+          <xs:element minOccurs="0" name="Paths" nillable="true" type="tns:ArrayOfPath" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Polyline" nillable="true" type="tns:Polyline" />
+  <xs:complexType name="ArrayOfPath">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Path" nillable="true" type="tns:Path" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPath" nillable="true" type="tns:ArrayOfPath" />
+</xs:schema>

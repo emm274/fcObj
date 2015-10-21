@@ -1,0 +1,644 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://oobd.gismap3d.ru" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://oobd.gismap3d.ru" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://oobd.gismap3d.ru/Imports">
+      <xsd:import namespace="http://oobd.gismap3d.ru" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/SODBCore" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/SODBCore.Enums" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/SODBCore.Queries" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/SODBCore.Conditions" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISODBService_CheckCatalogue_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckCatalogue" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CheckCatalogue_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckCatalogueResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CheckCatalogue_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q1:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CheckCatalogue_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q2:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CatalogueClassCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:CatalogueClassCount" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CatalogueClassCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CatalogueClassCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CatalogueClassCount_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q3:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CatalogueClassCount_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q4:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CatalogueLoadingProgress_InputMessage">
+    <wsdl:part name="parameters" element="tns:CatalogueLoadingProgress" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CatalogueLoadingProgress_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CatalogueLoadingProgressResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CatalogueLoadingProgress_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q5:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CatalogueLoadingProgress_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q6:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DiagnosticAnalysisClassCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:DiagnosticAnalysisClassCount" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DiagnosticAnalysisClassCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DiagnosticAnalysisClassCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DiagnosticAnalysisClassCount_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q7:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DiagnosticAnalysisClassCount_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q8:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DiagnosticAnalysisProgress_InputMessage">
+    <wsdl:part name="parameters" element="tns:DiagnosticAnalysisProgress" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DiagnosticAnalysisProgress_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DiagnosticAnalysisProgressResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DiagnosticAnalysisProgress_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q9:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DiagnosticAnalysisProgress_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q10:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_Authorization_InputMessage">
+    <wsdl:part name="parameters" element="tns:Authorization" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_Authorization_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthorizationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CloseConnection_InputMessage">
+    <wsdl:part name="parameters" element="tns:CloseConnection" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_CloseConnection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CloseConnectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatureClasses_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFeatureClasses" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatureClasses_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFeatureClassesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatureClasses_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q11:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatureClasses_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q12:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatureClassSchema_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFeatureClassSchema" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatureClassSchema_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFeatureClassSchemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatureClassSchema_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q13:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatureClassSchema_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q14:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatureClassMetaData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFeatureClassMetaData" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatureClassMetaData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFeatureClassMetaDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatureClassMetaData_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q15:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetScales_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetScales" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetScales_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetScalesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetScales_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q16:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetScales_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q17:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetCartographicModels_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCartographicModels" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetCartographicModels_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCartographicModelsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetCartographicModels_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q18:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetCartographicModels_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q19:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetStyles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStyles" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetStyles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStylesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetStyles_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q20:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetStyles_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q21:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetDomain_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDomain" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetDomain_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDomainResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetDomain_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q22:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetDomain_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q23:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetMetaFields_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMetaFields" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetMetaFields_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMetaFieldsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetMetaFields_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q24:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetMetaFields_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q25:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_Request_InputMessage">
+    <wsdl:part name="parameters" element="tns:Request" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_Request_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_Request_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q26:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_Request_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q27:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_RequestNSAsync_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestNSAsync" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_RequestNSAsync_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestNSAsyncResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_RequestNSAsync_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q28:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetRequestStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRequestStatus" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetRequestStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRequestStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetRequestStatus_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q29:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetRequestStatus_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q30:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetRequestResult_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRequestResult" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetRequestResult_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRequestResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetRequestResult_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q31:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatures_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFeatures" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatures_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFeaturesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatures_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q32:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetFeatures_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q33:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetCartographicElements_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCartographicElements" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetCartographicElements_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCartographicElementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetCartographicElements_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q34:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_StartEditing_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartEditing" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_StartEditing_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartEditingResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_StartEditing_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q35:ExecuteFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_StartEditing_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q36:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_StopEditing_InputMessage">
+    <wsdl:part name="parameters" element="tns:StopEditing" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_StopEditing_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StopEditingResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_StopEditing_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q37:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_StopEditing_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q38:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_SaveEditingAsync_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveEditingAsync" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_SaveEditingAsync_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveEditingAsyncResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_SaveEditingAsync_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q39:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_SaveEditingAsync_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q40:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddFeatures_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddFeatures" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddFeatures_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddFeaturesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddFeatures_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q41:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddFeatures_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q42:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditFeatures_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditFeatures" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditFeatures_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditFeaturesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditFeatures_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q43:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditFeatures_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q44:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteFeatures_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFeatures" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteFeatures_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFeaturesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteFeatures_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q45:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteFeatures_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q46:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddCartographicElements_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddCartographicElements" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddCartographicElements_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddCartographicElementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddCartographicElements_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q47:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddCartographicElements_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q48:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditCartographicElements_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditCartographicElements" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditCartographicElements_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditCartographicElementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditCartographicElements_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q49:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditCartographicElements_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q50:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteCartographicElements_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCartographicElements" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteCartographicElements_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCartographicElementsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteCartographicElements_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q51:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteCartographicElements_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q52:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddCartographicModels_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddCartographicModels" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddCartographicModels_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddCartographicModelsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddCartographicModels_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q53:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddCartographicModels_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q54:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditCartographicModels_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditCartographicModels" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditCartographicModels_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditCartographicModelsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditCartographicModels_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q55="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q55:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditCartographicModels_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q56="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q56:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteCartographicModels_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCartographicModels" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteCartographicModels_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCartographicModelsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteCartographicModels_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q57="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q57:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteCartographicModels_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q58="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q58:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddStyles_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddStyles" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddStyles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddStylesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddStyles_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q59="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q59:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_AddStyles_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q60="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q60:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditStyles_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditStyles" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditStyles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditStylesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditStyles_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q61="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q61:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_EditStyles_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q62="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q62:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteStyles_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteStyles" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteStyles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteStylesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteStyles_SessionFaultFault_FaultMessage">
+    <wsdl:part xmlns:q63="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q63:SessionFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_DeleteStyles_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q64="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q64:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetGeometry_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetGeometry" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetGeometry_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetGeometryResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ISODBService">
+    <wsdl:operation name="CheckCatalogue">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CheckCatalogue" message="tns:ISODBService_CheckCatalogue_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CheckCatalogueResponse" message="tns:ISODBService_CheckCatalogue_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CheckCatalogueExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_CheckCatalogue_ExecuteFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CheckCatalogueTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_CheckCatalogue_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CatalogueClassCount">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CatalogueClassCount" message="tns:ISODBService_CatalogueClassCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CatalogueClassCountResponse" message="tns:ISODBService_CatalogueClassCount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CatalogueClassCountExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_CatalogueClassCount_ExecuteFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CatalogueClassCountTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_CatalogueClassCount_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CatalogueLoadingProgress">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CatalogueLoadingProgress" message="tns:ISODBService_CatalogueLoadingProgress_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CatalogueLoadingProgressResponse" message="tns:ISODBService_CatalogueLoadingProgress_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CatalogueLoadingProgressTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_CatalogueLoadingProgress_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CatalogueLoadingProgressExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_CatalogueLoadingProgress_ExecuteFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DiagnosticAnalysisClassCount">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisClassCount" message="tns:ISODBService_DiagnosticAnalysisClassCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisClassCountResponse" message="tns:ISODBService_DiagnosticAnalysisClassCount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisClassCountExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_DiagnosticAnalysisClassCount_ExecuteFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisClassCountTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_DiagnosticAnalysisClassCount_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DiagnosticAnalysisProgress">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisProgress" message="tns:ISODBService_DiagnosticAnalysisProgress_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisProgressResponse" message="tns:ISODBService_DiagnosticAnalysisProgress_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisProgressTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_DiagnosticAnalysisProgress_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisProgressExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_DiagnosticAnalysisProgress_ExecuteFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Authorization">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/Authorization" message="tns:ISODBService_Authorization_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AuthorizationResponse" message="tns:ISODBService_Authorization_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CloseConnection">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CloseConnection" message="tns:ISODBService_CloseConnection_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/CloseConnectionResponse" message="tns:ISODBService_CloseConnection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFeatureClasses">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClasses" message="tns:ISODBService_GetFeatureClasses_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassesResponse" message="tns:ISODBService_GetFeatureClasses_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassesTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetFeatureClasses_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassesExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_GetFeatureClasses_ExecuteFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFeatureClassSchema">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassSchema" message="tns:ISODBService_GetFeatureClassSchema_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassSchemaResponse" message="tns:ISODBService_GetFeatureClassSchema_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassSchemaTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetFeatureClassSchema_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassSchemaExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_GetFeatureClassSchema_ExecuteFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFeatureClassMetaData">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassMetaData" message="tns:ISODBService_GetFeatureClassMetaData_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassMetaDataResponse" message="tns:ISODBService_GetFeatureClassMetaData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassMetaDataTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetFeatureClassMetaData_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetScales">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetScales" message="tns:ISODBService_GetScales_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetScalesResponse" message="tns:ISODBService_GetScales_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetScalesExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_GetScales_ExecuteFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetScalesTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetScales_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCartographicModels">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetCartographicModels" message="tns:ISODBService_GetCartographicModels_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetCartographicModelsResponse" message="tns:ISODBService_GetCartographicModels_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetCartographicModelsTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetCartographicModels_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetCartographicModelsExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_GetCartographicModels_ExecuteFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStyles">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetStyles" message="tns:ISODBService_GetStyles_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetStylesResponse" message="tns:ISODBService_GetStyles_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetStylesExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_GetStyles_ExecuteFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetStylesTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetStyles_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDomain">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetDomain" message="tns:ISODBService_GetDomain_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetDomainResponse" message="tns:ISODBService_GetDomain_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetDomainExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_GetDomain_ExecuteFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetDomainTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetDomain_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMetaFields">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetMetaFields" message="tns:ISODBService_GetMetaFields_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetMetaFieldsResponse" message="tns:ISODBService_GetMetaFields_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetMetaFieldsExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_GetMetaFields_ExecuteFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetMetaFieldsTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetMetaFields_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Request">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/Request" message="tns:ISODBService_Request_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/RequestResponse" message="tns:ISODBService_Request_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/RequestTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_Request_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/RequestExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_Request_ExecuteFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestNSAsync">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/RequestNSAsync" message="tns:ISODBService_RequestNSAsync_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/RequestNSAsyncResponse" message="tns:ISODBService_RequestNSAsync_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/RequestNSAsyncTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_RequestNSAsync_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRequestStatus">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetRequestStatus" message="tns:ISODBService_GetRequestStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetRequestStatusResponse" message="tns:ISODBService_GetRequestStatus_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetRequestStatusExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_GetRequestStatus_ExecuteFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetRequestStatusTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetRequestStatus_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRequestResult">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetRequestResult" message="tns:ISODBService_GetRequestResult_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetRequestResultResponse" message="tns:ISODBService_GetRequestResult_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetRequestResultTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetRequestResult_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFeatures">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatures" message="tns:ISODBService_GetFeatures_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeaturesResponse" message="tns:ISODBService_GetFeatures_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeaturesTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetFeatures_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeaturesExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_GetFeatures_ExecuteFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCartographicElements">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetCartographicElements" message="tns:ISODBService_GetCartographicElements_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetCartographicElementsResponse" message="tns:ISODBService_GetCartographicElements_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetCartographicElementsTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetCartographicElements_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StartEditing">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/StartEditing" message="tns:ISODBService_StartEditing_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/StartEditingResponse" message="tns:ISODBService_StartEditing_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/StartEditingExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_StartEditing_ExecuteFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/StartEditingTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_StartEditing_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StopEditing">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/StopEditing" message="tns:ISODBService_StopEditing_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/StopEditingResponse" message="tns:ISODBService_StopEditing_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/StopEditingSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_StopEditing_SessionFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/StopEditingTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_StopEditing_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveEditingAsync">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/SaveEditingAsync" message="tns:ISODBService_SaveEditingAsync_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/SaveEditingAsyncResponse" message="tns:ISODBService_SaveEditingAsync_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/SaveEditingAsyncTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_SaveEditingAsync_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/SaveEditingAsyncSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_SaveEditingAsync_SessionFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddFeatures">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddFeatures" message="tns:ISODBService_AddFeatures_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddFeaturesResponse" message="tns:ISODBService_AddFeatures_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddFeaturesTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_AddFeatures_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddFeaturesSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_AddFeatures_SessionFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditFeatures">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditFeatures" message="tns:ISODBService_EditFeatures_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditFeaturesResponse" message="tns:ISODBService_EditFeatures_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditFeaturesTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_EditFeatures_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditFeaturesSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_EditFeatures_SessionFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFeatures">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteFeatures" message="tns:ISODBService_DeleteFeatures_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteFeaturesResponse" message="tns:ISODBService_DeleteFeatures_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteFeaturesTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_DeleteFeatures_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteFeaturesSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_DeleteFeatures_SessionFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCartographicElements">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicElements" message="tns:ISODBService_AddCartographicElements_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicElementsResponse" message="tns:ISODBService_AddCartographicElements_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicElementsSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_AddCartographicElements_SessionFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicElementsTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_AddCartographicElements_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditCartographicElements">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicElements" message="tns:ISODBService_EditCartographicElements_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicElementsResponse" message="tns:ISODBService_EditCartographicElements_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicElementsTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_EditCartographicElements_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicElementsSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_EditCartographicElements_SessionFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCartographicElements">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicElements" message="tns:ISODBService_DeleteCartographicElements_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicElementsResponse" message="tns:ISODBService_DeleteCartographicElements_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicElementsSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_DeleteCartographicElements_SessionFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicElementsTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_DeleteCartographicElements_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCartographicModels">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicModels" message="tns:ISODBService_AddCartographicModels_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicModelsResponse" message="tns:ISODBService_AddCartographicModels_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicModelsSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_AddCartographicModels_SessionFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicModelsTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_AddCartographicModels_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditCartographicModels">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicModels" message="tns:ISODBService_EditCartographicModels_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicModelsResponse" message="tns:ISODBService_EditCartographicModels_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicModelsSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_EditCartographicModels_SessionFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicModelsTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_EditCartographicModels_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCartographicModels">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicModels" message="tns:ISODBService_DeleteCartographicModels_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicModelsResponse" message="tns:ISODBService_DeleteCartographicModels_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicModelsSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_DeleteCartographicModels_SessionFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicModelsTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_DeleteCartographicModels_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddStyles">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddStyles" message="tns:ISODBService_AddStyles_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddStylesResponse" message="tns:ISODBService_AddStyles_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddStylesTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_AddStyles_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/AddStylesSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_AddStyles_SessionFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditStyles">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditStyles" message="tns:ISODBService_EditStyles_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditStylesResponse" message="tns:ISODBService_EditStyles_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditStylesTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_EditStyles_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/EditStylesSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_EditStyles_SessionFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteStyles">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteStyles" message="tns:ISODBService_DeleteStyles_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteStylesResponse" message="tns:ISODBService_DeleteStyles_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteStylesSessionFaultFault" name="SessionFaultFault" message="tns:ISODBService_DeleteStyles_SessionFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/DeleteStylesTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_DeleteStyles_TokenFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGeometry">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetGeometry" message="tns:ISODBService_GetGeometry_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetGeometryResponse" message="tns:ISODBService_GetGeometry_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

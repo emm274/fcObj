@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2015f8cb-9455-4f29-ba70-3527a3e2a516" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://localhost:8022/SOAPService/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="oobd.gismap3d.ru1.wsdl" MetadataType="Wsdl" ID="524c74bf-c834-4234-978e-d39cb1156345" SourceId="1" SourceUrl="https://localhost:8022/SOAPService/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="a350e144-efa5-44ae-90d7-d1e31d33b0c9" SourceId="1" SourceUrl="https://localhost:8022/SOAPService/mex" />
+    <MetadataFile FileName="oobd.gismap3d.ru1.xsd" MetadataType="Schema" ID="0003726e-afa5-4f09-a133-d48cf6715d73" SourceId="1" SourceUrl="https://localhost:8022/SOAPService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="e795f1bd-67ae-4b5e-b5a6-4899a2e70320" SourceId="1" SourceUrl="https://localhost:8022/SOAPService/mex" />
+    <MetadataFile FileName="SODBCore1.xsd" MetadataType="Schema" ID="82574ca9-7da6-4fa6-b801-78dc12797d7f" SourceId="1" SourceUrl="https://localhost:8022/SOAPService/mex" />
+    <MetadataFile FileName="SODBCore.Enums1.xsd" MetadataType="Schema" ID="cc355e6b-0b59-425f-8270-26f17f577e76" SourceId="1" SourceUrl="https://localhost:8022/SOAPService/mex" />
+    <MetadataFile FileName="Arrays1.xsd" MetadataType="Schema" ID="0d5e6eab-9ad5-441e-9ff6-0b804e6a2223" SourceId="1" SourceUrl="https://localhost:8022/SOAPService/mex" />
+    <MetadataFile FileName="SODBServices.CustomExceptions1.xsd" MetadataType="Schema" ID="79160134-907f-404f-a319-68c8e43ac69b" SourceId="1" SourceUrl="https://localhost:8022/SOAPService/mex" />
+    <MetadataFile FileName="SODBCore.Geometries1.xsd" MetadataType="Schema" ID="cb3a8c78-f42c-4f8d-84dd-a80d039b0b9b" SourceId="1" SourceUrl="https://localhost:8022/SOAPService/mex" />
+    <MetadataFile FileName="SODBCore.Queries1.xsd" MetadataType="Schema" ID="910212e5-379d-4e39-8bb5-bccf7cc15eb4" SourceId="1" SourceUrl="https://localhost:8022/SOAPService/mex" />
+    <MetadataFile FileName="SODBCore.Conditions1.xsd" MetadataType="Schema" ID="cf2d553e-3042-458a-9044-e240a0f41d52" SourceId="1" SourceUrl="https://localhost:8022/SOAPService/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

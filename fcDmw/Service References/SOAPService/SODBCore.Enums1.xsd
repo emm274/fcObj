@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SODBCore.Enums" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SODBCore.Enums" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:simpleType name="MessageType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Info" />
+      <xs:enumeration value="Warrning" />
+      <xs:enumeration value="Error" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="MessageType" nillable="true" type="tns:MessageType" />
+  <xs:simpleType name="RequestStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Queued" />
+      <xs:enumeration value="Performed" />
+      <xs:enumeration value="Ready" />
+      <xs:enumeration value="Error" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RequestStatus" nillable="true" type="tns:RequestStatus" />
+  <xs:simpleType name="BGTypes">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="None">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Point">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Polyline">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Polygon">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:element name="BGTypes" nillable="true" type="tns:BGTypes" />
+  <xs:simpleType name="ClassifierType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FeatureClass" />
+      <xs:enumeration value="AssociationClass" />
+      <xs:enumeration value="AttributeClass" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ClassifierType" nillable="true" type="tns:ClassifierType" />
+  <xs:simpleType name="EditableStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unchanged" />
+      <xs:enumeration value="Added" />
+      <xs:enumeration value="Modified" />
+      <xs:enumeration value="Deleted" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="EditableStatus" nillable="true" type="tns:EditableStatus" />
+  <xs:simpleType name="RuleClassType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Source" />
+      <xs:enumeration value="Target" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RuleClassType" nillable="true" type="tns:RuleClassType" />
+  <xs:simpleType name="DataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="String" />
+      <xs:enumeration value="Classifier" />
+      <xs:enumeration value="Float" />
+      <xs:enumeration value="Text" />
+      <xs:enumeration value="Integer" />
+      <xs:enumeration value="Boolean" />
+      <xs:enumeration value="Domain" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DataType" nillable="true" type="tns:DataType" />
+  <xs:simpleType name="GeomRole">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="BG" />
+      <xs:enumeration value="Clarifying" />
+      <xs:enumeration value="Attribute" />
+      <xs:enumeration value="Relation" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="GeomRole" nillable="true" type="tns:GeomRole" />
+  <xs:simpleType name="GeometryType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Point" />
+      <xs:enumeration value="Polyline" />
+      <xs:enumeration value="Polygon" />
+      <xs:enumeration value="MultiPoint" />
+      <xs:enumeration value="MultiPatch" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="GeometryType" nillable="true" type="tns:GeometryType" />
+  <xs:simpleType name="RelationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Ordinary" />
+      <xs:enumeration value="Aggregation" />
+      <xs:enumeration value="Composition" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RelationType" nillable="true" type="tns:RelationType" />
+  <xs:complexType name="ArrayOfGeometryType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GeometryType" type="tns:GeometryType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGeometryType" nillable="true" type="tns:ArrayOfGeometryType" />
+  <xs:simpleType name="Operation">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Equal" />
+      <xs:enumeration value="Less" />
+      <xs:enumeration value="Great" />
+      <xs:enumeration value="GreatEqual" />
+      <xs:enumeration value="LessEqual" />
+      <xs:enumeration value="Like" />
+      <xs:enumeration value="IntervalClose" />
+      <xs:enumeration value="IntervalOpen" />
+      <xs:enumeration value="IntervalCloseOpen" />
+      <xs:enumeration value="IntervalOpenClose" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Operation" nillable="true" type="tns:Operation" />
+  <xs:simpleType name="GeometryTypeSearch">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Point" />
+          <xs:enumeration value="Polyline" />
+          <xs:enumeration value="Polygon" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:element name="GeometryTypeSearch" nillable="true" type="tns:GeometryTypeSearch" />
+  <xs:simpleType name="SpatialQueryType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Intersects" />
+      <xs:enumeration value="EnvelopeIntersects">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Touches">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Overlaps">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Crosses">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Within">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Contains">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Relation">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SpatialQueryType" nillable="true" type="tns:SpatialQueryType" />
+  <xs:simpleType name="MetaDataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FeatureClass" />
+      <xs:enumeration value="Feature" />
+      <xs:enumeration value="GeoName" />
+      <xs:enumeration value="Attribute" />
+      <xs:enumeration value="Geometry" />
+      <xs:enumeration value="CartographicElement" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="MetaDataType" nillable="true" type="tns:MetaDataType" />
+  <xs:simpleType name="RelationRole">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Source" />
+      <xs:enumeration value="Target" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RelationRole" nillable="true" type="tns:RelationRole" />
+</xs:schema>

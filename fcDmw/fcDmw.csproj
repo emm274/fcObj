@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{E0F7D0DF-81DC-41E1-ACAA-1F7C1A4C0C2D}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>fcDmw</RootNamespace>
+    <AssemblyName>fcDmw</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\common\Ini.cs">
+      <Link>Ini.cs</Link>
+    </Compile>
+    <Compile Include="..\common\xedits.cs">
+      <Link>xedits.cs</Link>
+    </Compile>
+    <Compile Include="..\common\xfiles.cs">
+      <Link>xfiles.cs</Link>
+    </Compile>
+    <Compile Include="..\common\xwin.cs">
+      <Link>xwin.cs</Link>
+    </Compile>
+    <Compile Include="..\common\convert.cs">
+      <Link>convert.cs</Link>
+    </Compile>
+    <Compile Include="..\common\dmwAuto.cs">
+      <Link>dmwAuto.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\common\OFiles.cs">
+      <Link>OFiles.cs</Link>
+    </Compile>
+    <Compile Include="..\common\OTypes.cs">
+      <Link>OTypes.cs</Link>
+    </Compile>
+    <Compile Include="DBLoaderMap.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\SOAPService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="sodb.cs" />
+    <Compile Include="sodbFeatureToIntf.cs" />
+    <Compile Include="sodbFeatureToMap.cs" />
+    <Compile Include="sodbFeatureToText.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Service References\SOAPService\Arrays1.xsd" />
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.BaseDomain.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.CartographicElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.CartographicModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.FeatureClass.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.FeatureClassSchema.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.FeatureResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.Geometry.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.MetaField.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.MetaValue.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.ProgressOperation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.RequestInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.RequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.Style.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SOAPService\oobd.gismap3d.ru1.xsd" />
+    <None Include="Service References\SOAPService\service1.wsdl" />
+    <None Include="Service References\SOAPService\service1.xsd" />
+    <None Include="Service References\SOAPService\SODBCore.Conditions1.xsd" />
+    <None Include="Service References\SOAPService\SODBCore.Enums1.xsd" />
+    <None Include="Service References\SOAPService\SODBCore.Geometries1.xsd" />
+    <None Include="Service References\SOAPService\SODBCore.Queries1.xsd" />
+    <None Include="Service References\SOAPService\SODBCore1.xsd" />
+    <None Include="Service References\SOAPService\SODBServices.CustomExceptions1.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Dmw">
+      <Guid>{939C0EA0-9A59-11D1-868D-004095013CFD}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="xmap">
+      <Guid>{50AFFE7F-015F-4A72-8FB1-B2EE2D100A6F}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\execute.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\SOAPService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SOAPService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SOAPService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SOAPService\oobd.gismap3d.ru1.wsdl" />
+    <None Include="Service References\SOAPService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FILEOPEN.BMP" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FILESAVE.BMP" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
