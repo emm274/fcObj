@@ -1193,7 +1193,8 @@ namespace fcDmw
 
                         if (map.Goto_root == 0)
                             __message("Goto_root == 0");
-                        layers();
+                        else
+                            layers();
 
                         ferr.close();
 

@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -22,7 +23,8 @@ namespace xjson
     public class XJson: ClassMsg {
 
         JsonTextReader freader;
-        bool fstatus = false;
+        string fstatus = "";
+        public string status { get { return fstatus; } }
 
         Stack<string> fkeys = new Stack<string>();
 
@@ -30,6 +32,13 @@ namespace xjson
 
         string fdumpBlock = "";
         bool fIsDumpBlock = false;
+
+        public bool status_success()
+        {
+            if (convert.IsString(fstatus))
+            return fstatus == "success";
+            return false;
+        }
 
         public void startDumpBlock()
         {
@@ -222,32 +231,33 @@ namespace xjson
             if (__token(0)) {
                 JsonToken token = freader.TokenType;
 
+                if (token == JsonToken.Null)
+                    return true;
+                else
                 if (token == JsonToken.StartObject)
                     return (__object(name));
                 else
-
-                    if (token == JsonToken.StartArray)
-                        return (__array(name));
-                    else
-
-                        if ((token == JsonToken.Integer) ||
-                            (token == JsonToken.Float) ||
-                            (token == JsonToken.String) ||
-                            (token == JsonToken.Boolean))
+                if (token == JsonToken.StartArray)
+                    return (__array(name));
+                else
+                if ((token == JsonToken.Integer) ||
+                    (token == JsonToken.Float) ||
+                    (token == JsonToken.String) ||
+                    (token == JsonToken.Boolean))
+                {
+                    Object v = freader.Value;
+                    if (v != null)
+                        if (name == "status")
                         {
-                            Object v = freader.Value;
-                            if (v != null)
-                                if (name == "status")
-                                {
-                                    fstatus = (v.ToString() == "success");
-                                    return true;
-                                }
-                                else
-                                {
-                                    value(name, 0, token, v);
-                                    return true;
-                                }
+                            fstatus = v.ToString();
+                            return true;
                         }
+                        else
+                        {
+                            value(name, 0, token, v);
+                            return true;
+                        }
+                }
             }
 
             return false;
@@ -256,7 +266,7 @@ namespace xjson
         public bool Parse(StreamReader stream)
         {
             fkeys.Clear();
-            fstatus = false;
+            fstatus = "";
             fIsDumpBlock = false;
 
             freader = new JsonTextReader(stream);
@@ -298,4 +308,32 @@ namespace xjson
         }
 
     }
+
+    public class XJsonStringWriter
+    {
+        StringBuilder sb;
+        StringWriter sw;
+        JsonWriter fwriter;
+        public JsonWriter writer { get { return fwriter; } }
+
+        public string Text { get { return sb.ToString(); } }
+
+        public XJsonStringWriter()
+        {
+            sb = new StringBuilder();
+            sw = new StringWriter(sb);
+            fwriter = new JsonTextWriter(sw);
+        }
+
+        public void Reset() {
+            sb.Clear();
+        }
+
+        public byte[] Data()
+        {
+            return Encoding.UTF8.GetBytes(sb.ToString());
+        }
+
+    }
+
 }

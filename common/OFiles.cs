@@ -23,7 +23,7 @@ namespace ofiles
 
             try
             {
-                file = new System.IO.StreamWriter(Path);
+                file = new StreamWriter(Path);
                 return true;
             }
             catch (Exception ex) { 
@@ -52,5 +52,28 @@ namespace ofiles
                 flineCount++;
             }
         }
+    }
+
+    public static class OFiles
+    {
+        public static string GetAppData() {
+            return Environment.ExpandEnvironmentVariables("%APPDATA%");
+        }
+
+        public static string GetIniDir()
+        {
+            return GetAppData() + "\\dmw\\ini\\";
+        }
+
+        public static string GetTmpDir()
+        {
+            return GetAppData() + "\\dmw\\tmp\\";
+        }
+
+        public static string GetTmpPath(string name)
+        {
+            return GetAppData() + "\\dmw\\tmp\\" + name;
+        }
+
     }
 }

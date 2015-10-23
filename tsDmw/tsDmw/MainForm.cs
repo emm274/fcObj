@@ -13,6 +13,7 @@ using Ini;
 using xedits;
 using xfiles;
 using dlgLogin;
+using enterText;
 
 namespace tsDmw
 {
@@ -22,6 +23,7 @@ namespace tsDmw
         string fmsg;
 
         string fdataDir = "";
+        string fworkDir = "";
 
         IniData fini = new IniData();
 
@@ -32,6 +34,7 @@ namespace tsDmw
             fdb.beginTask = beginTask;
             fdb.endTask = endTask;
             fdb.message = task_msg;
+            fdb.Progress = task_progress;
         }
 
         private void ExitItem_Click(object sender, EventArgs e)
@@ -45,6 +48,8 @@ namespace tsDmw
             ini.ReadForm(this);
 
             fdataDir = ini.ReadDir("dataDir");
+            fworkDir = ini.ReadDir("workDir");
+            statusWorkDir.Text = "["+fworkDir+"]";
         }
 
         private void DfmTsDmw_FormClosed(object sender, FormClosedEventArgs e)
@@ -54,6 +59,7 @@ namespace tsDmw
             ini.WriteForm(this);
 
             ini.WriteDir("dataDir", fdataDir);
+            ini.WriteDir("workDir", fworkDir);
 
             fini.CopyTo(ini);
         }
@@ -87,7 +93,7 @@ namespace tsDmw
             this.Invoke(new EventHandler(invoke_msg));
         }
 
-        void invoke_task(object sender, EventArgs e)
+        void invoke_end_task(object sender, EventArgs e)
         {
             statusTask.Text = fmsg;
             statusProgress.Text = "";
@@ -104,7 +110,7 @@ namespace tsDmw
         void endTask(object sender, string msg) 
         {
             fmsg = msg;
-            this.Invoke(new EventHandler(invoke_task));
+            this.Invoke(new EventHandler(invoke_end_task));
         }
 
         void invoke_progress(object sender, EventArgs e)
@@ -128,11 +134,22 @@ namespace tsDmw
         {
             statusApiVersion.Text = fdb.version;
             XEdits.FillListBox(lbBranches, fdb.branches);
+            if (lbBranches.Items.Count > 0)
+            {
+                lbBranches.SelectedIndex = 0;
+                lbBranches_Click(null, null);
+            }
         }
 
         void commits(object sender, EventArgs e)
         {
-            XEdits.FillMemo(lbMsg, fdb.Commits);
+            lbCommit.BeginUpdate();
+            lbCommit.Items.Clear();
+
+            foreach (var c in fdb.Commits)
+            lbCommit.Items.Add(c.Value);
+
+            lbCommit.EndUpdate();
         }
 
         string selectedBranch()
@@ -149,27 +166,30 @@ namespace tsDmw
 
         private void lbBranches_Click(object sender, EventArgs e)
         {
-            string br = selectedBranch();
-            if (br != null) { 
-                lbMsg.Text="";
-                fdb.getCommits(br,commits);
-            }
+            string branch = selectedBranch();
+            if (branch != null) 
+            fdb.getCommits(branch, commits);
         }
 
         private void dumpItem_Click(object sender, EventArgs e)
         {
             string br = selectedBranch();
             if (br != null) {
-                string filter = "Files (*.json)|*.json";
-                string title = "Save content as";
+                string filter = "Files (*.json)|*.json|"+
+                                "Files (*.txt)|*.txt|"+
+                                "Files (*.dm)|*.dm";
+                string title = "Сохранить карту как";
                 string dest;
-                bool rc = XFiles.dialSaveFile(ref fdataDir, 
-                                              filter, title, 
-                                              out dest);
+                int rc = fini.ReadInt("saveIndex");
+                    
+                rc=XFiles.dialSaveFile(ref fdataDir, 
+                                       filter, title, 
+                                       rc,out dest);
 
-                if (rc) {
-                    lbMsg.Text = "";
-                    fdb.Progress = task_progress;
+                if (rc >= 0) {
+                    fini.WriteInt("saveIndex", rc);
+
+                    lbMsg.Clear();
                     fdb.getContent(br, dest);
                 }
             }
@@ -219,5 +239,110 @@ namespace tsDmw
             }
         }
 
+        void after_commit(object sender, EventArgs e)
+        {
+            if (fdb.status_success())
+                lbBranches_Click(null, null);
+        }
+
+        private void LoadMap_Click(object sender, EventArgs e)
+        {
+            lbMsg.Clear();
+
+            string branch = selectedBranch();
+            if (branch == null)
+                message("Не указана ветка!");
+            else
+            {
+                string filter = "Files (*.dm)|*.dm";
+                string title = "Загрузить карту";
+                string path;
+                bool rc = XFiles.dialFile(ref fdataDir, filter, title, true, out path);
+
+                if (rc)
+                {
+                    DateTime now = DateTime.Now;
+
+                    EnterText dlg = new EnterText(fini);
+                    dlg.Caption = "commit";
+                    dlg.Title = branch;
+                    dlg.text = now.ToString();
+
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        string comment = dlg.text;
+
+                        message(String.Format("{0}: +commit \"{1}\"", branch, comment));
+
+                        string json = Path.ChangeExtension(path, ".json");
+
+                        tsLoaderMap loader = new tsLoaderMap();
+                        loader.message = task_msg;
+
+                        loader.workDir(fworkDir);
+                        rc = loader.exec(path, json, branch, comment, false);
+
+                        if (rc) fdb.commit(branch, json, after_commit);
+                    }
+                }
+
+            }
+        }
+
+        private void dialWorkDir_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dlg = new FolderBrowserDialog();
+            dlg.SelectedPath = fworkDir;
+
+            if (dlg.ShowDialog() == DialogResult.OK) {
+                fworkDir = dlg.SelectedPath;
+                statusWorkDir.Text = "["+fworkDir+"]";
+            }
+
+        }
+
+        private void lbMsg_SizeChanged(object sender, EventArgs e)
+        {
+            btClear.Left = lbMsg.Left + lbMsg.Width - 24 - btClear.Width;
+        }
+
+        private void btClear_Click(object sender, EventArgs e)
+        {
+            lbMsg.Clear();
+        }
+
+        private void deleteCommit_Click(object sender, EventArgs e)
+        {
+            string branch = selectedBranch();
+            if (branch == null)
+                message("Не указана ветка!");
+            else
+            {
+                int i = lbCommit.Items.Count-1;
+                if (i < 0)
+                    message("В ветке нет изменений!");
+                else 
+                {
+                    string commit = fdb.Commits.ElementAt(i).Key;
+                    fdb.undo_commit(branch,commit,after_commit);
+                }
+            }
+        }
+
+        private void lbCommit_Click(object sender, EventArgs e)
+        {
+            string branch = selectedBranch();
+            if (branch == null)
+                message("Не указана ветка!");
+            else
+            {
+                int i = lbCommit.SelectedIndex;
+
+                if (i >= 0) {
+                    KeyValuePair<string,string> kv = fdb.Commits.ElementAt(i);
+                    message(kv.Key+" \""+kv.Value+"\"");
+                }
+            }
+        }
     }
 }

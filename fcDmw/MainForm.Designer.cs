@@ -46,11 +46,13 @@ namespace fcDmw
             this.acronym = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.alias = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbMsg = new System.Windows.Forms.GroupBox();
+            this.btCls = new System.Windows.Forms.Button();
             this.lbMsg = new System.Windows.Forms.TextBox();
             this.paLeft = new System.Windows.Forms.Panel();
             this.btUpdate = new System.Windows.Forms.Button();
             this.btLoad = new System.Windows.Forms.Button();
             this.gbFrag = new System.Windows.Forms.GroupBox();
+            this.gbClassBt = new System.Windows.Forms.GroupBox();
             this.btListSave = new System.Windows.Forms.Button();
             this.btListLoad = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
@@ -70,7 +72,6 @@ namespace fcDmw
             this.login_ = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btCls = new System.Windows.Forms.Button();
             this.paClient.SuspendLayout();
             this.paRight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -82,6 +83,7 @@ namespace fcDmw
             this.gbMsg.SuspendLayout();
             this.paLeft.SuspendLayout();
             this.gbFrag.SuspendLayout();
+            this.gbClassBt.SuspendLayout();
             this.gbConn.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -189,8 +191,19 @@ namespace fcDmw
             this.gbMsg.Size = new System.Drawing.Size(516, 197);
             this.gbMsg.TabIndex = 2;
             this.gbMsg.TabStop = false;
-            this.gbMsg.Text = "Messages";
+            this.gbMsg.Text = "Сообщения";
             this.gbMsg.SizeChanged += new System.EventHandler(this.gbMsg_SizeChanged);
+            // 
+            // btCls
+            // 
+            this.btCls.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btCls.Location = new System.Drawing.Point(424, 0);
+            this.btCls.Name = "btCls";
+            this.btCls.Size = new System.Drawing.Size(28, 23);
+            this.btCls.TabIndex = 1;
+            this.btCls.Text = "X";
+            this.btCls.UseVisualStyleBackColor = true;
+            this.btCls.Click += new System.EventHandler(this.btCls_Click);
             // 
             // lbMsg
             // 
@@ -217,28 +230,27 @@ namespace fcDmw
             // 
             // btUpdate
             // 
-            this.btUpdate.Location = new System.Drawing.Point(112, 307);
+            this.btUpdate.Location = new System.Drawing.Point(22, 356);
             this.btUpdate.Name = "btUpdate";
-            this.btUpdate.Size = new System.Drawing.Size(89, 23);
+            this.btUpdate.Size = new System.Drawing.Size(173, 23);
             this.btUpdate.TabIndex = 12;
-            this.btUpdate.Text = "Update";
+            this.btUpdate.Text = "Загрузить изменения";
             this.btUpdate.UseVisualStyleBackColor = true;
             this.btUpdate.Click += new System.EventHandler(this.btUpdate_Click);
             // 
             // btLoad
             // 
-            this.btLoad.Location = new System.Drawing.Point(16, 308);
+            this.btLoad.Location = new System.Drawing.Point(22, 327);
             this.btLoad.Name = "btLoad";
-            this.btLoad.Size = new System.Drawing.Size(89, 23);
+            this.btLoad.Size = new System.Drawing.Size(173, 23);
             this.btLoad.TabIndex = 11;
-            this.btLoad.Text = "Load map";
+            this.btLoad.Text = "Загрузить карту";
             this.btLoad.UseVisualStyleBackColor = true;
             this.btLoad.Click += new System.EventHandler(this.btLoad_Click);
             // 
             // gbFrag
             // 
-            this.gbFrag.Controls.Add(this.btListSave);
-            this.gbFrag.Controls.Add(this.btListLoad);
+            this.gbFrag.Controls.Add(this.gbClassBt);
             this.gbFrag.Controls.Add(this.label6);
             this.gbFrag.Controls.Add(this.label5);
             this.gbFrag.Controls.Add(this.label4);
@@ -251,28 +263,39 @@ namespace fcDmw
             this.gbFrag.Controls.Add(this.btFrag);
             this.gbFrag.Location = new System.Drawing.Point(8, 120);
             this.gbFrag.Name = "gbFrag";
-            this.gbFrag.Size = new System.Drawing.Size(200, 181);
+            this.gbFrag.Size = new System.Drawing.Size(200, 201);
             this.gbFrag.TabIndex = 10;
             this.gbFrag.TabStop = false;
-            this.gbFrag.Text = "Get fragment";
+            this.gbFrag.Text = "Получить фрагмент";
+            // 
+            // gbClassBt
+            // 
+            this.gbClassBt.Controls.Add(this.btListSave);
+            this.gbClassBt.Controls.Add(this.btListLoad);
+            this.gbClassBt.Location = new System.Drawing.Point(6, 146);
+            this.gbClassBt.Name = "gbClassBt";
+            this.gbClassBt.Size = new System.Drawing.Size(188, 46);
+            this.gbClassBt.TabIndex = 14;
+            this.gbClassBt.TabStop = false;
+            this.gbClassBt.Text = "Список классов";
             // 
             // btListSave
             // 
-            this.btListSave.Location = new System.Drawing.Point(107, 146);
+            this.btListSave.Location = new System.Drawing.Point(96, 16);
             this.btListSave.Name = "btListSave";
-            this.btListSave.Size = new System.Drawing.Size(75, 23);
-            this.btListSave.TabIndex = 13;
-            this.btListSave.Text = "[..] save";
+            this.btListSave.Size = new System.Drawing.Size(85, 23);
+            this.btListSave.TabIndex = 15;
+            this.btListSave.Text = "Сохранить";
             this.btListSave.UseVisualStyleBackColor = true;
             this.btListSave.Click += new System.EventHandler(this.btListSave_Click);
             // 
             // btListLoad
             // 
-            this.btListLoad.Location = new System.Drawing.Point(15, 146);
+            this.btListLoad.Location = new System.Drawing.Point(8, 16);
             this.btListLoad.Name = "btListLoad";
-            this.btListLoad.Size = new System.Drawing.Size(75, 23);
-            this.btListLoad.TabIndex = 12;
-            this.btListLoad.Text = "[..] load";
+            this.btListLoad.Size = new System.Drawing.Size(82, 23);
+            this.btListLoad.TabIndex = 14;
+            this.btListLoad.Text = "Загрузить";
             this.btListLoad.UseVisualStyleBackColor = true;
             this.btListLoad.Click += new System.EventHandler(this.btListLoad_Click);
             // 
@@ -360,7 +383,7 @@ namespace fcDmw
             this.btFrag.Name = "btFrag";
             this.btFrag.Size = new System.Drawing.Size(120, 23);
             this.btFrag.TabIndex = 1;
-            this.btFrag.Text = "Show fragment";
+            this.btFrag.Text = "Показать";
             this.btFrag.UseVisualStyleBackColor = true;
             this.btFrag.Click += new System.EventHandler(this.BtFragClick);
             // 
@@ -377,7 +400,7 @@ namespace fcDmw
             this.gbConn.Size = new System.Drawing.Size(200, 106);
             this.gbConn.TabIndex = 9;
             this.gbConn.TabStop = false;
-            this.gbConn.Text = "Database";
+            this.gbConn.Text = "БД ";
             // 
             // btDisconnect
             // 
@@ -385,7 +408,7 @@ namespace fcDmw
             this.btDisconnect.Name = "btDisconnect";
             this.btDisconnect.Size = new System.Drawing.Size(89, 23);
             this.btDisconnect.TabIndex = 5;
-            this.btDisconnect.Text = "Disconnect";
+            this.btDisconnect.Text = "Отключение";
             this.btDisconnect.UseVisualStyleBackColor = true;
             this.btDisconnect.Click += new System.EventHandler(this.BtDisconnectClick);
             // 
@@ -395,7 +418,7 @@ namespace fcDmw
             this.btConnect.Name = "btConnect";
             this.btConnect.Size = new System.Drawing.Size(89, 23);
             this.btConnect.TabIndex = 4;
-            this.btConnect.Text = "Connect";
+            this.btConnect.Text = "Подключение";
             this.btConnect.UseVisualStyleBackColor = true;
             this.btConnect.Click += new System.EventHandler(this.BtConnectClick);
             // 
@@ -418,28 +441,18 @@ namespace fcDmw
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 49);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 13);
+            this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "password";
+            this.label2.Text = "пароль";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(14, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.Size = new System.Drawing.Size(78, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "login";
-            // 
-            // btCls
-            // 
-            this.btCls.Location = new System.Drawing.Point(424, 0);
-            this.btCls.Name = "btCls";
-            this.btCls.Size = new System.Drawing.Size(44, 23);
-            this.btCls.TabIndex = 1;
-            this.btCls.Text = ".cls";
-            this.btCls.UseVisualStyleBackColor = true;
-            this.btCls.Click += new System.EventHandler(this.btCls_Click);
+            this.label1.Text = "пользователь";
             // 
             // MainForm
             // 
@@ -449,7 +462,7 @@ namespace fcDmw
             this.Controls.Add(this.paClient);
             this.Controls.Add(this.status);
             this.Name = "MainForm";
-            this.Text = "(dm) SODB Client";
+            this.Text = "(dm) SODB Клиент";
             this.Activated += new System.EventHandler(this.MainForm_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFormClosed);
             this.Load += new System.EventHandler(this.MainFormLoad);
@@ -466,6 +479,7 @@ namespace fcDmw
             this.paLeft.ResumeLayout(false);
             this.gbFrag.ResumeLayout(false);
             this.gbFrag.PerformLayout();
+            this.gbClassBt.ResumeLayout(false);
             this.gbConn.ResumeLayout(false);
             this.gbConn.PerformLayout();
             this.ResumeLayout(false);
@@ -486,8 +500,6 @@ namespace fcDmw
         private System.Windows.Forms.Panel paLeft;
         private System.Windows.Forms.Button btLoad;
         private System.Windows.Forms.GroupBox gbFrag;
-        private System.Windows.Forms.Button btListSave;
-        private System.Windows.Forms.Button btListLoad;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
@@ -508,5 +520,8 @@ namespace fcDmw
         private System.Windows.Forms.TextBox lbMsg;
         private System.Windows.Forms.Button btUpdate;
         private System.Windows.Forms.Button btCls;
+        private System.Windows.Forms.GroupBox gbClassBt;
+        private System.Windows.Forms.Button btListSave;
+        private System.Windows.Forms.Button btListLoad;
 	}
 }

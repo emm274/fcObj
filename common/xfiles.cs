@@ -38,10 +38,11 @@ namespace xfiles
             return false;
         }
 
-        public static bool dialSaveFile(ref string dir,
-                                        string filter,
-                                        string title,
-                                        out string path)
+        public static int dialSaveFile(ref string dir,
+                                      string filter,
+                                      string title,
+                                      int filterIndex,   
+                                      out string path)
         {
             path = "";
 
@@ -53,15 +54,16 @@ namespace xfiles
             dlg.Title = title;
             dlg.Filter = filter;
             dlg.RestoreDirectory = true;
+            dlg.FilterIndex = filterIndex;
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 path = dlg.FileName;
                 dir = Path.GetDirectoryName(path);
-                return true;
+                return dlg.FilterIndex;
             }
 
-            return false;
+            return -1;
         }
 
     }

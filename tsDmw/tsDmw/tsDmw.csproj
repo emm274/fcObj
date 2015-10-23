@@ -75,6 +75,14 @@
       <Link>dlgLogin.designer.cs</Link>
       <DependentUpon>dlgLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\..\common\enterText.cs">
+      <Link>enterText.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\..\common\enterText.designer.cs">
+      <Link>enterText.designer.cs</Link>
+      <DependentUpon>enterText.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\..\common\Ini.cs">
       <Link>Ini.cs</Link>
     </Compile>
@@ -109,6 +117,9 @@
     <Compile Include="tsObjects.cs" />
     <EmbeddedResource Include="..\..\common\dlgLogin.resx">
       <DependentUpon>dlgLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\common\enterText.resx">
+      <DependentUpon>enterText.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

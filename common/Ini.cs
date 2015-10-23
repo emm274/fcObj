@@ -14,6 +14,8 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 
+using ofiles;
+
 namespace Ini
 {
     public class IniCustom
@@ -62,6 +64,19 @@ namespace Ini
             return false;
         }
 
+        public void WriteInt(string Key, int v)
+        {
+            WriteValue("Ints", Key, v.ToString());
+        }
+
+        public int ReadInt(string Key)
+        {
+            string s = ReadValue("Ints", Key);
+            int v;
+            if (int.TryParse(s, out v)) return v;
+            return 0;
+        }
+
     }
 
     class TSection
@@ -80,8 +95,9 @@ namespace Ini
         public void Add(string key, string value) {
 
             string v;
+
             if (data.TryGetValue(key, out v)) 
-                v = value;
+                data[key] = value;
             else   
                 data.Add(key, value);
         }
@@ -217,22 +233,11 @@ namespace Ini
       	}
       	
       	public string ReadDir(string Key) {
-      		string s = ReadValue( "Files",Key );
+      		string s = ReadValue( "Dirs",Key );
       		if (Directory.Exists(s)) return s;
       		return "";
       	}
       	
-        public void WriteInt(string Key, int v) {
-            WriteValue("Ints",Key,v.ToString());
-        }
-      	
-        public int ReadInt(string Key) {
-            string s = ReadValue( "Ints",Key );
-            int v;
-            if (int.TryParse(s,out v)) return v;
-            return 0;
-        }
-
         public void WriteReal(string Key, double v)
         {
             WriteValue("Reals", Key, v.ToString());

@@ -31,21 +31,30 @@
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LoginItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.deleteCommit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.dumpItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveContentAsText = new System.Windows.Forms.ToolStripMenuItem();
             this.saveContentAsMap = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.LoadMap = new System.Windows.Forms.ToolStripMenuItem();
+            this.dialWorkDir = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusWorkDir = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusApiVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusTask = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusProgress = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lbCommit = new System.Windows.Forms.ListBox();
+            this.splitter1 = new System.Windows.Forms.Splitter();
             this.lbBranches = new System.Windows.Forms.ListBox();
+            this.btClear = new System.Windows.Forms.Button();
             this.lbMsg = new System.Windows.Forms.TextBox();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mainMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -69,54 +78,97 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.LoginItem,
+            this.toolStripSeparator3,
+            this.deleteCommit,
             this.toolStripSeparator1,
             this.dumpItem,
             this.saveContentAsText,
             this.saveContentAsMap,
+            this.toolStripSeparator2,
+            this.LoadMap,
+            this.dialWorkDir,
             this.toolStripMenuItem1,
             this.ExitItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.fileToolStripMenuItem.Text = "Файл";
             // 
             // LoginItem
             // 
             this.LoginItem.Name = "LoginItem";
-            this.LoginItem.Size = new System.Drawing.Size(196, 22);
+            this.LoginItem.Size = new System.Drawing.Size(202, 22);
             this.LoginItem.Text = "Авторизация...";
             this.LoginItem.Click += new System.EventHandler(this.LoginItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
+            // 
+            // deleteCommit
+            // 
+            this.deleteCommit.Name = "deleteCommit";
+            this.deleteCommit.Size = new System.Drawing.Size(202, 22);
+            this.deleteCommit.Text = "Удалить последний патч";
+            this.deleteCommit.Click += new System.EventHandler(this.deleteCommit_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
             // 
             // dumpItem
             // 
             this.dumpItem.Name = "dumpItem";
-            this.dumpItem.Size = new System.Drawing.Size(196, 22);
-            this.dumpItem.Text = "get content...";
+            this.dumpItem.Size = new System.Drawing.Size(202, 22);
+            this.dumpItem.Text = "Сохранить как...";
             this.dumpItem.Click += new System.EventHandler(this.dumpItem_Click);
             // 
             // saveContentAsText
             // 
             this.saveContentAsText.Name = "saveContentAsText";
-            this.saveContentAsText.Size = new System.Drawing.Size(196, 22);
+            this.saveContentAsText.Size = new System.Drawing.Size(202, 22);
             this.saveContentAsText.Text = "save content as text...";
+            this.saveContentAsText.Visible = false;
             this.saveContentAsText.Click += new System.EventHandler(this.saveContentAsText_Click);
             // 
             // saveContentAsMap
             // 
             this.saveContentAsMap.Name = "saveContentAsMap";
-            this.saveContentAsMap.Size = new System.Drawing.Size(196, 22);
+            this.saveContentAsMap.Size = new System.Drawing.Size(202, 22);
             this.saveContentAsMap.Text = "save content as <dm>...";
+            this.saveContentAsMap.Visible = false;
             this.saveContentAsMap.Click += new System.EventHandler(this.saveContentAsMap_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
+            // 
+            // LoadMap
+            // 
+            this.LoadMap.Name = "LoadMap";
+            this.LoadMap.Size = new System.Drawing.Size(202, 22);
+            this.LoadMap.Text = "Загрузить карту...";
+            this.LoadMap.Click += new System.EventHandler(this.LoadMap_Click);
+            // 
+            // dialWorkDir
+            // 
+            this.dialWorkDir.Name = "dialWorkDir";
+            this.dialWorkDir.Size = new System.Drawing.Size(202, 22);
+            this.dialWorkDir.Text = "Рабочая папка...";
+            this.dialWorkDir.Click += new System.EventHandler(this.dialWorkDir_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(193, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(199, 6);
             // 
             // ExitItem
             // 
             this.ExitItem.Name = "ExitItem";
             this.ExitItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.X)));
-            this.ExitItem.Size = new System.Drawing.Size(196, 22);
+            this.ExitItem.Size = new System.Drawing.Size(202, 22);
             this.ExitItem.Text = "Выход";
             this.ExitItem.Click += new System.EventHandler(this.ExitItem_Click);
             // 
@@ -137,6 +189,7 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusWorkDir,
             this.statusApiVersion,
             this.statusTask,
             this.statusProgress});
@@ -145,6 +198,11 @@
             this.statusStrip1.Size = new System.Drawing.Size(541, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // statusWorkDir
+            // 
+            this.statusWorkDir.Name = "statusWorkDir";
+            this.statusWorkDir.Size = new System.Drawing.Size(0, 17);
             // 
             // statusApiVersion
             // 
@@ -169,27 +227,61 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.lbCommit);
+            this.splitContainer1.Panel1.Controls.Add(this.splitter1);
             this.splitContainer1.Panel1.Controls.Add(this.lbBranches);
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.btClear);
             this.splitContainer1.Panel2.Controls.Add(this.lbMsg);
             this.splitContainer1.Size = new System.Drawing.Size(541, 391);
             this.splitContainer1.SplitterDistance = 180;
             this.splitContainer1.TabIndex = 2;
             // 
+            // lbCommit
+            // 
+            this.lbCommit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbCommit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbCommit.FormattingEnabled = true;
+            this.lbCommit.Location = new System.Drawing.Point(0, 167);
+            this.lbCommit.Name = "lbCommit";
+            this.lbCommit.Size = new System.Drawing.Size(180, 224);
+            this.lbCommit.TabIndex = 2;
+            this.lbCommit.Click += new System.EventHandler(this.lbCommit_Click);
+            // 
+            // splitter1
+            // 
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter1.Location = new System.Drawing.Point(0, 164);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(180, 3);
+            this.splitter1.TabIndex = 1;
+            this.splitter1.TabStop = false;
+            // 
             // lbBranches
             // 
-            this.lbBranches.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbBranches.Dock = System.Windows.Forms.DockStyle.Top;
             this.lbBranches.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lbBranches.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.lbBranches.FormattingEnabled = true;
             this.lbBranches.ItemHeight = 16;
             this.lbBranches.Location = new System.Drawing.Point(0, 0);
             this.lbBranches.Name = "lbBranches";
-            this.lbBranches.Size = new System.Drawing.Size(180, 391);
+            this.lbBranches.Size = new System.Drawing.Size(180, 164);
             this.lbBranches.TabIndex = 0;
             this.lbBranches.Click += new System.EventHandler(this.lbBranches_Click);
+            // 
+            // btClear
+            // 
+            this.btClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btClear.Location = new System.Drawing.Point(297, 8);
+            this.btClear.Name = "btClear";
+            this.btClear.Size = new System.Drawing.Size(27, 23);
+            this.btClear.TabIndex = 1;
+            this.btClear.Text = "x";
+            this.btClear.UseVisualStyleBackColor = true;
+            this.btClear.Click += new System.EventHandler(this.btClear_Click);
             // 
             // lbMsg
             // 
@@ -201,11 +293,7 @@
             this.lbMsg.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.lbMsg.Size = new System.Drawing.Size(357, 391);
             this.lbMsg.TabIndex = 0;
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(193, 6);
+            this.lbMsg.SizeChanged += new System.EventHandler(this.lbMsg_SizeChanged);
             // 
             // DfmTsDmw
             // 
@@ -255,6 +343,15 @@
         private System.Windows.Forms.ToolStripMenuItem saveContentAsMap;
         private System.Windows.Forms.ToolStripStatusLabel statusProgress;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem LoadMap;
+        private System.Windows.Forms.ToolStripMenuItem dialWorkDir;
+        private System.Windows.Forms.ToolStripStatusLabel statusWorkDir;
+        private System.Windows.Forms.Button btClear;
+        private System.Windows.Forms.ListBox lbCommit;
+        private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem deleteCommit;
     }
 }
 

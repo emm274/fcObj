@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using otypes;
+using Convert;
 using ofiles;
 using xjson;
 using tsContent;
@@ -45,25 +46,24 @@ namespace tsDmw
         List<string> fBranches;
         public List<string> branches { get { return fBranches; } }
 
-        List<string> fCommits;
-        public List<string> Commits { get { return fCommits; } }
+        Dictionary<string,string> fCommits;
+        public Dictionary<string,string> Commits { get { return fCommits; } }
 
-        List<string> fCodes = new List<string>();
-        TTextWrite fdump = new TTextWrite();
-
-        enum tquery { getVersion,
+        enum tquery { error,
+                      getVersion,
                       getBranches,
                       getCommits,
-                      getCodes
+                      post,
+                      delete
                     }
 
         tquery fquery;
 
-        delegate void tvalue(string k, int index, JsonToken typ, Object v);
-
-        Stack<string> fkeys = new Stack<string>();
-
+        string fdata;
         string fdest;
+
+        string fcommitMsg = null;
+        string fcommitID = null;
 
         void __error(string capt, string message)
         {
@@ -92,7 +92,7 @@ namespace tsDmw
             Password = "chylm7UpBoucwoPin";
             fVersion = "";
             fBranches = new List<string>();
-            fCommits = new List<string>();
+            fCommits = new Dictionary<string,string>();
         }
 
         protected override void value(string k, int index, JsonToken typ, Object v)
@@ -101,6 +101,10 @@ namespace tsDmw
 
             switch (fquery)
             {
+                case tquery.error:
+                    __message(null, s);
+                    break;
+
                 case tquery.getVersion:
                     if (k == "API version")
                     fVersion = s; 
@@ -112,60 +116,84 @@ namespace tsDmw
                     break;
 
                 case tquery.getCommits:
-                    if (k == "message") 
-                    fCommits.Add(s);
+                    if (k == "message") fcommitMsg = s;
+                    else
+                    if (k == "commit") fcommitID = s;
                     break;
 
-                case tquery.getCodes:
-                    if (k == "code") 
-                    if (fCodes.IndexOf(s) < 0) {
-                        fCodes.Add(s);
-                        fdump.writeLine(s);
-                    }
+                case tquery.post:
+                    if (v != null) 
+                    __message(k,v.ToString());
                     break;
             }
         }
 
-        public void getVersion(tnotify Anotify)
+        protected override void endObject(string k)
+        {
+            if (fquery == tquery.getCommits)
+            {
+                if (convert.IsString(fcommitID))
+                if (convert.IsString(fcommitMsg))
+                fCommits.Add(fcommitID, fcommitMsg);
+            }
+        }
+
+        public void getVersion(tnotify notify)
         {
             __beginTask("get version");
-            Task.Run(() => __request("", tquery.getVersion, Anotify));
+            Task.Run(() => __get("", tquery.getVersion, notify));
         }
 
-        public void getBranches(tnotify Anotify)
+        public void getBranches(tnotify notify)
         {
             fBranches.Clear(); __beginTask("get branches");
-            Task.Run(() => __request("branches", tquery.getBranches, Anotify));
+            Task.Run(() => __get("branches", tquery.getBranches, notify));
         }
 
-        public void getCommits(string name, tnotify Anotify)
+        public void getCommits(string name, tnotify notify)
         {
             fCommits.Clear(); __beginTask("get commits");
-            Task.Run(() => __request("branch/" + name + "/log", tquery.getCommits, Anotify));
+            Task.Run(() => __get("branch/" + name + "/log", tquery.getCommits, notify));
         }
 
         public void getContent(string name, string dest)
         {
-            File.Delete(dest);
+            File.Delete(dest); fdest = null;
+
+            string path = dest;
+            if (Path.GetExtension(dest) != "json")
+            {
+                fdest = dest;
+                path = Path.ChangeExtension(dest, ".json");
+            }
 
             __beginTask("get content: "+name);
-            Task.Run(() => task_requestData("branch/" + name + "/content", dest) );
+            Task.Run(() => __download("branch/" + name + "/content", path));
         }
 
-        public void stat_codes(string path)
+        public void commit(string name, string path, tnotify notify)
         {
-            string s = Path.ChangeExtension(path, ".log");
-            if (fdump.open(s)) {
-                string t = Path.GetFileName(path);
-                fdump.writeLine("file: "+t);
+            __beginTask("commit: " + name);
+            Task.Run(() => __postFile("/commit", path, tquery.post, notify) );
+        }
 
-                fCodes.Clear();
-                StreamReader stream = new StreamReader(path);
+        public void undo_commit(string branch, string commit, tnotify notify)
+        {
+            XJsonStringWriter sw = new XJsonStringWriter();
+            JsonWriter writer = sw.writer;
+            writer.WriteStartObject();
+            writer.WritePropertyName("commit");
+            writer.WriteValue(commit);
+            writer.WriteEndObject();
+            writer.Close();
 
-                __beginTask(t);
+            byte[] data = sw.Data();
+            if (data != null)
+            {
+                __beginTask(String.Format("{0}: undo commit {1}", branch, commit));
 
-                Task.Run(() => task_json(stream,tquery.getCodes) );
-                fdump.close();
+                string what = "/branch/"+branch+"?force=true";
+                Task.Run(() => __sendData(what, "PUT", data, tquery.delete, notify));
             }
         }
 
@@ -215,92 +243,222 @@ namespace tsDmw
             __endTask(this, null);
         }
 
-        void __request(string what, tquery query, tnotify notify)
+        bool response_json(WebResponse response, tquery query) 
         {
-            WebRequest request = WebRequest.Create(Host + "/" + what);
-            request.Credentials = new NetworkCredential(Login, Password);
+            Stream stream = response.GetResponseStream();
 
+            if (stream != null) { 
+                StreamReader reader = new StreamReader(stream,Encoding.UTF8);
+                fquery = query; Parse(reader); return true;
+            }
+
+            return false;
+        }
+
+        bool error_json(WebException e)
+        {
+            WebResponse response = e.Response;
+            if (response != null) {
+                bool rc = response_json(response, tquery.error);
+                response.Close(); return rc;
+            }
+
+            return false;
+        }
+
+        void web_error(WebException e, string capt)
+        {
+            if (!error_json(e))
+            __error(capt, e.Message);
+        }
+
+        void request_json(WebRequest request, tquery query, tnotify notify)
+        {
             try
             {
                 WebResponse response = request.GetResponse();
-
-                StreamReader stream = new StreamReader(
-                        response.GetResponseStream(), Encoding.UTF8);
-
-                fquery = query; Parse(stream);
-
+                response_json(response, query);
+                response.Close();
+                
                 if (notify != null)
 
                     if (fnotifyTask != null)
                         fnotifyTask(this, notify);
                     else
                         notify(this, null);
-
             }
-            catch (Exception ex)
+            catch (WebException e)
             {
-                __error("http get", ex.Message);
+                web_error(e,request.Method);
             }
+        }
 
+        void __request(string what, string method, tquery query, tnotify notify)
+        {
+            WebRequest request = WebRequest.Create(Host + "/" + what);
+            request.Credentials = new NetworkCredential(Login, Password);
+            request.Method = method;
+            request_json(request, query, notify);
             __endTask(this, null);
         }
 
-        bool __requestData(string what, string dest)
+        void __get(string what, tquery query, tnotify notify)
         {
-            WebClient client = new WebClient();
-            client.Credentials = new NetworkCredential(Login, Password);
-            try
-            {
-                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
-                client.DownloadFile(Host + "/" + what, dest);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                __error("http get", ex.Message);
-            }
-
-            return false;
+            __request(what, "GET", query, notify);
         }
 
-        void __requestAsync(string what, string dest)
+        void __sendData(string what, string method, byte[] data, tquery query, tnotify notify)
         {
+            if (data != null)
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Host + "/" + what);
+                request.Credentials = new NetworkCredential(Login, Password);
+                request.Method = method;
+
+                if (method == "POST")
+                  request.ContentType = "application/x-www-form-urlencoded";
+                else
+                    request.ContentType = "application/json";
+
+                request.ContentLength = data.Length;
+
+                Stream stream = request.GetRequestStream();
+                stream.Write(data, 0, data.Length);
+                stream.Close();
+
+                request_json(request, query, notify);
+
+                __endTask(this, null);
+            }
+        }
+
+        void __postJson(string what, string data, tquery query, tnotify notify)
+        {
+            __sendData(what,"POST", convert.GetBytes(data), query, notify);
+        }
+
+        void __postFile(string what, string path, tquery query, tnotify notify)
+        {
+            __sendData(what,"POST", File.ReadAllBytes(path), query, notify);
+        }
+
+        bool __download(string what, string path)
+        {
+            fdata = path;
+
             WebClient client = new WebClient();
             client.Credentials = new NetworkCredential(Login, Password);
             Uri uri = new Uri(Host + "/" + what);
             try
             {
-                fdest = dest;
-                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
-                client.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadCompletedCallback);
-                client.DownloadFileAsync(uri, dest);
+                if (fProgress == null)
+                {
+                    client.DownloadFile(uri, path);
+                    __endTask(this, Path.GetFileName(path) + ".");
+                }
+                else
+                {
+                    client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
+                    client.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadCompletedCallback);
+                    client.DownloadFileAsync(uri, path);
+                }
+
+                return true;
             }
-            catch (Exception ex)
+            catch (WebException e)
             {
-                __error("http get", ex.Message);
+                web_error(e,"download");
             }
 
+            return false;
         }
 
         private void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
         {
-            string s = String.Format("{0}%...",e.ProgressPercentage);
-            fProgress(this,s);
+            string s = String.Format("{0}%...", e.ProgressPercentage);
+            fProgress(this, s);
         }
 
-        private void DownloadCompletedCallback(object sender, AsyncCompletedEventArgs e) 
+        private void DownloadCompletedCallback(object sender, AsyncCompletedEventArgs e)
         {
-            __endTask(this, Path.GetFileName(fdest) + ".");
-        }
+            string ext = "";
+            if (convert.IsString(fdest))
+            ext = Path.GetExtension(fdest).ToLower();
 
-        void task_requestData(string what, string dest)
-        {
-            if (fProgress != null)
-                __requestAsync(what, dest);
-            else {
-                __requestData(what, dest);
-                __endTask(this, Path.GetFileName(dest) + ".");
+            if (ext == ".txt") {
+                __beginTask(Path.GetFileName(fdest));
+                task_json_to_text(fdata, fdest);
+            } else
+
+            if (ext == ".dm")
+            {
+                __beginTask(Path.GetFileName(fdest));
+                task_json_to_map(fdata, fdest);
             }
+            else
+                __endTask(this, Path.GetFileName(fdata) + ".");
         }
+
+        bool __upload(string what, string path)
+        {
+            fdata = path;
+
+            WebClient client = new WebClient();
+            client.Credentials = new NetworkCredential(Login, Password);
+            Uri uri = new Uri(Host + "/" + what);
+
+            client.Headers.Add("ContentType: application/x-www-form-urlencoded");
+
+            try
+            {
+                if (fProgress == null)
+                {
+                    byte[] rc = client.UploadFile(uri, path);
+
+                    if (rc != null)
+                    {
+                        string s = convert.GetString(rc);
+                        __message(null,s);
+                    }
+
+                    __endTask(this, Path.GetFileName(path) + ".");
+                }
+                else
+                {
+                    client.UploadProgressChanged += new UploadProgressChangedEventHandler(UploadProgressCallback);
+                    client.UploadFileCompleted += new UploadFileCompletedEventHandler(UploadCompletedCallback);
+                    client.UploadFileAsync(uri, path);
+                }
+
+                return true;
+            }
+            catch (WebException e)
+            {
+                web_error(e,"upload");
+            }
+
+            return false;
+        }
+
+        private void UploadProgressCallback(object sender, UploadProgressChangedEventArgs e)
+        {
+            string s = String.Format("{0}%...", e.ProgressPercentage);
+            fProgress(this, s);
+        }
+
+        private void UploadCompletedCallback(object sender, UploadFileCompletedEventArgs e)
+        {
+            if (e.Cancelled)
+                __message("upload", "cancelled");
+            else
+            if (e.Error != null)
+                __message("upload", e.Error.Message);
+            else
+            if (e.Result != null)
+                __message(null, Encoding.UTF8.GetString(e.Result));
+
+            __endTask(this, Path.GetFileName(fdata) + ".");
+        }
+
     }
 }

@@ -68,7 +68,7 @@ namespace fcDmw
 		void MainFormLoad(object sender, EventArgs e)
 		{
 			IniFile ini = new IniFile("");
-			ini.ReadForm(Name,this);
+			ini.ReadForm(this);
             fdataDir = ini.ReadDir("dataDir");
             finiDir = ini.ReadDir("iniDir");
 
@@ -121,7 +121,7 @@ namespace fcDmw
 			IniFile ini = new IniFile("");
             ini.Reset();
 
-			ini.WriteForm(Name,this);
+			ini.WriteForm(this);
             ini.WriteDir("dataDir", fdataDir);
             ini.WriteDir("iniDir", finiDir);
 

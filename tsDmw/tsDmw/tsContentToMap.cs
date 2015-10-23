@@ -114,14 +114,13 @@ namespace tsDmw
                     obj.Add_geometry(g.lower, g.upper, g.key);
 
                 int ptr;
-                obj.end_Feature(fe.Key, fe.code, out ptr);
+                obj.end_Feature(fe.Key, fe.code, fe.guid, out ptr);
             }
         }
 
         public void stat(tsObject o) { }
 
         public void writeKey(string Key, string Value) { }
-
 
     }
 }
