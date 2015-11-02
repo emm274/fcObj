@@ -91,6 +91,18 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="DataType" nillable="true" type="tns:DataType" />
+  <xs:simpleType name="MetaDataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FeatureClass" />
+      <xs:enumeration value="Feature" />
+      <xs:enumeration value="GeoName" />
+      <xs:enumeration value="Attribute" />
+      <xs:enumeration value="Geometry" />
+      <xs:enumeration value="CartographicElement" />
+      <xs:enumeration value="Metadata" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="MetaDataType" nillable="true" type="tns:MetaDataType" />
   <xs:simpleType name="GeomRole">
     <xs:restriction base="xs:string">
       <xs:enumeration value="None" />
@@ -108,7 +120,6 @@
       <xs:enumeration value="Polyline" />
       <xs:enumeration value="Polygon" />
       <xs:enumeration value="MultiPoint" />
-      <xs:enumeration value="MultiPatch" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="GeometryType" nillable="true" type="tns:GeometryType" />
@@ -208,17 +219,6 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="SpatialQueryType" nillable="true" type="tns:SpatialQueryType" />
-  <xs:simpleType name="MetaDataType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="FeatureClass" />
-      <xs:enumeration value="Feature" />
-      <xs:enumeration value="GeoName" />
-      <xs:enumeration value="Attribute" />
-      <xs:enumeration value="Geometry" />
-      <xs:enumeration value="CartographicElement" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="MetaDataType" nillable="true" type="tns:MetaDataType" />
   <xs:simpleType name="RelationRole">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Source" />

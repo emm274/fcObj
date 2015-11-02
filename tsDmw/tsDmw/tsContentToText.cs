@@ -60,7 +60,7 @@ namespace tsDmw
             string s = o.Name();
             if (msg != null) s += " " + msg;
 
-            file.WriteLine("{");
+            file.WriteLine("\n{");
             file.WriteLine(s);
         }
 
@@ -119,7 +119,17 @@ namespace tsDmw
             if (fe.Geometry.Count > 0) {
                 writeKeyi("geometry", fe.Geometry.Count);
                 foreach (var g in fe.Geometry)
-                file.WriteLine(g);
+                file.WriteLine(g.key);
+            }
+
+            if (fe.Relations.Count > 0)
+            {
+                writeKeyi("relations", fe.Relations.Count);
+                foreach (var r in fe.Relations)
+                {
+                    string s = String.Format("{0} {1} {2}",r.role,r.code,r.dest);
+                    file.WriteLine(s);
+                }
             }
 
             endObject();

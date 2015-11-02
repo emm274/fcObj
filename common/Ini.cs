@@ -14,6 +14,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 
+using Convert;
 using ofiles;
 
 namespace Ini
@@ -36,7 +37,7 @@ namespace Ini
         public bool ReadForm(Form form)
         {
             string s = ReadValue("Forms", form.Name);
-            if (s.Length > 0)
+            if (convert.IsString(s))
             {
 
                 string[] ts = s.Split(' ');
@@ -77,18 +78,95 @@ namespace Ini
             return 0;
         }
 
+        public void WriteFile(string Key, string path)
+        {
+            WriteValue("Files", Key, path);
+        }
+
+        public string ReadFile(string Key)
+        {
+            string s = ReadValue("Files", Key);
+            if (File.Exists(s)) return s;
+            return "";
+        }
+
+        public void WriteDir(string Key, string path)
+        {
+            WriteValue("Dirs", Key, path);
+        }
+
+        public string ReadDir(string Key)
+        {
+            string s = ReadValue("Dirs", Key);
+            if (Directory.Exists(s)) return s;
+            return "";
+        }
+
+        public void WriteReal(string Key, double v)
+        {
+            WriteValue("Reals", Key, v.ToString());
+        }
+
+        public double ReadReal(double def, string Key)
+        {
+            string s = ReadValue("Reals", Key);
+            double v;
+            if (double.TryParse(s, out v)) return v;
+            return def;
+        }
+
+        public void WriteBool(string Key, bool v)
+        {
+            int i = 0; if (v) i = 1;
+            WriteValue("Ints", Key, i.ToString());
+        }
+
+        public bool ReadBool(string Key)
+        {
+            string s = ReadValue("Ints", Key);
+            int v;
+            if (int.TryParse(s, out v)) return (v == 1);
+            return false;
+        }
+
+        public void WriteStr(string Key, string v)
+        {
+            WriteValue("Strs", Key, v);
+        }
+
+        public string ReadStr(string def, string Key)
+        {
+            string s = ReadValue("Strs", Key);
+            if (s.Length > 0) return s;
+            return def;
+        }
+
+        public void WriteSplitContainer(string Key, SplitContainer s)
+        {
+            WriteInt(Key, s.SplitterDistance);
+        }
+
+        public void ReadSplitContainer(string Key, SplitContainer s)
+        {
+            int v = ReadInt(Key);
+            if ((v > s.Panel1MinSize) &&
+                (v < s.Width - s.Panel1MinSize))
+                s.SplitterDistance = v;
+        }
+
     }
 
     class TSection
     {
         string fName;
         public string Name { get { return fName; } }
+        bool fIsQuote = false;
 
         Dictionary<string, string> data;
 
-        public TSection(string aName)
+        public TSection(string aName, bool aIsQuote)
         {
-            fName = aName;
+            fName = aName; fIsQuote = aIsQuote;
             data = new Dictionary<string, string>();
         }
 
@@ -116,6 +194,20 @@ namespace Ini
             dest.WriteValue(fName, v.Key, v.Value.ToString());
         }
 
+        public void dump(StreamWriter sw)
+        {
+            sw.WriteLine("[" + fName + "]");
+
+            foreach (var v in data)
+            {
+                string s = v.Value.ToString();
+                if (fIsQuote) s = "\"" + s + "\"";
+                sw.WriteLine(v.Key + "=" + s);
+            }
+
+            sw.WriteLine("[end_" + fName + "]\n");
+        }
+
     }
 
     public class IniData : IniCustom
@@ -125,6 +217,107 @@ namespace Ini
         public IniData()
         {
             fSections = new List<TSection>();
+        }
+
+        bool getTag(string str, out string tag)
+        {
+            tag = null;
+            string s = str.Trim();
+            if (s.StartsWith("["))
+            if (s.EndsWith("]"))
+            if (s.Length > 2)
+            {
+                tag = s.Substring(1, s.Length - 2);
+                return true;
+            }
+
+            return false;
+        }
+
+        public void loadFrom(string FName)
+        {
+            if (fSections.Count == 0)
+            {
+                fSections.Add(new TSection("Forms", true));
+                fSections.Add(new TSection("Files", true));
+                fSections.Add(new TSection("Dirs", true));
+                fSections.Add(new TSection("Strs", true));
+
+                fSections.Add(new TSection("Ints", false));
+                fSections.Add(new TSection("Reals", false));
+            }
+
+  	  		string s=FName;
+  	  		if (!convert.IsString(s)) {
+  	  			Module mod = typeof(IniFile).Assembly.GetModules() [0];	
+  	  			s=Path.ChangeExtension(mod.Name,".ini");
+            }
+
+            if (convert.IsString(s))
+            try 
+            {
+                s = OFiles.GetIniPath(s);
+                using (StreamReader sr = new StreamReader(s)) 
+                {
+                    string sect = null;
+
+                    while (sr.Peek() >= 0) {
+                        s=sr.ReadLine();
+                        if (convert.IsString(s))
+                        {
+                            string t;
+                            if (getTag(s, out t))
+                            {
+                                if (sect == null)
+                                    sect = t;
+                                else
+                                    sect = null;
+                            } else
+                            if (sect != null)
+                            {
+                                int i = s.IndexOf("=");
+                                int l = s.Length;
+                                if ((i > 0) && (i < l - 1))
+                                {
+                                    t = s.Substring(i + 1);
+                                    if (t.StartsWith("\""))
+                                    if (t.EndsWith("\""))
+                                    t = t.Substring(1, t.Length - 2);
+
+                                    s = s.Substring(0, i);
+                                    WriteValue(sect, s, t);
+                                } 
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception) {
+            }
+        }
+
+        public void saveAs(string FName)
+        {
+            string s = FName;
+            if (!convert.IsString(s))
+            {
+                Module mod = typeof(IniFile).Assembly.GetModules()[0];
+                s = Path.ChangeExtension(mod.Name, ".ini");
+            }
+
+            if (convert.IsString(s))
+            try
+            {
+                s = OFiles.GetIniPath(s);
+                using (StreamWriter sw = new StreamWriter(s))
+                {
+                    foreach (var sect in fSections)
+                    sect.dump(sw);
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
 
         TSection sectionOf(string name)
@@ -138,12 +331,6 @@ namespace Ini
         public override void WriteValue(string Section, string Key, string Value)
         {
             TSection s = sectionOf(Section);
-            if (s == null)
-            {
-                s = new TSection(Section);
-                fSections.Add(s);
-            }
-
             if (s != null) s.Add(Key, Value);
         }
 
@@ -152,15 +339,6 @@ namespace Ini
             string v = null;
             TSection s = sectionOf(Section);
             if (s != null) v = s.Get(Key);
-
-            if (v == null) {
-                IniFile ini = new IniFile("");
-                v = ini.ReadValue(Section, Key);
-
-                if ((v != null) && (v.Length > 0))
-                    WriteValue(Section, Key, v);
-            }
-
             return v;
         }
         
@@ -218,76 +396,5 @@ namespace Ini
     	     return temp.ToString();
    	  	}
 
-      	public void WriteFile(string Key, string path) {
-      		WriteValue( "Files",Key,path );
-      	}
-      	
-      	public string ReadFile(string Key) {
-      		string s = ReadValue( "Files",Key );
-      		if (File.Exists(s)) return s;
-      		return "";
-      	}
-      	
-      	public void WriteDir(string Key, string path) {
-      		WriteValue( "Dirs",Key,path );
-      	}
-      	
-      	public string ReadDir(string Key) {
-      		string s = ReadValue( "Dirs",Key );
-      		if (Directory.Exists(s)) return s;
-      		return "";
-      	}
-      	
-        public void WriteReal(string Key, double v)
-        {
-            WriteValue("Reals", Key, v.ToString());
-        }
-
-        public double ReadReal(double def, string Key)
-        {
-            string s = ReadValue("Reals", Key);
-            double v;
-            if (double.TryParse(s, out v)) return v;
-            return def;
-        }
-
-        public void WriteBool(string Key, bool v)
-        {
-            int i = 0; if (v) i = 1;
-            WriteValue("Ints", Key, i.ToString());
-        }
-
-        public bool ReadBool(string Key)
-        {
-            string s = ReadValue("Ints", Key);
-            int v;
-            if (int.TryParse(s, out v)) return (v == 1);
-            return false;
-        }
-
-        public void WriteStr(string Key, string v)
-        {
-            WriteValue("Strs", Key, v);
-        }
-
-        public string ReadStr(string def, string Key)
-        {
-            string s = ReadValue("Strs", Key);
-            if (s.Length > 0) return s; 
-            return def;
-        }
-
-        public void WriteSplitContainer(string Key, SplitContainer s)
-        {
-      		WriteInt(Key,s.SplitterDistance);
-		}
-      	
-      	public void ReadSplitContainer(string Key, SplitContainer s) {
-      		int v=ReadInt(Key);
-      		if ((v > s.Panel1MinSize) &&
-      		    (v < s.Width-s.Panel1MinSize))
-      			s.SplitterDistance=v;
-      	}
-      	
 	}
 }

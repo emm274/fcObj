@@ -11,6 +11,7 @@ namespace xfiles
         public static bool dialFile(ref string dir,
                                     string filter,
                                     string title,
+                                    string fileName,
                                     bool exists,
                                     out string path)
         {
@@ -25,6 +26,9 @@ namespace xfiles
             dlg.Filter = filter;
             dlg.RestoreDirectory = true;
             dlg.CheckFileExists = exists;
+
+            if (fileName != null)
+                dlg.FileName = fileName;
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {

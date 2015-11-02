@@ -440,8 +440,9 @@ namespace fcDmw
             if (sodb_Connected()) 
             if (XFiles.dialFile(ref fdataDir,
                                 "Files (*.dm)|*.dm",
-                                "Load map",
-                                true,out path)) {
+                                "Загрузить карту",
+                                null,true,
+                                out path)) {
 
                 string s = Path.GetFileName(path)+"...";
                 beginProcess(s);
@@ -469,8 +470,8 @@ namespace fcDmw
             if (sodb_Connected())
                 if (XFiles.dialFile(ref fdataDir,
                                     "Files (*.tdm)|*.tdm",
-                                    "Open update data",
-                                    true, out path))
+                                    "Загрузить изменения",
+                                    null,true, out path))
             {
                 string s = Path.GetFileName(path) + "...";
                 beginProcess(s);
@@ -520,8 +521,8 @@ namespace fcDmw
             string path = "";
             if (XFiles.dialFile(ref finiDir,
                                 "Files (*.txt)|*.txt",
-                                "Load class list",
-                                true,out path)) {
+                                "Загрузить список классов",
+                                null,true,out path)) {
 
                 classList.Clear();
 
@@ -563,11 +564,12 @@ namespace fcDmw
         private void btListSave_Click(object sender, EventArgs e)
         {
             string path = "";
-            if (XFiles.dialSaveFile(ref finiDir,
-                                    "Files (*.txt)|*.txt",
-                                    "Save class list as",
-                                    out path))
-            {
+            int rc = XFiles.dialSaveFile(ref finiDir,
+                                         "Files (*.txt)|*.txt",
+                                         "Сохранить список классов как",
+                                          0, out path);
+ 
+            if (rc >= 0) {
                 var file = new StreamWriter(path);
                 if (file != null) {
 

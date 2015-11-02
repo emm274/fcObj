@@ -24,14 +24,24 @@ namespace dlgLogin
 
         public string login
         {
-            get { return tbLogin.Text; }
-            set { tbLogin.Text = value; }
+            get { 
+                return tbLogin.Text; 
+            }
+            set { 
+                if (value != null)
+                tbLogin.Text = value; 
+            }
         }
 
         public string password
         {
-            get { return tbPassword.Text; }
-            set { tbPassword.Text = value; }
+            get { 
+                return tbPassword.Text; 
+            }
+            set { 
+                if (value != null)
+                tbPassword.Text = value; 
+            }
         }
 
         private void LoginDialog_Load(object sender, EventArgs e)

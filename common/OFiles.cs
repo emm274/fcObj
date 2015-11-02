@@ -26,8 +26,8 @@ namespace ofiles
                 file = new StreamWriter(Path);
                 return true;
             }
-            catch (Exception ex) { 
-                openError=ex.Message;
+            catch (Exception e) { 
+                openError=e.Message;
                 file = null;
             }
 
@@ -56,7 +56,8 @@ namespace ofiles
 
     public static class OFiles
     {
-        public static string GetAppData() {
+        public static string GetAppData()
+        {
             return Environment.ExpandEnvironmentVariables("%APPDATA%");
         }
 
@@ -73,6 +74,24 @@ namespace ofiles
         public static string GetTmpPath(string name)
         {
             return GetAppData() + "\\dmw\\tmp\\" + name;
+        }
+
+        public static string GetIniPath(string name)
+        {
+            return GetAppData() + "\\dmw\\ini\\" + name;
+        }
+
+        public static void dumpData(string dest, byte[] data)
+        {
+            using (BinaryWriter bw = new BinaryWriter(File.Open(dest, FileMode.Create)))
+            {
+                bw.Write(data);
+            }
+        }
+
+        public static void dumpTempData(string name, byte[] data)
+        {
+            dumpData(GetTmpPath(name), data);
         }
 
     }

@@ -224,9 +224,9 @@ namespace fcDmw.SOAPService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
     [System.SerializableAttribute()]
-    public partial class ExecuteFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class TokenFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -269,9 +269,9 @@ namespace fcDmw.SOAPService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
     [System.SerializableAttribute()]
-    public partial class TokenFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class ExecuteFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -378,6 +378,7 @@ namespace fcDmw.SOAPService {
     [System.Runtime.Serialization.DataContractAttribute(Name="FeatureClass", Namespace="http://schemas.datacontract.org/2004/07/SODBCore")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.FeatureClassSchema))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.MetadataClassSchema))]
     public partial class FeatureClass : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -693,6 +694,45 @@ namespace fcDmw.SOAPService {
                 if ((object.ReferenceEquals(this.RelationsField, value) != true)) {
                     this.RelationsField = value;
                     this.RaisePropertyChanged("Relations");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MetadataClassSchema", Namespace="http://schemas.datacontract.org/2004/07/SODBCore")]
+    [System.SerializableAttribute()]
+    public partial class MetadataClassSchema : fcDmw.SOAPService.FeatureClass {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsMetaFieldsChangedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<fcDmw.SOAPService.MetaField> MetaFieldsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsMetaFieldsChanged {
+            get {
+                return this.IsMetaFieldsChangedField;
+            }
+            set {
+                if ((this.IsMetaFieldsChangedField.Equals(value) != true)) {
+                    this.IsMetaFieldsChangedField = value;
+                    this.RaisePropertyChanged("IsMetaFieldsChanged");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<fcDmw.SOAPService.MetaField> MetaFields {
+            get {
+                return this.MetaFieldsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MetaFieldsField, value) != true)) {
+                    this.MetaFieldsField = value;
+                    this.RaisePropertyChanged("MetaFields");
                 }
             }
         }
@@ -1705,7 +1745,7 @@ namespace fcDmw.SOAPService {
         private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<fcDmw.SOAPService.MetaValue> MetaValuesField;
+        private System.Collections.Generic.List<fcDmw.SOAPService.Metadata> MetadataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private fcDmw.SOAPService.Geometry ShapeField;
@@ -1740,14 +1780,14 @@ namespace fcDmw.SOAPService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<fcDmw.SOAPService.MetaValue> MetaValues {
+        public System.Collections.Generic.List<fcDmw.SOAPService.Metadata> Metadata {
             get {
-                return this.MetaValuesField;
+                return this.MetadataField;
             }
             set {
-                if ((object.ReferenceEquals(this.MetaValuesField, value) != true)) {
-                    this.MetaValuesField = value;
-                    this.RaisePropertyChanged("MetaValues");
+                if ((object.ReferenceEquals(this.MetadataField, value) != true)) {
+                    this.MetadataField = value;
+                    this.RaisePropertyChanged("Metadata");
                 }
             }
         }
@@ -1806,11 +1846,11 @@ namespace fcDmw.SOAPService {
     [System.Runtime.Serialization.DataContractAttribute(Name="Geometry", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Geometries")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Point))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Polygon))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.PointCollection))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Path))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Ring))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Polyline))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.PointCollection))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Ring))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Path))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Polygon))]
     public partial class Geometry : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -1820,7 +1860,7 @@ namespace fcDmw.SOAPService {
         private string KeyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<fcDmw.SOAPService.MetaValue> MetaValuesField;
+        private System.Collections.Generic.List<fcDmw.SOAPService.Metadata> MetadataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private fcDmw.SOAPService.GeomRole RoleField;
@@ -1867,14 +1907,14 @@ namespace fcDmw.SOAPService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<fcDmw.SOAPService.MetaValue> MetaValues {
+        public System.Collections.Generic.List<fcDmw.SOAPService.Metadata> Metadata {
             get {
-                return this.MetaValuesField;
+                return this.MetadataField;
             }
             set {
-                if ((object.ReferenceEquals(this.MetaValuesField, value) != true)) {
-                    this.MetaValuesField = value;
-                    this.RaisePropertyChanged("MetaValues");
+                if ((object.ReferenceEquals(this.MetadataField, value) != true)) {
+                    this.MetadataField = value;
+                    this.RaisePropertyChanged("Metadata");
                 }
             }
         }
@@ -2013,6 +2053,517 @@ namespace fcDmw.SOAPService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Metadata", Namespace="http://schemas.datacontract.org/2004/07/SODBCore")]
+    [System.SerializableAttribute()]
+    public partial class Metadata : fcDmw.SOAPService.MetaField {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<fcDmw.SOAPService.Metadata> CompositeMetadataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string KeyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MDIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private fcDmw.SOAPService.MetaDataType MetadataTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Metadata_Cl_IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int Metadata_ClassIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ParentKeyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private fcDmw.SOAPService.EditableStatus Status1Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<fcDmw.SOAPService.MetaValue> ValuesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<fcDmw.SOAPService.Metadata> CompositeMetadata {
+            get {
+                return this.CompositeMetadataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CompositeMetadataField, value) != true)) {
+                    this.CompositeMetadataField = value;
+                    this.RaisePropertyChanged("CompositeMetadata");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Key {
+            get {
+                return this.KeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.KeyField, value) != true)) {
+                    this.KeyField = value;
+                    this.RaisePropertyChanged("Key");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MDID {
+            get {
+                return this.MDIDField;
+            }
+            set {
+                if ((this.MDIDField.Equals(value) != true)) {
+                    this.MDIDField = value;
+                    this.RaisePropertyChanged("MDID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public fcDmw.SOAPService.MetaDataType MetadataType {
+            get {
+                return this.MetadataTypeField;
+            }
+            set {
+                if ((this.MetadataTypeField.Equals(value) != true)) {
+                    this.MetadataTypeField = value;
+                    this.RaisePropertyChanged("MetadataType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Metadata_Cl_Id {
+            get {
+                return this.Metadata_Cl_IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Metadata_Cl_IdField, value) != true)) {
+                    this.Metadata_Cl_IdField = value;
+                    this.RaisePropertyChanged("Metadata_Cl_Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Metadata_ClassId {
+            get {
+                return this.Metadata_ClassIdField;
+            }
+            set {
+                if ((this.Metadata_ClassIdField.Equals(value) != true)) {
+                    this.Metadata_ClassIdField = value;
+                    this.RaisePropertyChanged("Metadata_ClassId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ParentKey {
+            get {
+                return this.ParentKeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ParentKeyField, value) != true)) {
+                    this.ParentKeyField = value;
+                    this.RaisePropertyChanged("ParentKey");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Status")]
+        public fcDmw.SOAPService.EditableStatus Status1 {
+            get {
+                return this.Status1Field;
+            }
+            set {
+                if ((this.Status1Field.Equals(value) != true)) {
+                    this.Status1Field = value;
+                    this.RaisePropertyChanged("Status1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<fcDmw.SOAPService.MetaValue> Values {
+            get {
+                return this.ValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValuesField, value) != true)) {
+                    this.ValuesField = value;
+                    this.RaisePropertyChanged("Values");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MetaField", Namespace="http://schemas.datacontract.org/2004/07/SODBCore")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Metadata))]
+    public partial class MetaField : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AkronimField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AliasField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CardinalityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CompositAttrAkronimField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int CompositAttrClassIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DomainNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsAliasChangedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsCardinalityChangedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsCompositeAttrChangedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsCompositeAttributeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsDomainNameChangedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsMeasureChangedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsNameChangedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsTypeChangedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MeasureField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private fcDmw.SOAPService.EditableStatus StatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private fcDmw.SOAPService.DataType TypeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Akronim {
+            get {
+                return this.AkronimField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AkronimField, value) != true)) {
+                    this.AkronimField = value;
+                    this.RaisePropertyChanged("Akronim");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Alias {
+            get {
+                return this.AliasField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AliasField, value) != true)) {
+                    this.AliasField = value;
+                    this.RaisePropertyChanged("Alias");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Cardinality {
+            get {
+                return this.CardinalityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CardinalityField, value) != true)) {
+                    this.CardinalityField = value;
+                    this.RaisePropertyChanged("Cardinality");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CompositAttrAkronim {
+            get {
+                return this.CompositAttrAkronimField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CompositAttrAkronimField, value) != true)) {
+                    this.CompositAttrAkronimField = value;
+                    this.RaisePropertyChanged("CompositAttrAkronim");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int CompositAttrClassId {
+            get {
+                return this.CompositAttrClassIdField;
+            }
+            set {
+                if ((this.CompositAttrClassIdField.Equals(value) != true)) {
+                    this.CompositAttrClassIdField = value;
+                    this.RaisePropertyChanged("CompositAttrClassId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DomainName {
+            get {
+                return this.DomainNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DomainNameField, value) != true)) {
+                    this.DomainNameField = value;
+                    this.RaisePropertyChanged("DomainName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsAliasChanged {
+            get {
+                return this.IsAliasChangedField;
+            }
+            set {
+                if ((this.IsAliasChangedField.Equals(value) != true)) {
+                    this.IsAliasChangedField = value;
+                    this.RaisePropertyChanged("IsAliasChanged");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsCardinalityChanged {
+            get {
+                return this.IsCardinalityChangedField;
+            }
+            set {
+                if ((this.IsCardinalityChangedField.Equals(value) != true)) {
+                    this.IsCardinalityChangedField = value;
+                    this.RaisePropertyChanged("IsCardinalityChanged");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsCompositeAttrChanged {
+            get {
+                return this.IsCompositeAttrChangedField;
+            }
+            set {
+                if ((this.IsCompositeAttrChangedField.Equals(value) != true)) {
+                    this.IsCompositeAttrChangedField = value;
+                    this.RaisePropertyChanged("IsCompositeAttrChanged");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsCompositeAttribute {
+            get {
+                return this.IsCompositeAttributeField;
+            }
+            set {
+                if ((this.IsCompositeAttributeField.Equals(value) != true)) {
+                    this.IsCompositeAttributeField = value;
+                    this.RaisePropertyChanged("IsCompositeAttribute");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsDomainNameChanged {
+            get {
+                return this.IsDomainNameChangedField;
+            }
+            set {
+                if ((this.IsDomainNameChangedField.Equals(value) != true)) {
+                    this.IsDomainNameChangedField = value;
+                    this.RaisePropertyChanged("IsDomainNameChanged");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsMeasureChanged {
+            get {
+                return this.IsMeasureChangedField;
+            }
+            set {
+                if ((this.IsMeasureChangedField.Equals(value) != true)) {
+                    this.IsMeasureChangedField = value;
+                    this.RaisePropertyChanged("IsMeasureChanged");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsNameChanged {
+            get {
+                return this.IsNameChangedField;
+            }
+            set {
+                if ((this.IsNameChangedField.Equals(value) != true)) {
+                    this.IsNameChangedField = value;
+                    this.RaisePropertyChanged("IsNameChanged");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsTypeChanged {
+            get {
+                return this.IsTypeChangedField;
+            }
+            set {
+                if ((this.IsTypeChangedField.Equals(value) != true)) {
+                    this.IsTypeChangedField = value;
+                    this.RaisePropertyChanged("IsTypeChanged");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Measure {
+            get {
+                return this.MeasureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MeasureField, value) != true)) {
+                    this.MeasureField = value;
+                    this.RaisePropertyChanged("Measure");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public fcDmw.SOAPService.EditableStatus Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((this.StatusField.Equals(value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public fcDmw.SOAPService.DataType Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((this.TypeField.Equals(value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MetaDataType", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Enums")]
+    public enum MetaDataType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FeatureClass = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Feature = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        GeoName = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Attribute = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Geometry = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CartographicElement = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Metadata = 6,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MetaValue", Namespace="http://schemas.datacontract.org/2004/07/SODBCore")]
     [System.SerializableAttribute()]
     public partial class MetaValue : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -2021,10 +2572,7 @@ namespace fcDmw.SOAPService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<fcDmw.SOAPService.MetaValue> ChildMetaValuesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private fcDmw.SOAPService.MetaField MetaFieldField;
+        private int IDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private fcDmw.SOAPService.EditableStatus StatusField;
@@ -2043,27 +2591,14 @@ namespace fcDmw.SOAPService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<fcDmw.SOAPService.MetaValue> ChildMetaValues {
+        public int ID {
             get {
-                return this.ChildMetaValuesField;
+                return this.IDField;
             }
             set {
-                if ((object.ReferenceEquals(this.ChildMetaValuesField, value) != true)) {
-                    this.ChildMetaValuesField = value;
-                    this.RaisePropertyChanged("ChildMetaValues");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public fcDmw.SOAPService.MetaField MetaField {
-            get {
-                return this.MetaFieldField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MetaFieldField, value) != true)) {
-                    this.MetaFieldField = value;
-                    this.RaisePropertyChanged("MetaField");
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
                 }
             }
         }
@@ -2090,83 +2625,6 @@ namespace fcDmw.SOAPService {
                 if ((object.ReferenceEquals(this.ValueField, value) != true)) {
                     this.ValueField = value;
                     this.RaisePropertyChanged("Value");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MetaField", Namespace="http://schemas.datacontract.org/2004/07/SODBCore")]
-    [System.SerializableAttribute()]
-    public partial class MetaField : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool RequiredField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Required {
-            get {
-                return this.RequiredField;
-            }
-            set {
-                if ((this.RequiredField.Equals(value) != true)) {
-                    this.RequiredField = value;
-                    this.RaisePropertyChanged("Required");
                 }
             }
         }
@@ -2231,6 +2689,148 @@ namespace fcDmw.SOAPService {
                 if ((this.ZField.Equals(value) != true)) {
                     this.ZField = value;
                     this.RaisePropertyChanged("Z");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Polyline", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Geometries")]
+    [System.SerializableAttribute()]
+    public partial class Polyline : fcDmw.SOAPService.Geometry {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double LengthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<fcDmw.SOAPService.Path> PathsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Length {
+            get {
+                return this.LengthField;
+            }
+            set {
+                if ((this.LengthField.Equals(value) != true)) {
+                    this.LengthField = value;
+                    this.RaisePropertyChanged("Length");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<fcDmw.SOAPService.Path> Paths {
+            get {
+                return this.PathsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PathsField, value) != true)) {
+                    this.PathsField = value;
+                    this.RaisePropertyChanged("Paths");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PointCollection", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Geometries")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Ring))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Path))]
+    public partial class PointCollection : fcDmw.SOAPService.Geometry {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<fcDmw.SOAPService.Point> PointsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<fcDmw.SOAPService.Point> Points {
+            get {
+                return this.PointsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PointsField, value) != true)) {
+                    this.PointsField = value;
+                    this.RaisePropertyChanged("Points");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Ring", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Geometries")]
+    [System.SerializableAttribute()]
+    public partial class Ring : fcDmw.SOAPService.PointCollection {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double AreaField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsInteriorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double PerimeterField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Area {
+            get {
+                return this.AreaField;
+            }
+            set {
+                if ((this.AreaField.Equals(value) != true)) {
+                    this.AreaField = value;
+                    this.RaisePropertyChanged("Area");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsInterior {
+            get {
+                return this.IsInteriorField;
+            }
+            set {
+                if ((this.IsInteriorField.Equals(value) != true)) {
+                    this.IsInteriorField = value;
+                    this.RaisePropertyChanged("IsInterior");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Perimeter {
+            get {
+                return this.PerimeterField;
+            }
+            set {
+                if ((this.PerimeterField.Equals(value) != true)) {
+                    this.PerimeterField = value;
+                    this.RaisePropertyChanged("Perimeter");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Path", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Geometries")]
+    [System.SerializableAttribute()]
+    public partial class Path : fcDmw.SOAPService.PointCollection {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double LengthField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Length {
+            get {
+                return this.LengthField;
+            }
+            set {
+                if ((this.LengthField.Equals(value) != true)) {
+                    this.LengthField = value;
+                    this.RaisePropertyChanged("Length");
                 }
             }
         }
@@ -2307,148 +2907,6 @@ namespace fcDmw.SOAPService {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PointCollection", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Geometries")]
-    [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Path))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.Ring))]
-    public partial class PointCollection : fcDmw.SOAPService.Geometry {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<fcDmw.SOAPService.Point> PointsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<fcDmw.SOAPService.Point> Points {
-            get {
-                return this.PointsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PointsField, value) != true)) {
-                    this.PointsField = value;
-                    this.RaisePropertyChanged("Points");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Path", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Geometries")]
-    [System.SerializableAttribute()]
-    public partial class Path : fcDmw.SOAPService.PointCollection {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double LengthField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Length {
-            get {
-                return this.LengthField;
-            }
-            set {
-                if ((this.LengthField.Equals(value) != true)) {
-                    this.LengthField = value;
-                    this.RaisePropertyChanged("Length");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Ring", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Geometries")]
-    [System.SerializableAttribute()]
-    public partial class Ring : fcDmw.SOAPService.PointCollection {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double AreaField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsInteriorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double PerimeterField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Area {
-            get {
-                return this.AreaField;
-            }
-            set {
-                if ((this.AreaField.Equals(value) != true)) {
-                    this.AreaField = value;
-                    this.RaisePropertyChanged("Area");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsInterior {
-            get {
-                return this.IsInteriorField;
-            }
-            set {
-                if ((this.IsInteriorField.Equals(value) != true)) {
-                    this.IsInteriorField = value;
-                    this.RaisePropertyChanged("IsInterior");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Perimeter {
-            get {
-                return this.PerimeterField;
-            }
-            set {
-                if ((this.PerimeterField.Equals(value) != true)) {
-                    this.PerimeterField = value;
-                    this.RaisePropertyChanged("Perimeter");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Polyline", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Geometries")]
-    [System.SerializableAttribute()]
-    public partial class Polyline : fcDmw.SOAPService.Geometry {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double LengthField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<fcDmw.SOAPService.Path> PathsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Length {
-            get {
-                return this.LengthField;
-            }
-            set {
-                if ((this.LengthField.Equals(value) != true)) {
-                    this.LengthField = value;
-                    this.RaisePropertyChanged("Length");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<fcDmw.SOAPService.Path> Paths {
-            get {
-                return this.PathsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PathsField, value) != true)) {
-                    this.PathsField = value;
-                    this.RaisePropertyChanged("Paths");
-                }
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GeomRole", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Enums")]
     public enum GeomRole : int {
@@ -2487,9 +2945,6 @@ namespace fcDmw.SOAPService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         MultiPoint = 4,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        MultiPatch = 5,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -3043,8 +3498,8 @@ namespace fcDmw.SOAPService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BaseDomain", Namespace="http://schemas.datacontract.org/2004/07/SODBCore")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.RangeDomain))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.CodedDomain))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.RangeDomain))]
     public partial class BaseDomain : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -3104,6 +3559,29 @@ namespace fcDmw.SOAPService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CodedDomain", Namespace="http://schemas.datacontract.org/2004/07/SODBCore")]
+    [System.SerializableAttribute()]
+    public partial class CodedDomain : fcDmw.SOAPService.BaseDomain {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<fcDmw.SOAPService.CodedDomainValue> ValuesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<fcDmw.SOAPService.CodedDomainValue> Values {
+            get {
+                return this.ValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValuesField, value) != true)) {
+                    this.ValuesField = value;
+                    this.RaisePropertyChanged("Values");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RangeDomain", Namespace="http://schemas.datacontract.org/2004/07/SODBCore")]
     [System.SerializableAttribute()]
     public partial class RangeDomain : fcDmw.SOAPService.BaseDomain {
@@ -3136,29 +3614,6 @@ namespace fcDmw.SOAPService {
                 if ((this.MinField.Equals(value) != true)) {
                     this.MinField = value;
                     this.RaisePropertyChanged("Min");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CodedDomain", Namespace="http://schemas.datacontract.org/2004/07/SODBCore")]
-    [System.SerializableAttribute()]
-    public partial class CodedDomain : fcDmw.SOAPService.BaseDomain {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<fcDmw.SOAPService.CodedDomainValue> ValuesField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<fcDmw.SOAPService.CodedDomainValue> Values {
-            get {
-                return this.ValuesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ValuesField, value) != true)) {
-                    this.ValuesField = value;
-                    this.RaisePropertyChanged("Values");
                 }
             }
         }
@@ -3608,10 +4063,10 @@ namespace fcDmw.SOAPService {
     [System.Runtime.Serialization.DataContractAttribute(Name="Condition", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Conditions")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.AttrCondition))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.GeometryCondition))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.NameCondition))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.RelationCondition))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.MetaCondition))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.GeometryCondition))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(fcDmw.SOAPService.RelationCondition))]
     public partial class Condition : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -3761,13 +4216,13 @@ namespace fcDmw.SOAPService {
     public partial class AttrCondition : fcDmw.SOAPService.Condition {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string AttrIdField;
+        private System.Collections.Generic.List<string> AttrIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ValueField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AttrId {
+        public System.Collections.Generic.List<string> AttrId {
             get {
                 return this.AttrIdField;
             }
@@ -3775,6 +4230,84 @@ namespace fcDmw.SOAPService {
                 if ((object.ReferenceEquals(this.AttrIdField, value) != true)) {
                     this.AttrIdField = value;
                     this.RaisePropertyChanged("AttrId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="NameCondition", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Conditions")]
+    [System.SerializableAttribute()]
+    public partial class NameCondition : fcDmw.SOAPService.Condition {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MetaCondition", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Conditions")]
+    [System.SerializableAttribute()]
+    public partial class MetaCondition : fcDmw.SOAPService.Condition {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal MetaFieldField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private fcDmw.SOAPService.MetaDataType TypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ValueField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal MetaField {
+            get {
+                return this.MetaFieldField;
+            }
+            set {
+                if ((this.MetaFieldField.Equals(value) != true)) {
+                    this.MetaFieldField = value;
+                    this.RaisePropertyChanged("MetaField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public fcDmw.SOAPService.MetaDataType Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((this.TypeField.Equals(value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
                 }
             }
         }
@@ -3850,29 +4383,6 @@ namespace fcDmw.SOAPService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="NameCondition", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Conditions")]
-    [System.SerializableAttribute()]
-    public partial class NameCondition : fcDmw.SOAPService.Condition {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RelationCondition", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Conditions")]
     [System.SerializableAttribute()]
     public partial class RelationCondition : fcDmw.SOAPService.Condition {
@@ -3889,61 +4399,6 @@ namespace fcDmw.SOAPService {
                 if ((object.ReferenceEquals(this.Cl_idField, value) != true)) {
                     this.Cl_idField = value;
                     this.RaisePropertyChanged("Cl_id");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MetaCondition", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Conditions")]
-    [System.SerializableAttribute()]
-    public partial class MetaCondition : fcDmw.SOAPService.Condition {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal MetaFieldField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private fcDmw.SOAPService.MetaDataType TypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ValueField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal MetaField {
-            get {
-                return this.MetaFieldField;
-            }
-            set {
-                if ((this.MetaFieldField.Equals(value) != true)) {
-                    this.MetaFieldField = value;
-                    this.RaisePropertyChanged("MetaField");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public fcDmw.SOAPService.MetaDataType Type {
-            get {
-                return this.TypeField;
-            }
-            set {
-                if ((this.TypeField.Equals(value) != true)) {
-                    this.TypeField = value;
-                    this.RaisePropertyChanged("Type");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Value {
-            get {
-                return this.ValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
-                    this.ValueField = value;
-                    this.RaisePropertyChanged("Value");
                 }
             }
         }
@@ -4026,29 +4481,6 @@ namespace fcDmw.SOAPService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Relation = 9,
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MetaDataType", Namespace="http://schemas.datacontract.org/2004/07/SODBCore.Enums")]
-    public enum MetaDataType : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        FeatureClass = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Feature = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        GeoName = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Attribute = 3,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Geometry = 4,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        CartographicElement = 5,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -4261,6 +4693,9 @@ namespace fcDmw.SOAPService {
         private string KeyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<fcDmw.SOAPService.Metadata> MetadataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Collections.Generic.List<fcDmw.SOAPService.Relation> RelationsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -4407,6 +4842,19 @@ namespace fcDmw.SOAPService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<fcDmw.SOAPService.Metadata> Metadata {
+            get {
+                return this.MetadataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MetadataField, value) != true)) {
+                    this.MetadataField = value;
+                    this.RaisePropertyChanged("Metadata");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Collections.Generic.List<fcDmw.SOAPService.Relation> Relations {
             get {
                 return this.RelationsField;
@@ -4458,7 +4906,7 @@ namespace fcDmw.SOAPService {
         private string KeyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<fcDmw.SOAPService.MetaValue> MetaValuesField;
+        private System.Collections.Generic.List<fcDmw.SOAPService.Metadata> MetadataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private fcDmw.SOAPService.CartographicModel ModelField;
@@ -4521,14 +4969,14 @@ namespace fcDmw.SOAPService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<fcDmw.SOAPService.MetaValue> MetaValues {
+        public System.Collections.Generic.List<fcDmw.SOAPService.Metadata> Metadata {
             get {
-                return this.MetaValuesField;
+                return this.MetadataField;
             }
             set {
-                if ((object.ReferenceEquals(this.MetaValuesField, value) != true)) {
-                    this.MetaValuesField = value;
-                    this.RaisePropertyChanged("MetaValues");
+                if ((object.ReferenceEquals(this.MetadataField, value) != true)) {
+                    this.MetadataField = value;
+                    this.RaisePropertyChanged("Metadata");
                 }
             }
         }
@@ -4833,16 +5281,16 @@ namespace fcDmw.SOAPService {
     public interface ISODBService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/CheckCatalogue", ReplyAction="http://oobd.gismap3d.ru/ISODBService/CheckCatalogueResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/CheckCatalogueExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/CheckCatalogueTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/CheckCatalogueExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         fcDmw.SOAPService.RequestResponse CheckCatalogue(string token, byte[] bytes);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/CheckCatalogue", ReplyAction="http://oobd.gismap3d.ru/ISODBService/CheckCatalogueResponse")]
         System.Threading.Tasks.Task<fcDmw.SOAPService.RequestResponse> CheckCatalogueAsync(string token, byte[] bytes);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/CatalogueClassCount", ReplyAction="http://oobd.gismap3d.ru/ISODBService/CatalogueClassCountResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/CatalogueClassCountExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/CatalogueClassCountTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/CatalogueClassCountExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         int CatalogueClassCount(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/CatalogueClassCount", ReplyAction="http://oobd.gismap3d.ru/ISODBService/CatalogueClassCountResponse")]
@@ -4857,9 +5305,9 @@ namespace fcDmw.SOAPService {
         System.Threading.Tasks.Task<fcDmw.SOAPService.ProgressOperation> CatalogueLoadingProgressAsync(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisClassCount", ReplyAction="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisClassCountResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisClassCountTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisClassCountExecuteFaultFaul" +
             "t", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisClassCountTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         int DiagnosticAnalysisClassCount(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisClassCount", ReplyAction="http://oobd.gismap3d.ru/ISODBService/DiagnosticAnalysisClassCountResponse")]
@@ -4909,8 +5357,8 @@ namespace fcDmw.SOAPService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<fcDmw.SOAPService.MetaValue>> GetFeatureClassMetaDataAsync(string token, string cl_id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetScales", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetScalesResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/GetScalesExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/GetScalesTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/GetScalesExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         System.Collections.Generic.List<decimal> GetScales(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetScales", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetScalesResponse")]
@@ -4925,24 +5373,24 @@ namespace fcDmw.SOAPService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<fcDmw.SOAPService.CartographicModel>> GetCartographicModelsAsync(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetStyles", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetStylesResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/GetStylesExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/GetStylesTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/GetStylesExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         System.Collections.Generic.List<fcDmw.SOAPService.Style> GetStyles(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetStyles", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetStylesResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<fcDmw.SOAPService.Style>> GetStylesAsync(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetDomain", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetDomainResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/GetDomainExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/GetDomainTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/GetDomainExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         fcDmw.SOAPService.BaseDomain GetDomain(string token, string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetDomain", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetDomainResponse")]
         System.Threading.Tasks.Task<fcDmw.SOAPService.BaseDomain> GetDomainAsync(string token, string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetMetaFields", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetMetaFieldsResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/GetMetaFieldsExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/GetMetaFieldsTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/GetMetaFieldsExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         System.Collections.Generic.List<fcDmw.SOAPService.MetaField> GetMetaFields(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetMetaFields", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetMetaFieldsResponse")]
@@ -4964,8 +5412,8 @@ namespace fcDmw.SOAPService {
         System.Threading.Tasks.Task<fcDmw.SOAPService.RequestResponse> RequestNSAsyncAsync(string token, fcDmw.SOAPService.FeatureRequest request, fcDmw.SOAPService.Extent extent);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetRequestStatus", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetRequestStatusResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/GetRequestStatusExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/GetRequestStatusTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/GetRequestStatusExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         fcDmw.SOAPService.RequestInfo GetRequestStatus(string token, string requestId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetRequestStatus", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetRequestStatusResponse")]
@@ -4994,16 +5442,16 @@ namespace fcDmw.SOAPService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<fcDmw.SOAPService.CartographicElement>> GetCartographicElementsAsync(string token, string key, fcDmw.SOAPService.Extent extent);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/StartEditing", ReplyAction="http://oobd.gismap3d.ru/ISODBService/StartEditingResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/StartEditingExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/StartEditingTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/StartEditingExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         string StartEditing(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/StartEditing", ReplyAction="http://oobd.gismap3d.ru/ISODBService/StartEditingResponse")]
         System.Threading.Tasks.Task<string> StartEditingAsync(string token);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/StopEditing", ReplyAction="http://oobd.gismap3d.ru/ISODBService/StopEditingResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/StopEditingSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/StopEditingTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/StopEditingSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         void StopEditing(string token, string sessionId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/StopEditing", ReplyAction="http://oobd.gismap3d.ru/ISODBService/StopEditingResponse")]
@@ -5042,8 +5490,8 @@ namespace fcDmw.SOAPService {
         System.Threading.Tasks.Task<fcDmw.SOAPService.RequestResponse> DeleteFeaturesAsync(string token, string sessionId, System.Collections.Generic.List<string> featureKeys);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicElements", ReplyAction="http://oobd.gismap3d.ru/ISODBService/AddCartographicElementsResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicElementsSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicElementsTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicElementsSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         fcDmw.SOAPService.RequestResponse AddCartographicElements(string token, string sessionId, System.Collections.Generic.List<fcDmw.SOAPService.CartographicElement> cartographicElements);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicElements", ReplyAction="http://oobd.gismap3d.ru/ISODBService/AddCartographicElementsResponse")]
@@ -5058,32 +5506,32 @@ namespace fcDmw.SOAPService {
         System.Threading.Tasks.Task<fcDmw.SOAPService.RequestResponse> EditCartographicElementsAsync(string token, string sessionId, System.Collections.Generic.List<fcDmw.SOAPService.CartographicElement> cartographicElements);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicElements", ReplyAction="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicElementsResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicElementsSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicElementsTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicElementsSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         fcDmw.SOAPService.RequestResponse DeleteCartographicElements(string token, string sessionId, System.Collections.Generic.List<decimal> cartographicElementIds);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicElements", ReplyAction="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicElementsResponse")]
         System.Threading.Tasks.Task<fcDmw.SOAPService.RequestResponse> DeleteCartographicElementsAsync(string token, string sessionId, System.Collections.Generic.List<decimal> cartographicElementIds);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicModels", ReplyAction="http://oobd.gismap3d.ru/ISODBService/AddCartographicModelsResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicModelsSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicModelsTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicModelsSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         fcDmw.SOAPService.RequestResponse AddCartographicModels(string token, string sessionId, System.Collections.Generic.List<fcDmw.SOAPService.CartographicModel> models);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/AddCartographicModels", ReplyAction="http://oobd.gismap3d.ru/ISODBService/AddCartographicModelsResponse")]
         System.Threading.Tasks.Task<fcDmw.SOAPService.RequestResponse> AddCartographicModelsAsync(string token, string sessionId, System.Collections.Generic.List<fcDmw.SOAPService.CartographicModel> models);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicModels", ReplyAction="http://oobd.gismap3d.ru/ISODBService/EditCartographicModelsResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicModelsSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicModelsTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicModelsSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         fcDmw.SOAPService.RequestResponse EditCartographicModels(string token, string sessionId, System.Collections.Generic.List<fcDmw.SOAPService.CartographicModel> cartographicModels);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/EditCartographicModels", ReplyAction="http://oobd.gismap3d.ru/ISODBService/EditCartographicModelsResponse")]
         System.Threading.Tasks.Task<fcDmw.SOAPService.RequestResponse> EditCartographicModelsAsync(string token, string sessionId, System.Collections.Generic.List<fcDmw.SOAPService.CartographicModel> cartographicModels);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicModels", ReplyAction="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicModelsResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicModelsSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicModelsTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicModelsSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         fcDmw.SOAPService.RequestResponse DeleteCartographicModels(string token, string sessionId, System.Collections.Generic.List<decimal> cartographicModelsId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicModels", ReplyAction="http://oobd.gismap3d.ru/ISODBService/DeleteCartographicModelsResponse")]
@@ -5106,8 +5554,8 @@ namespace fcDmw.SOAPService {
         System.Threading.Tasks.Task<fcDmw.SOAPService.RequestResponse> EditStylesAsync(string token, string sessionId, System.Collections.Generic.List<fcDmw.SOAPService.Style> styles);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/DeleteStyles", ReplyAction="http://oobd.gismap3d.ru/ISODBService/DeleteStylesResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/DeleteStylesSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/DeleteStylesTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.SessionFault), Action="http://oobd.gismap3d.ru/ISODBService/DeleteStylesSessionFaultFault", Name="SessionFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         fcDmw.SOAPService.RequestResponse DeleteStyles(string token, string sessionId, System.Collections.Generic.List<decimal> stylesId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/DeleteStyles", ReplyAction="http://oobd.gismap3d.ru/ISODBService/DeleteStylesResponse")]

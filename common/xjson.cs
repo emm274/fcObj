@@ -30,8 +30,9 @@ namespace xjson
 
         jsonListener fListener = null;
 
-        string fdumpBlock = "";
         bool fIsDumpBlock = false;
+        StringBuilder fdumpBlock = new StringBuilder();
+        JsonTextWriter fwriter;
 
         public bool status_success()
         {
@@ -42,14 +43,21 @@ namespace xjson
 
         public void startDumpBlock()
         {
-            fdumpBlock = "{";
+            if (fIsDumpBlock) fwriter.Close();
+
+            fdumpBlock.Clear();
+            StringWriter sw = new StringWriter(fdumpBlock);
+            fwriter = new JsonTextWriter(sw);
+            fwriter.WriteStartObject();
+
             fIsDumpBlock = true;
         }
 
         public string stopDumpBlock()
         {
             fIsDumpBlock = false;
-            return fdumpBlock;
+            if (fwriter != null) fwriter.Close();
+            return fdumpBlock.ToString();
         }
 
         public void setListener(jsonListener value)
@@ -90,48 +98,34 @@ namespace xjson
                 JsonToken k = freader.TokenType;
                 Object v = freader.Value;
 
-                string s = "";
-                JsonToken token = freader.TokenType;
-                switch (token)
+                switch (k)
                 {
                     case JsonToken.StartObject:
-                        if (index > 0) s += ",";
-                        s += "{"; break;
-
+                        fwriter.WriteStartObject();
+                        break;
                     case JsonToken.EndObject:
-                        s = "}"; break;
-
+                        fwriter.WriteEndObject();
+                        break;
                     case JsonToken.StartArray:
-                        s = "["; break;
-
+                        fwriter.WriteStartArray();
+                        break;
                     case JsonToken.EndArray:
-                        s = "]"; break;
+                        fwriter.WriteEndArray();
+                        break;
 
                     case JsonToken.PropertyName:
-                        if (index > 0) s = ",";
-
                         if (v != null)
-                        s += "\""+v.ToString() + "\":";
+                        fwriter.WritePropertyName(v.ToString());
                         break;
 
                     case JsonToken.Integer:
                     case JsonToken.Float:
-                        if (index > 0) s = ",";
-                        s += v.ToString();
-                        break;
-
                     case JsonToken.String:
-                        if (index > 0) s = ",";
-                        s += "\"" + v.ToString() + "\"";
-                        break;
-
                     case JsonToken.Boolean:
-                        if (index > 0) s = ",";
-                        s += v.ToString().ToLower();
+                        if (v != null)
+                        fwriter.WriteValue(v);
                         break;
                 }
-
-                fdumpBlock += s;
             }
 
             return rc;
@@ -263,6 +257,11 @@ namespace xjson
             return false;
         }
 
+        public void Close()
+        {
+            freader.Close();
+        } 
+
         public bool Parse(StreamReader stream)
         {
             fkeys.Clear();
@@ -298,7 +297,6 @@ namespace xjson
                 return false;
             }
 
-
             return true;
         }
 
@@ -316,8 +314,6 @@ namespace xjson
         JsonWriter fwriter;
         public JsonWriter writer { get { return fwriter; } }
 
-        public string Text { get { return sb.ToString(); } }
-
         public XJsonStringWriter()
         {
             sb = new StringBuilder();
@@ -325,15 +321,10 @@ namespace xjson
             fwriter = new JsonTextWriter(sw);
         }
 
-        public void Reset() {
-            sb.Clear();
-        }
-
         public byte[] Data()
         {
-            return Encoding.UTF8.GetBytes(sb.ToString());
+            return UTF8Encoding.UTF8.GetBytes(sb.ToString());
         }
-
     }
 
 }

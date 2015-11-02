@@ -214,7 +214,7 @@ namespace fcDmw
             }
 
             obj.Loc = 30+loc;
-            obj.Acronym = Attr_id;
+            obj.acronym = Attr_id;
 
             bool rc;
 
@@ -224,7 +224,7 @@ namespace fcDmw
 
                 obj.Reset();
                 obj.Loc = 30;
-                obj.Acronym = Attr_id;
+                obj.acronym = Attr_id;
                 fill_hf(db, dt);
 
                 int count1 = 1;
@@ -291,7 +291,7 @@ namespace fcDmw
             if (fe.IsRealFeature) {
 
                 obj.Loc = 0;
-     			obj.Acronym=fe.Cl_Id;
+     			obj.acronym=fe.Cl_Id;
      			xmap.IPoly mf=obj.mf;
      			obj.Reset();
 
@@ -358,7 +358,7 @@ namespace fcDmw
                         SOAPService.Geometry shp = v.Shape;
                         if (shp != null) {
                             obj.Reset();
-                            obj.Acronym = a.Attr_Id;
+                            obj.acronym = a.Attr_Id;
                             attr_shape(shp);
 
                             string s = attrValue(db, v);
@@ -402,7 +402,7 @@ namespace fcDmw
                 foreach(var node in nodes)
                 if (node.key == key) {
 
-                    int ptr = fmap.Seek_Node[node.owner];
+                    int ptr = fmap.Seek_Node[node.owner,""];
                     if (ptr == node.owner)
                     {
                         int count = 1;

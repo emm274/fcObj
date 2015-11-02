@@ -312,23 +312,25 @@ namespace tsObjects
 
     public struct Relation
     {
+        public string role;
         public string code;
         public string dest;
 
-        public Relation(string acode, string adest)
+        public Relation(string Arole, string acode, string adest)
         {
-            code = acode; dest = adest;
+            role = Arole; code = acode; dest = adest;
         }
 
         public void Reset() {
-            code = ""; dest = "";
+            code = ""; role = ""; dest = "";
         }
 
         public bool Enabled {
             get
             {
                 return (convert.IsString(code) &&
-                         convert.IsString(dest));
+                        convert.IsString(role) &&
+                        convert.IsString(dest));
             }
         }
     }
@@ -366,6 +368,7 @@ namespace tsObjects
         public List<Geometry> Geometry { get { return fGeometry; } }
 
         List<Relation> fRelations;
+        public List<Relation> Relations { get { return fRelations; } }
 
         SortedList<string, int> fcodes;
         List<int> fcounts;
@@ -409,7 +412,7 @@ namespace tsObjects
 
         public void relation(Relation r) 
         {
-            fRelations.Add( new Relation(r.code,r.dest) ); 
+            fRelations.Add( new Relation(r.role,r.code,r.dest) ); 
         }
 
         public void close()

@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.mainMenu = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.LoginItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteCommit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.dumpItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveContentAsText = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveContentAsMap = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveJsonAs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.LoadMap = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.dialWorkDir = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,7 +66,7 @@
             // mainMenu
             // 
             this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
+            this.fileMenu,
             this.HelpMenu});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
@@ -74,24 +74,25 @@
             this.mainMenu.TabIndex = 0;
             this.mainMenu.Text = "menuStrip1";
             // 
-            // fileToolStripMenuItem
+            // fileMenu
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.LoginItem,
             this.toolStripSeparator3,
             this.deleteCommit,
             this.toolStripSeparator1,
             this.dumpItem,
-            this.saveContentAsText,
-            this.saveContentAsMap,
+            this.saveJsonAs,
             this.toolStripSeparator2,
             this.LoadMap,
+            this.loadUpdates,
             this.dialWorkDir,
             this.toolStripMenuItem1,
             this.ExitItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
-            this.fileToolStripMenuItem.Text = "Файл";
+            this.fileMenu.Name = "fileMenu";
+            this.fileMenu.Size = new System.Drawing.Size(45, 20);
+            this.fileMenu.Text = "Файл";
+            this.fileMenu.Click += new System.EventHandler(this.fileMenu_Click);
             // 
             // LoginItem
             // 
@@ -124,21 +125,12 @@
             this.dumpItem.Text = "Сохранить как...";
             this.dumpItem.Click += new System.EventHandler(this.dumpItem_Click);
             // 
-            // saveContentAsText
+            // saveJsonAs
             // 
-            this.saveContentAsText.Name = "saveContentAsText";
-            this.saveContentAsText.Size = new System.Drawing.Size(202, 22);
-            this.saveContentAsText.Text = "save content as text...";
-            this.saveContentAsText.Visible = false;
-            this.saveContentAsText.Click += new System.EventHandler(this.saveContentAsText_Click);
-            // 
-            // saveContentAsMap
-            // 
-            this.saveContentAsMap.Name = "saveContentAsMap";
-            this.saveContentAsMap.Size = new System.Drawing.Size(202, 22);
-            this.saveContentAsMap.Text = "save content as <dm>...";
-            this.saveContentAsMap.Visible = false;
-            this.saveContentAsMap.Click += new System.EventHandler(this.saveContentAsMap_Click);
+            this.saveJsonAs.Name = "saveJsonAs";
+            this.saveJsonAs.Size = new System.Drawing.Size(202, 22);
+            this.saveJsonAs.Text = "save json as...";
+            this.saveJsonAs.Click += new System.EventHandler(this.saveJsonAs_Click);
             // 
             // toolStripSeparator2
             // 
@@ -151,6 +143,13 @@
             this.LoadMap.Size = new System.Drawing.Size(202, 22);
             this.LoadMap.Text = "Загрузить карту...";
             this.LoadMap.Click += new System.EventHandler(this.LoadMap_Click);
+            // 
+            // loadUpdates
+            // 
+            this.loadUpdates.Name = "loadUpdates";
+            this.loadUpdates.Size = new System.Drawing.Size(202, 22);
+            this.loadUpdates.Text = "Загрузить изменения...";
+            this.loadUpdates.Click += new System.EventHandler(this.loadUpdates_Click);
             // 
             // dialWorkDir
             // 
@@ -183,8 +182,9 @@
             // AboutItem
             // 
             this.AboutItem.Name = "AboutItem";
-            this.AboutItem.Size = new System.Drawing.Size(150, 22);
+            this.AboutItem.Size = new System.Drawing.Size(152, 22);
             this.AboutItem.Text = "О программе...";
+            this.AboutItem.Click += new System.EventHandler(this.AboutItem_Click);
             // 
             // statusStrip1
             // 
@@ -326,7 +326,7 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip mainMenu;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fileMenu;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem ExitItem;
         private System.Windows.Forms.ToolStripMenuItem LoginItem;
@@ -339,8 +339,7 @@
         private System.Windows.Forms.TextBox lbMsg;
         private System.Windows.Forms.ToolStripMenuItem dumpItem;
         private System.Windows.Forms.ToolStripStatusLabel statusTask;
-        private System.Windows.Forms.ToolStripMenuItem saveContentAsText;
-        private System.Windows.Forms.ToolStripMenuItem saveContentAsMap;
+        private System.Windows.Forms.ToolStripMenuItem saveJsonAs;
         private System.Windows.Forms.ToolStripStatusLabel statusProgress;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -352,6 +351,7 @@
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem deleteCommit;
+        private System.Windows.Forms.ToolStripMenuItem loadUpdates;
     }
 }
 

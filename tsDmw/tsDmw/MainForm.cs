@@ -44,24 +44,23 @@ namespace tsDmw
 
         private void DfmTsDmw_Load(object sender, EventArgs e)
         {
-            IniFile ini = new IniFile("");
-            ini.ReadForm(this);
+            fini.loadFrom(null);
 
-            fdataDir = ini.ReadDir("dataDir");
-            fworkDir = ini.ReadDir("workDir");
+            fini.ReadForm(this);
+
+            fdataDir = fini.ReadDir("dataDir");
+            fworkDir = fini.ReadDir("workDir");
             statusWorkDir.Text = "["+fworkDir+"]";
         }
 
         private void DfmTsDmw_FormClosed(object sender, FormClosedEventArgs e)
         {
-            IniFile ini = new IniFile("");
-            ini.Reset();
-            ini.WriteForm(this);
+            fini.WriteForm(this);
 
-            ini.WriteDir("dataDir", fdataDir);
-            ini.WriteDir("workDir", fworkDir);
+            fini.WriteDir("dataDir", fdataDir);
+            fini.WriteDir("workDir", fworkDir);
 
-            fini.CopyTo(ini);
+            fini.saveAs(null);
         }
 
         private void DfmTsDmw_Shown(object sender, EventArgs e)
@@ -194,34 +193,37 @@ namespace tsDmw
                 }
             }
         }
-
-        private void saveContentAsText_Click(object sender, EventArgs e)
+         
+        private void saveJsonAs_Click(object sender, EventArgs e)
         {
             string filter = "Files (*.json)|*.json";
             string title = "json content";
-            string path;
-            bool rc = XFiles.dialFile(ref fdataDir, filter, title, true, out path);
+            string json;
+            bool rc = XFiles.dialFile(ref fdataDir, filter, title, null, true, out json);
 
             if (rc)
             {
-                lbMsg.Clear();
-                string dest = Path.ChangeExtension(path, ".txt");
-                fdb.json_to_text(path, dest);
-            }
-        }
+                filter = "Files (*.txt)|*.txt|" +
+                         "Files (*.dm)|*.dm";
+                title = "Save content as";
+                string dest;
 
-        private void saveContentAsMap_Click(object sender, EventArgs e)
-        {
-            string filter = "Files (*.json)|*.json";
-            string title = "json content";
-            string path;
-            bool rc = XFiles.dialFile(ref fdataDir, filter, title, true, out path);
+                int rc1 = XFiles.dialSaveFile(ref fdataDir,
+                                              filter, title,
+                                              0, out dest);
 
-            if (rc)
-            {
-                lbMsg.Clear();
-                string dest = Path.ChangeExtension(path, ".dm");
-                fdb.json_to_map(path, dest);
+                if (rc1 >= 0)
+                {
+                    lbMsg.Clear();
+
+                    string ext = Path.GetExtension(dest);
+
+                    if (ext == ".txt")
+                        fdb.json_to_text(json, dest);
+                    else
+                        fdb.json_to_map(json, dest);
+
+                }
             }
         }
 
@@ -245,7 +247,7 @@ namespace tsDmw
                 lbBranches_Click(null, null);
         }
 
-        private void LoadMap_Click(object sender, EventArgs e)
+        void load_map(bool updates, string ext, string title)
         {
             lbMsg.Clear();
 
@@ -254,39 +256,59 @@ namespace tsDmw
                 message("Не указана ветка!");
             else
             {
-                string filter = "Files (*.dm)|*.dm";
-                string title = "Загрузить карту";
+                string filter = String.Format("Files (*.{0})|*.{0}",ext);
                 string path;
-                bool rc = XFiles.dialFile(ref fdataDir, filter, title, true, out path);
+                bool rc = XFiles.dialFile(ref fdataDir, filter, title, null, true, out path);
 
-                if (rc)
+                if (rc) 
                 {
-                    DateTime now = DateTime.Now;
+                    tsLoaderMap loader = new tsLoaderMap();
 
-                    EnterText dlg = new EnterText(fini);
-                    dlg.Caption = "commit";
-                    dlg.Title = branch;
-                    dlg.text = now.ToString();
+                    string main = null;
+                    if (updates) {
+                        filter = "Files (*.dm)|*.dm";
+                        string title1 = "Базовая карта для "+Path.GetFileName(path);
 
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                    {
-                        string comment = dlg.text;
+                        string fname = loader.GetBaseMap(path);
+                        rc = XFiles.dialFile(ref fdataDir, filter, title1, fname, true, out main);
+                    }
 
-                        message(String.Format("{0}: +commit \"{1}\"", branch, comment));
+                    if (rc) {
+                        DateTime now = DateTime.Now;
+                        string msg = Path.GetFileName(path)+" "+now.ToString();
 
-                        string json = Path.ChangeExtension(path, ".json");
+                        EnterText dlg = new EnterText(fini);
+                        dlg.Caption = "commit";
+                        dlg.Title = branch;
+                        dlg.text = msg;
 
-                        tsLoaderMap loader = new tsLoaderMap();
-                        loader.message = task_msg;
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            string comment = dlg.text;
 
-                        loader.workDir(fworkDir);
-                        rc = loader.exec(path, json, branch, comment, false);
+                            message(String.Format("{0}: +commit \"{1}\"", branch, comment));
 
-                        if (rc) fdb.commit(branch, json, after_commit);
+                            string json = Path.ChangeExtension(path, ".json");
+
+                            loader.message = task_msg;
+                            loader.workDir(fworkDir);
+                            rc = loader.exec(path, main, json, branch, comment);
+
+                            if (rc) fdb.commit(branch, json, after_commit);
+                        }
                     }
                 }
-
             }
+        }
+
+        private void LoadMap_Click(object sender, EventArgs e)
+        {
+            load_map(false, "dm", "Загрузить карту");
+        }
+
+        private void loadUpdates_Click(object sender, EventArgs e)
+        {
+            load_map(true, "tdm", "Загрузить изменения");
         }
 
         private void dialWorkDir_Click(object sender, EventArgs e)
@@ -298,7 +320,6 @@ namespace tsDmw
                 fworkDir = dlg.SelectedPath;
                 statusWorkDir.Text = "["+fworkDir+"]";
             }
-
         }
 
         private void lbMsg_SizeChanged(object sender, EventArgs e)
@@ -318,11 +339,10 @@ namespace tsDmw
                 message("Не указана ветка!");
             else
             {
-                int i = lbCommit.Items.Count-1;
-                if (i < 0)
+                int i = 1;
+                if (i >= lbCommit.Items.Count)
                     message("В ветке нет изменений!");
-                else 
-                {
+                else {
                     string commit = fdb.Commits.ElementAt(i).Key;
                     fdb.undo_commit(branch,commit,after_commit);
                 }
@@ -344,5 +364,21 @@ namespace tsDmw
                 }
             }
         }
+
+        private void fileMenu_Click(object sender, EventArgs e)
+        {
+            bool branch = selectedBranch() != null;
+            deleteCommit.Enabled = branch && (lbCommit.Items.Count > 1);
+            dumpItem.Enabled = branch;
+            LoadMap.Enabled = branch;
+            loadUpdates.Enabled = branch;
+        }
+
+        private void AboutItem_Click(object sender, EventArgs e)
+        {
+            AboutBox about = new AboutBox();
+            about.ShowDialog();
+        }
+
     }
 }

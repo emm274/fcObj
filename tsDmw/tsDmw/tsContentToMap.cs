@@ -48,7 +48,11 @@ namespace tsDmw
         {
             double b1 = Math.Truncate(x1) * DegToRad;
             x1 *= DegToRad; y1 *= DegToRad; x2 *= DegToRad; y2 *= DegToRad;
-            fmap.NewMap(fPath, "s100", x1, y1, x2, y2, 9, 3, b1, 0, 0, 50000);
+
+            double r = Math.Max(x2-x1,y2-y1)/16;
+            r = Math.Max(r, (1 / 60 / 60) * DegToRad);
+
+            fmap.NewMap(fPath, "s100", x1-r, y1-r, x2+r, y2+r, 9, 3, b1, 0, 0, 50000);
             fEnabled = fmap.Enabled == 1; fmap.IsWGS84 = 1;
             return fEnabled;
         }
@@ -115,6 +119,9 @@ namespace tsDmw
 
                 int ptr;
                 obj.end_Feature(fe.Key, fe.code, fe.guid, out ptr);
+
+                foreach (var r in fe.Relations)
+                fmap.Relation(r.code, fe.Key, r.dest);
             }
         }
 

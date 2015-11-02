@@ -114,11 +114,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="ExecuteFaultFault">
-        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ExecuteFaultFault">
+        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="CatalogueClassCount">
@@ -129,11 +129,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="ExecuteFaultFault">
-        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ExecuteFaultFault">
+        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="CatalogueLoadingProgress">
@@ -159,11 +159,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="ExecuteFaultFault">
-        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ExecuteFaultFault">
+        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="DiagnosticAnalysisProgress">
@@ -249,11 +249,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="ExecuteFaultFault">
-        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ExecuteFaultFault">
+        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetCartographicModels">
@@ -279,11 +279,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="ExecuteFaultFault">
-        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ExecuteFaultFault">
+        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetDomain">
@@ -294,11 +294,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="ExecuteFaultFault">
-        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ExecuteFaultFault">
+        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetMetaFields">
@@ -309,11 +309,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="ExecuteFaultFault">
-        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ExecuteFaultFault">
+        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="Request">
@@ -351,11 +351,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="ExecuteFaultFault">
-        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ExecuteFaultFault">
+        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetRequestResult">
@@ -405,11 +405,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="ExecuteFaultFault">
-        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ExecuteFaultFault">
+        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="StopEditing">
@@ -420,11 +420,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="SessionFaultFault">
-        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SessionFaultFault">
+        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="SaveEditingAsync">
@@ -495,11 +495,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="SessionFaultFault">
-        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SessionFaultFault">
+        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="EditCartographicElements">
@@ -525,11 +525,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="SessionFaultFault">
-        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SessionFaultFault">
+        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="AddCartographicModels">
@@ -540,11 +540,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="SessionFaultFault">
-        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SessionFaultFault">
+        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="EditCartographicModels">
@@ -555,11 +555,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="SessionFaultFault">
-        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SessionFaultFault">
+        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="DeleteCartographicModels">
@@ -570,11 +570,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="SessionFaultFault">
-        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SessionFaultFault">
+        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="AddStyles">
@@ -615,11 +615,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="SessionFaultFault">
-        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TokenFaultFault">
         <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SessionFaultFault">
+        <soap12:fault use="literal" name="SessionFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetGeometry">

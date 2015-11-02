@@ -314,7 +314,7 @@ namespace fcDmw
             if (map.Goto_down > 0)
                 do
                 {
-                    obj.Get();
+                    obj.Get(0);
                     if (obj.Loc == 30)
                         if ((obj.Code % 10000) == code)
                             return true;
@@ -944,7 +944,7 @@ namespace fcDmw
             int uc = 0;    // add feature
             if (fIsUpdate) uc = obj.UpdateCode;
 
-            fe.Key = obj.GUID;
+            fe.Key = obj.guid;
 
             var attrs = new List<SOAPService.Attribute>();
             addAttrs(acronym, null, 0, 0, attrs);
@@ -982,7 +982,7 @@ namespace fcDmw
             do  {
                 ulong pos1 = map.Position;
 
-                obj.Get();
+                obj.Get(0);
                 int code = obj.Code;
                 int loc = obj.Loc;
 
@@ -1014,7 +1014,7 @@ namespace fcDmw
                             {
                                 v = __datatype(code, loc % 10, a);
                                 map.Position = pos1;
-                                obj.Get();
+                                obj.Get(0);
                             }
                             else
                             {
@@ -1115,9 +1115,9 @@ namespace fcDmw
             {
                 ulong pos1 = map.Position;
 
-                obj.Get();
+                obj.Get(0);
                 int offset = obj.Offset;
-                string acronym = obj.Acronym;
+                string acronym = obj.acronym;
                 int code = obj.Code, loc = obj.Loc;
 
                 int uc = 0;    // add feature
@@ -1128,7 +1128,7 @@ namespace fcDmw
                 if ((loc >= 1) && (loc <= 3)) 
                 {
                     var fe = new SOAPService.Feature() { Cl_Id=acronym, IsRealFeature = true };
-                    fe.Key = obj.GUID;
+                    fe.Key = obj.guid;
 
                     __baseShape(fe, loc);
 

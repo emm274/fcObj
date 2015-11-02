@@ -47,7 +47,7 @@ namespace Convert
 
         public static string decodeUTF8(string str)
         {
-            return System.Text.Encoding.UTF8.GetString( GetBytes(str) );
+            return Encoding.UTF8.GetString( GetBytes(str) );
         }
 
         public static StreamReader StringToStream(string s) 

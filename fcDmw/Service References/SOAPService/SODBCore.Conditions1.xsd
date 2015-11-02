@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SODBCore.Conditions" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SODBCore.Conditions" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/SODBCore.Enums" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" />
   <xs:complexType name="Condition">
     <xs:sequence>
@@ -12,25 +13,13 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Condition">
         <xs:sequence>
-          <xs:element minOccurs="0" name="AttrId" nillable="true" type="xs:string" />
+          <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AttrId" nillable="true" type="q2:ArrayOfstring" />
           <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="AttrCondition" nillable="true" type="tns:AttrCondition" />
-  <xs:complexType name="GeometryCondition">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Condition">
-        <xs:sequence>
-          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="GeometryQueryType" type="q2:GeometryTypeSearch" />
-          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="Shape" nillable="true" type="q3:Geometry" />
-          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Type" type="q4:SpatialQueryType" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="GeometryCondition" nillable="true" type="tns:GeometryCondition" />
   <xs:complexType name="NameCondition">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Condition">
@@ -41,6 +30,30 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="NameCondition" nillable="true" type="tns:NameCondition" />
+  <xs:complexType name="MetaCondition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Condition">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MetaField" type="xs:decimal" />
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Type" type="q3:MetaDataType" />
+          <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MetaCondition" nillable="true" type="tns:MetaCondition" />
+  <xs:complexType name="GeometryCondition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Condition">
+        <xs:sequence>
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="GeometryQueryType" type="q4:GeometryTypeSearch" />
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="Shape" nillable="true" type="q5:Geometry" />
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Type" type="q6:SpatialQueryType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GeometryCondition" nillable="true" type="tns:GeometryCondition" />
   <xs:complexType name="RelationCondition">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Condition">
@@ -51,16 +64,4 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="RelationCondition" nillable="true" type="tns:RelationCondition" />
-  <xs:complexType name="MetaCondition">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Condition">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="MetaField" type="xs:decimal" />
-          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Type" type="q5:MetaDataType" />
-          <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="MetaCondition" nillable="true" type="tns:MetaCondition" />
 </xs:schema>

@@ -162,13 +162,61 @@
   <xs:complexType name="AttrValue">
     <xs:sequence>
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MetaValues" nillable="true" type="tns:ArrayOfMetaValue" />
+      <xs:element minOccurs="0" name="Metadata" nillable="true" type="tns:ArrayOfMetadata" />
       <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="Shape" nillable="true" type="q12:Geometry" />
       <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q13:EditableStatus" />
       <xs:element minOccurs="0" name="Value" nillable="true" type="tns:NumberStringAttrValue" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AttrValue" nillable="true" type="tns:AttrValue" />
+  <xs:complexType name="ArrayOfMetadata">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Metadata" nillable="true" type="tns:Metadata" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMetadata" nillable="true" type="tns:ArrayOfMetadata" />
+  <xs:complexType name="Metadata">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MetaField">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompositeMetadata" nillable="true" type="tns:ArrayOfMetadata" />
+          <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MDID" type="xs:int" />
+          <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="MetadataType" type="q14:MetaDataType" />
+          <xs:element minOccurs="0" name="Metadata_Cl_Id" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Metadata_ClassId" type="xs:int" />
+          <xs:element minOccurs="0" name="ParentKey" nillable="true" type="xs:string" />
+          <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q15:EditableStatus" />
+          <xs:element minOccurs="0" name="Values" nillable="true" type="tns:ArrayOfMetaValue" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Metadata" nillable="true" type="tns:Metadata" />
+  <xs:complexType name="MetaField">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Akronim" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Alias" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Cardinality" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompositAttrAkronim" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompositAttrClassId" type="xs:int" />
+      <xs:element minOccurs="0" name="DomainName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IsAliasChanged" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCardinalityChanged" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCompositeAttrChanged" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCompositeAttribute" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsDomainNameChanged" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsMeasureChanged" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsNameChanged" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsTypeChanged" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Measure" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q16:EditableStatus" />
+      <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Type" type="q17:DataType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MetaField" nillable="true" type="tns:MetaField" />
   <xs:complexType name="ArrayOfMetaValue">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="MetaValue" nillable="true" type="tns:MetaValue" />
@@ -177,21 +225,12 @@
   <xs:element name="ArrayOfMetaValue" nillable="true" type="tns:ArrayOfMetaValue" />
   <xs:complexType name="MetaValue">
     <xs:sequence>
-      <xs:element minOccurs="0" name="ChildMetaValues" nillable="true" type="tns:ArrayOfMetaValue" />
-      <xs:element minOccurs="0" name="MetaField" nillable="true" type="tns:MetaField" />
-      <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q14:EditableStatus" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q18:EditableStatus" />
       <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MetaValue" nillable="true" type="tns:MetaValue" />
-  <xs:complexType name="MetaField">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Id" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Required" type="xs:boolean" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="MetaField" nillable="true" type="tns:MetaField" />
   <xs:complexType name="NumberStringAttrValue">
     <xs:sequence />
   </xs:complexType>
@@ -244,10 +283,10 @@
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RuleId" type="xs:int" />
       <xs:element minOccurs="0" name="Source" nillable="true" type="tns:FeatureClass" />
-      <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q15:EditableStatus" />
+      <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q19:EditableStatus" />
       <xs:element minOccurs="0" name="Target" nillable="true" type="tns:FeatureClass" />
       <xs:element minOccurs="0" name="TopologyRules" nillable="true" type="tns:ArrayOfTopologyRule" />
-      <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Type" type="q16:RelationType" />
+      <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Type" type="q20:RelationType" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RelationRule" nillable="true" type="tns:RelationRule" />
@@ -262,14 +301,31 @@
       <xs:element minOccurs="0" name="IsSourceChanged" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsTargetChanged" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsValueChanged" type="xs:boolean" />
-      <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Source" type="q17:GeometryType" />
-      <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q18:EditableStatus" />
-      <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Target" type="q19:GeometryType" />
+      <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Source" type="q21:GeometryType" />
+      <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q22:EditableStatus" />
+      <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Target" type="q23:GeometryType" />
       <xs:element minOccurs="0" name="TopologyId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TopologyRule" nillable="true" type="tns:TopologyRule" />
+  <xs:complexType name="MetadataClassSchema">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:FeatureClass">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IsMetaFieldsChanged" type="xs:boolean" />
+          <xs:element minOccurs="0" name="MetaFields" nillable="true" type="tns:ArrayOfMetaField" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MetadataClassSchema" nillable="true" type="tns:MetadataClassSchema" />
+  <xs:complexType name="ArrayOfMetaField">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MetaField" nillable="true" type="tns:MetaField" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMetaField" nillable="true" type="tns:ArrayOfMetaField" />
   <xs:complexType name="ArrayOfCartographicModel">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="CartographicModel" nillable="true" type="tns:CartographicModel" />
@@ -282,7 +338,7 @@
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ScaleMax" type="xs:decimal" />
       <xs:element minOccurs="0" name="ScaleMin" type="xs:decimal" />
-      <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q20:EditableStatus" />
+      <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q24:EditableStatus" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CartographicModel" nillable="true" type="tns:CartographicModel" />
@@ -299,7 +355,7 @@
       <xs:element minOccurs="0" name="FileBody" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="xs:decimal" />
       <xs:element minOccurs="0" name="Model" nillable="true" type="tns:CartographicModel" />
-      <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q21:EditableStatus" />
+      <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q25:EditableStatus" />
       <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -311,17 +367,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="BaseDomain" nillable="true" type="tns:BaseDomain" />
-  <xs:complexType name="RangeDomain">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:BaseDomain">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Max" type="xs:decimal" />
-          <xs:element minOccurs="0" name="Min" type="xs:decimal" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="RangeDomain" nillable="true" type="tns:RangeDomain" />
   <xs:complexType name="CodedDomain">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:BaseDomain">
@@ -347,17 +392,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CodedDomainValue" nillable="true" type="tns:CodedDomainValue" />
-  <xs:complexType name="ArrayOfMetaField">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="MetaField" nillable="true" type="tns:MetaField" />
-    </xs:sequence>
+  <xs:complexType name="RangeDomain">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseDomain">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Max" type="xs:decimal" />
+          <xs:element minOccurs="0" name="Min" type="xs:decimal" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
-  <xs:element name="ArrayOfMetaField" nillable="true" type="tns:ArrayOfMetaField" />
+  <xs:element name="RangeDomain" nillable="true" type="tns:RangeDomain" />
   <xs:complexType name="FeatureRequest">
     <xs:sequence>
       <xs:element minOccurs="0" name="Cl_Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Consist" nillable="true" type="tns:Consist" />
-      <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/SODBCore.Queries" minOccurs="0" name="Filter" nillable="true" type="q22:Query" />
+      <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/SODBCore.Queries" minOccurs="0" name="Filter" nillable="true" type="q26:Query" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="FeatureRequest" nillable="true" type="tns:FeatureRequest" />
@@ -368,8 +418,8 @@
       <xs:element minOccurs="0" name="Fields" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="GeoNames" type="xs:boolean" />
       <xs:element minOccurs="0" name="GeomMetaData" type="xs:boolean" />
-      <xs:element xmlns:q23="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GeomScales" nillable="true" type="q23:ArrayOfdecimal" />
-      <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="GeomTypes" nillable="true" type="q24:ArrayOfGeometryType" />
+      <xs:element xmlns:q27="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GeomScales" nillable="true" type="q27:ArrayOfdecimal" />
+      <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="GeomTypes" nillable="true" type="q28:ArrayOfGeometryType" />
       <xs:element minOccurs="0" name="Geometries" type="xs:boolean" />
       <xs:element minOccurs="0" name="NameMetaData" type="xs:boolean" />
       <xs:element minOccurs="0" name="ObjMetaData" type="xs:boolean" />
@@ -403,17 +453,18 @@
   <xs:complexType name="Feature">
     <xs:sequence>
       <xs:element minOccurs="0" name="Attributes" nillable="true" type="tns:ArrayOfAttribute" />
-      <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="BaseShapePoint" nillable="true" type="q25:Point" />
-      <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="BaseShapePolygon" nillable="true" type="q26:Polygon" />
-      <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="BaseShapePolyline" nillable="true" type="q27:Polyline" />
+      <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="BaseShapePoint" nillable="true" type="q29:Point" />
+      <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="BaseShapePolygon" nillable="true" type="q30:Polygon" />
+      <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="BaseShapePolyline" nillable="true" type="q31:Polyline" />
       <xs:element minOccurs="0" name="CartograpgicElements" nillable="true" type="tns:ArrayOfCartographicElement" />
       <xs:element minOccurs="0" name="Cl_Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
-      <xs:element xmlns:q28="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GeoNames" nillable="true" type="q28:ArrayOfstring" />
+      <xs:element xmlns:q32="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GeoNames" nillable="true" type="q32:ArrayOfstring" />
       <xs:element minOccurs="0" name="IsRealFeature" type="xs:boolean" />
       <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Metadata" nillable="true" type="tns:ArrayOfMetadata" />
       <xs:element minOccurs="0" name="Relations" nillable="true" type="tns:ArrayOfRelation" />
-      <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q29:EditableStatus" />
+      <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q33:EditableStatus" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Feature" nillable="true" type="tns:Feature" />
@@ -433,12 +484,12 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Id" type="xs:decimal" />
       <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MetaValues" nillable="true" type="tns:ArrayOfMetaValue" />
+      <xs:element minOccurs="0" name="Metadata" nillable="true" type="tns:ArrayOfMetadata" />
       <xs:element minOccurs="0" name="Model" nillable="true" type="tns:CartographicModel" />
       <xs:element minOccurs="0" name="Parent" nillable="true" type="tns:CartographicElement" />
       <xs:element minOccurs="0" name="Pattern" nillable="true" type="xs:string" />
-      <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="Shape" nillable="true" type="q30:Geometry" />
-      <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q31:EditableStatus" />
+      <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="Shape" nillable="true" type="q34:Geometry" />
+      <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q35:EditableStatus" />
       <xs:element minOccurs="0" name="Style" nillable="true" type="tns:Style" />
       <xs:element minOccurs="0" name="TimeStamp" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
@@ -456,9 +507,9 @@
       <xs:element minOccurs="0" name="Id" type="xs:decimal" />
       <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RelationRule" nillable="true" type="tns:RelationRule" />
-      <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Role" type="q32:RelationRole" />
-      <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="Shape" nillable="true" type="q33:Geometry" />
-      <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q34:EditableStatus" />
+      <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Role" type="q36:RelationRole" />
+      <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="Shape" nillable="true" type="q37:Geometry" />
+      <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q38:EditableStatus" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Relation" nillable="true" type="tns:Relation" />

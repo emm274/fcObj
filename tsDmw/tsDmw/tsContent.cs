@@ -116,13 +116,18 @@ namespace tsContent
 
             if (rc) fData.log(message);
 
+            fjson.Close();
+
             return rc; 
         }
 
         public bool ParseFile(string path, tmessage message)
         {
-            StreamReader stream = new StreamReader(path);
-            return ParseStream(stream,message);
+            bool rc = false;
+            using (StreamReader stream = new StreamReader(path)) {
+                rc = ParseStream(stream, message);
+            }
+            return rc;
         }
     }
 
@@ -358,7 +363,7 @@ namespace tsContent
             fIsGeometry = false;
             fIsRelations = false;
             fgeometry = new Geometry(1, 0, "");
-            frelation = new Relation("", "");
+            frelation = new Relation("", "","");
         }
 
         public override void reset(string key) 
@@ -397,7 +402,11 @@ namespace tsContent
 
 #if (test_enabled) 
                 bool rc = new XJson().ParseFromString(fe.attrs);
-                if (!rc) doc.__message(fe.Name(), "attributes parse error");
+                if (!rc)
+                {
+                    doc.__message(fe.Name(), "attributes parse error");
+                    doc.__message(null, fe.attrs);
+                }
 #endif
             } else
 
@@ -445,7 +454,15 @@ namespace tsContent
                     frelation.code = v.ToString();
                 } else
 
-                if (k == "ref") {
+                    if (k == "roleCode")
+                    {
+                        if (typ == JsonToken.String)
+                            frelation.role = v.ToString();
+                    }
+                    else
+
+                        if (k == "ref")
+                        {
                     if (typ == JsonToken.String)
                     frelation.dest = v.ToString();
                 } 

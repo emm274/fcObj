@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="ExecuteFault">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ExecuteFault" nillable="true" type="tns:ExecuteFault" />
   <xs:complexType name="TokenFault">
     <xs:sequence>
       <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TokenFault" nillable="true" type="tns:TokenFault" />
+  <xs:complexType name="ExecuteFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExecuteFault" nillable="true" type="tns:ExecuteFault" />
   <xs:complexType name="SessionFault">
     <xs:sequence>
       <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
