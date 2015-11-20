@@ -96,8 +96,8 @@ namespace tsDmw
         }
 
         public tsdb() {
-            Login = "oosdb";
-            Password = "chylm7UpBoucwoPin";
+            Login = "";
+            Password = "";
             fVersion = "";
             fBranches = new List<string>();
             fCommits = new Dictionary<string,string>();

@@ -51,6 +51,9 @@ namespace tsDmw
             fdataDir = fini.ReadDir("dataDir");
             fworkDir = fini.ReadDir("workDir");
             statusWorkDir.Text = "["+fworkDir+"]";
+
+            fdb.Login = fini.ReadStr("", "login");
+            fdb.Password = fini.ReadStr("", "password");
         }
 
         private void DfmTsDmw_FormClosed(object sender, FormClosedEventArgs e)
@@ -59,6 +62,9 @@ namespace tsDmw
 
             fini.WriteDir("dataDir", fdataDir);
             fini.WriteDir("workDir", fworkDir);
+
+            fini.WriteStr("login", fdb.Login);
+            fini.WriteStr("password", fdb.Password);
 
             fini.saveAs(null);
         }
