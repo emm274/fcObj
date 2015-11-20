@@ -72,6 +72,7 @@ namespace fcDmw
             this.login_ = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btComp = new System.Windows.Forms.Button();
             this.paClient.SuspendLayout();
             this.paRight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -218,6 +219,7 @@ namespace fcDmw
             // 
             // paLeft
             // 
+            this.paLeft.Controls.Add(this.btComp);
             this.paLeft.Controls.Add(this.btUpdate);
             this.paLeft.Controls.Add(this.btLoad);
             this.paLeft.Controls.Add(this.gbFrag);
@@ -230,7 +232,7 @@ namespace fcDmw
             // 
             // btUpdate
             // 
-            this.btUpdate.Location = new System.Drawing.Point(22, 356);
+            this.btUpdate.Location = new System.Drawing.Point(22, 341);
             this.btUpdate.Name = "btUpdate";
             this.btUpdate.Size = new System.Drawing.Size(173, 23);
             this.btUpdate.TabIndex = 12;
@@ -240,7 +242,7 @@ namespace fcDmw
             // 
             // btLoad
             // 
-            this.btLoad.Location = new System.Drawing.Point(22, 327);
+            this.btLoad.Location = new System.Drawing.Point(22, 312);
             this.btLoad.Name = "btLoad";
             this.btLoad.Size = new System.Drawing.Size(173, 23);
             this.btLoad.TabIndex = 11;
@@ -261,7 +263,7 @@ namespace fcDmw
             this.gbFrag.Controls.Add(this.x2_);
             this.gbFrag.Controls.Add(this.x1_);
             this.gbFrag.Controls.Add(this.btFrag);
-            this.gbFrag.Location = new System.Drawing.Point(8, 120);
+            this.gbFrag.Location = new System.Drawing.Point(8, 100);
             this.gbFrag.Name = "gbFrag";
             this.gbFrag.Size = new System.Drawing.Size(200, 201);
             this.gbFrag.TabIndex = 10;
@@ -302,38 +304,38 @@ namespace fcDmw
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(16, 120);
+            this.label6.Location = new System.Drawing.Point(16, 124);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(27, 13);
+            this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 10;
-            this.label6.Text = "east";
+            this.label6.Text = "восток";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(16, 96);
+            this.label5.Location = new System.Drawing.Point(16, 100);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 13);
+            this.label5.Size = new System.Drawing.Size(37, 13);
             this.label5.TabIndex = 9;
-            this.label5.Text = "west";
+            this.label5.Text = "запад";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 72);
+            this.label4.Location = new System.Drawing.Point(16, 76);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(31, 13);
+            this.label4.Size = new System.Drawing.Size(37, 13);
             this.label4.TabIndex = 8;
-            this.label4.Text = "north";
+            this.label4.Text = "север";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 48);
+            this.label3.Location = new System.Drawing.Point(16, 52);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(33, 13);
+            this.label3.Size = new System.Drawing.Size(20, 13);
             this.label3.TabIndex = 7;
-            this.label3.Text = "south";
+            this.label3.Text = "юг";
             // 
             // y2_
             // 
@@ -395,16 +397,16 @@ namespace fcDmw
             this.gbConn.Controls.Add(this.login_);
             this.gbConn.Controls.Add(this.label2);
             this.gbConn.Controls.Add(this.label1);
-            this.gbConn.Location = new System.Drawing.Point(8, 8);
+            this.gbConn.Location = new System.Drawing.Point(8, 0);
             this.gbConn.Name = "gbConn";
-            this.gbConn.Size = new System.Drawing.Size(200, 106);
+            this.gbConn.Size = new System.Drawing.Size(200, 100);
             this.gbConn.TabIndex = 9;
             this.gbConn.TabStop = false;
             this.gbConn.Text = "БД ";
             // 
             // btDisconnect
             // 
-            this.btDisconnect.Location = new System.Drawing.Point(103, 72);
+            this.btDisconnect.Location = new System.Drawing.Point(103, 68);
             this.btDisconnect.Name = "btDisconnect";
             this.btDisconnect.Size = new System.Drawing.Size(89, 23);
             this.btDisconnect.TabIndex = 5;
@@ -414,7 +416,7 @@ namespace fcDmw
             // 
             // btConnect
             // 
-            this.btConnect.Location = new System.Drawing.Point(8, 72);
+            this.btConnect.Location = new System.Drawing.Point(8, 68);
             this.btConnect.Name = "btConnect";
             this.btConnect.Size = new System.Drawing.Size(89, 23);
             this.btConnect.TabIndex = 4;
@@ -424,7 +426,7 @@ namespace fcDmw
             // 
             // password_
             // 
-            this.password_.Location = new System.Drawing.Point(96, 42);
+            this.password_.Location = new System.Drawing.Point(96, 40);
             this.password_.Name = "password_";
             this.password_.Size = new System.Drawing.Size(88, 20);
             this.password_.TabIndex = 3;
@@ -439,7 +441,7 @@ namespace fcDmw
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 49);
+            this.label2.Location = new System.Drawing.Point(14, 44);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 1;
@@ -448,11 +450,21 @@ namespace fcDmw
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 23);
+            this.label1.Location = new System.Drawing.Point(14, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(78, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "пользователь";
+            // 
+            // btComp
+            // 
+            this.btComp.Location = new System.Drawing.Point(22, 370);
+            this.btComp.Name = "btComp";
+            this.btComp.Size = new System.Drawing.Size(173, 23);
+            this.btComp.TabIndex = 13;
+            this.btComp.Text = "Сравнить";
+            this.btComp.UseVisualStyleBackColor = true;
+            this.btComp.Click += new System.EventHandler(this.btComp_Click);
             // 
             // MainForm
             // 
@@ -523,5 +535,6 @@ namespace fcDmw
         private System.Windows.Forms.GroupBox gbClassBt;
         private System.Windows.Forms.Button btListSave;
         private System.Windows.Forms.Button btListLoad;
+        private System.Windows.Forms.Button btComp;
 	}
 }

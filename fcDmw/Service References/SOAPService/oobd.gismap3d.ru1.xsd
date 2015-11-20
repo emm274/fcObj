@@ -131,6 +131,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetMetadataClassSchemas">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMetadataClassSchemasResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetMetadataClassSchemasResult" nillable="true" type="q6:ArrayOfMetadataClassSchema" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetFeatureClassMetaData">
     <xs:complexType>
       <xs:sequence>
@@ -142,7 +156,7 @@
   <xs:element name="GetFeatureClassMetaDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetFeatureClassMetaDataResult" nillable="true" type="q6:ArrayOfMetaValue" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetFeatureClassMetaDataResult" nillable="true" type="q7:ArrayOfMetaValue" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -156,7 +170,7 @@
   <xs:element name="GetScalesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetScalesResult" nillable="true" type="q7:ArrayOfdecimal" />
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetScalesResult" nillable="true" type="q8:ArrayOfdecimal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -170,7 +184,7 @@
   <xs:element name="GetCartographicModelsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetCartographicModelsResult" nillable="true" type="q8:ArrayOfCartographicModel" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetCartographicModelsResult" nillable="true" type="q9:ArrayOfCartographicModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -184,7 +198,7 @@
   <xs:element name="GetStylesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetStylesResult" nillable="true" type="q9:ArrayOfStyle" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetStylesResult" nillable="true" type="q10:ArrayOfStyle" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -199,7 +213,7 @@
   <xs:element name="GetDomainResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetDomainResult" nillable="true" type="q10:BaseDomain" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetDomainResult" nillable="true" type="q11:BaseDomain" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -213,7 +227,7 @@
   <xs:element name="GetMetaFieldsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetMetaFieldsResult" nillable="true" type="q11:ArrayOfMetaField" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetMetaFieldsResult" nillable="true" type="q12:ArrayOfMetaField" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -221,15 +235,15 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="request" nillable="true" type="q12:FeatureRequest" />
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="extent" nillable="true" type="q13:Extent" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="request" nillable="true" type="q13:FeatureRequest" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="extent" nillable="true" type="q14:Extent" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RequestResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="RequestResult" nillable="true" type="q14:FeatureResult" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="RequestResult" nillable="true" type="q15:FeatureResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -237,15 +251,15 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="request" nillable="true" type="q15:FeatureRequest" />
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="extent" nillable="true" type="q16:Extent" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="request" nillable="true" type="q16:FeatureRequest" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="extent" nillable="true" type="q17:Extent" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RequestNSAsyncResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="RequestNSAsyncResult" nillable="true" type="q17:RequestResponse" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="RequestNSAsyncResult" nillable="true" type="q18:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -260,7 +274,7 @@
   <xs:element name="GetRequestStatusResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetRequestStatusResult" nillable="true" type="q18:RequestInfo" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetRequestStatusResult" nillable="true" type="q19:RequestInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -276,7 +290,7 @@
   <xs:element name="GetRequestResultResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetRequestResultResult" nillable="true" type="q19:FeatureResult" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetRequestResultResult" nillable="true" type="q20:FeatureResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -284,16 +298,16 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
-        <xs:element xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="keys" nillable="true" type="q20:ArrayOfstring" />
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="consist" nillable="true" type="q21:Consist" />
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="extent" nillable="true" type="q22:Extent" />
+        <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="keys" nillable="true" type="q21:ArrayOfstring" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="consist" nillable="true" type="q22:Consist" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="extent" nillable="true" type="q23:Extent" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetFeaturesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetFeaturesResult" nillable="true" type="q23:FeatureResult" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetFeaturesResult" nillable="true" type="q24:FeatureResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -302,14 +316,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="key" nillable="true" type="xs:string" />
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="extent" nillable="true" type="q24:Extent" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="extent" nillable="true" type="q25:Extent" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetCartographicElementsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetCartographicElementsResult" nillable="true" type="q25:ArrayOfCartographicElement" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="GetCartographicElementsResult" nillable="true" type="q26:ArrayOfCartographicElement" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -352,7 +366,7 @@
   <xs:element name="SaveEditingAsyncResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="SaveEditingAsyncResult" nillable="true" type="q26:RequestResponse" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="SaveEditingAsyncResult" nillable="true" type="q27:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -361,14 +375,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="features" nillable="true" type="q27:ArrayOfFeature" />
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="features" nillable="true" type="q28:ArrayOfFeature" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddFeaturesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="AddFeaturesResult" nillable="true" type="q28:RequestResponse" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="AddFeaturesResult" nillable="true" type="q29:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -377,14 +391,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="features" nillable="true" type="q29:ArrayOfFeature" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="features" nillable="true" type="q30:ArrayOfFeature" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditFeaturesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="EditFeaturesResult" nillable="true" type="q30:RequestResponse" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="EditFeaturesResult" nillable="true" type="q31:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -393,14 +407,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q31="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="featureKeys" nillable="true" type="q31:ArrayOfstring" />
+        <xs:element xmlns:q32="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="featureKeys" nillable="true" type="q32:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="DeleteFeaturesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="DeleteFeaturesResult" nillable="true" type="q32:RequestResponse" />
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="DeleteFeaturesResult" nillable="true" type="q33:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -409,14 +423,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="cartographicElements" nillable="true" type="q33:ArrayOfCartographicElement" />
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="cartographicElements" nillable="true" type="q34:ArrayOfCartographicElement" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddCartographicElementsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="AddCartographicElementsResult" nillable="true" type="q34:RequestResponse" />
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="AddCartographicElementsResult" nillable="true" type="q35:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -425,14 +439,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="cartographicElements" nillable="true" type="q35:ArrayOfCartographicElement" />
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="cartographicElements" nillable="true" type="q36:ArrayOfCartographicElement" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditCartographicElementsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="EditCartographicElementsResult" nillable="true" type="q36:RequestResponse" />
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="EditCartographicElementsResult" nillable="true" type="q37:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -441,14 +455,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q37="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="cartographicElementIds" nillable="true" type="q37:ArrayOfdecimal" />
+        <xs:element xmlns:q38="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="cartographicElementIds" nillable="true" type="q38:ArrayOfdecimal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="DeleteCartographicElementsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="DeleteCartographicElementsResult" nillable="true" type="q38:RequestResponse" />
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="DeleteCartographicElementsResult" nillable="true" type="q39:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -457,14 +471,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="models" nillable="true" type="q39:ArrayOfCartographicModel" />
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="models" nillable="true" type="q40:ArrayOfCartographicModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddCartographicModelsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="AddCartographicModelsResult" nillable="true" type="q40:RequestResponse" />
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="AddCartographicModelsResult" nillable="true" type="q41:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -473,14 +487,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="cartographicModels" nillable="true" type="q41:ArrayOfCartographicModel" />
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="cartographicModels" nillable="true" type="q42:ArrayOfCartographicModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditCartographicModelsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="EditCartographicModelsResult" nillable="true" type="q42:RequestResponse" />
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="EditCartographicModelsResult" nillable="true" type="q43:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -489,14 +503,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q43="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="cartographicModelsId" nillable="true" type="q43:ArrayOfdecimal" />
+        <xs:element xmlns:q44="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="cartographicModelsId" nillable="true" type="q44:ArrayOfdecimal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="DeleteCartographicModelsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="DeleteCartographicModelsResult" nillable="true" type="q44:RequestResponse" />
+        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="DeleteCartographicModelsResult" nillable="true" type="q45:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -505,14 +519,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="styles" nillable="true" type="q45:ArrayOfStyle" />
+        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="styles" nillable="true" type="q46:ArrayOfStyle" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddStylesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="AddStylesResult" nillable="true" type="q46:RequestResponse" />
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="AddStylesResult" nillable="true" type="q47:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -521,14 +535,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="styles" nillable="true" type="q47:ArrayOfStyle" />
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="styles" nillable="true" type="q48:ArrayOfStyle" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditStylesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="EditStylesResult" nillable="true" type="q48:RequestResponse" />
+        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="EditStylesResult" nillable="true" type="q49:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -537,14 +551,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q49="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="stylesId" nillable="true" type="q49:ArrayOfdecimal" />
+        <xs:element xmlns:q50="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="stylesId" nillable="true" type="q50:ArrayOfdecimal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="DeleteStylesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="DeleteStylesResult" nillable="true" type="q50:RequestResponse" />
+        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/SODBCore" minOccurs="0" name="DeleteStylesResult" nillable="true" type="q51:RequestResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -559,7 +573,7 @@
   <xs:element name="GetGeometryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="GetGeometryResult" nillable="true" type="q51:Geometry" />
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/SODBCore.Geometries" minOccurs="0" name="GetGeometryResult" nillable="true" type="q52:Geometry" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

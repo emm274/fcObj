@@ -439,7 +439,7 @@ namespace tsContent
 
                 if (k == "upper") {
                     if (typ == JsonToken.Float)
-                    fgeometry.lower = (double)v;
+                    fgeometry.upper = (double)v;
                 } else
 
                 if (k == "ref") {

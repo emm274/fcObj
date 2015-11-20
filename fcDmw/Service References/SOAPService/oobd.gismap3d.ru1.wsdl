@@ -109,6 +109,18 @@
   <wsdl:message name="ISODBService_GetFeatureClassSchema_ExecuteFaultFault_FaultMessage">
     <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q14:ExecuteFault" />
   </wsdl:message>
+  <wsdl:message name="ISODBService_GetMetadataClassSchemas_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMetadataClassSchemas" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetMetadataClassSchemas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMetadataClassSchemasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetMetadataClassSchemas_TokenFaultFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q15:TokenFault" />
+  </wsdl:message>
+  <wsdl:message name="ISODBService_GetMetadataClassSchemas_ExecuteFaultFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q16:ExecuteFault" />
+  </wsdl:message>
   <wsdl:message name="ISODBService_GetFeatureClassMetaData_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFeatureClassMetaData" />
   </wsdl:message>
@@ -116,7 +128,7 @@
     <wsdl:part name="parameters" element="tns:GetFeatureClassMetaDataResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetFeatureClassMetaData_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q15:TokenFault" />
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q17:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetScales_InputMessage">
     <wsdl:part name="parameters" element="tns:GetScales" />
@@ -125,10 +137,10 @@
     <wsdl:part name="parameters" element="tns:GetScalesResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetScales_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q16:TokenFault" />
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q18:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetScales_ExecuteFaultFault_FaultMessage">
-    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q17:ExecuteFault" />
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q19:ExecuteFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetCartographicModels_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCartographicModels" />
@@ -137,10 +149,10 @@
     <wsdl:part name="parameters" element="tns:GetCartographicModelsResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetCartographicModels_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q18:TokenFault" />
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q20:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetCartographicModels_ExecuteFaultFault_FaultMessage">
-    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q19:ExecuteFault" />
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q21:ExecuteFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetStyles_InputMessage">
     <wsdl:part name="parameters" element="tns:GetStyles" />
@@ -149,10 +161,10 @@
     <wsdl:part name="parameters" element="tns:GetStylesResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetStyles_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q20:TokenFault" />
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q22:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetStyles_ExecuteFaultFault_FaultMessage">
-    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q21:ExecuteFault" />
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q23:ExecuteFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetDomain_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDomain" />
@@ -161,10 +173,10 @@
     <wsdl:part name="parameters" element="tns:GetDomainResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetDomain_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q22:TokenFault" />
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q24:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetDomain_ExecuteFaultFault_FaultMessage">
-    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q23:ExecuteFault" />
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q25:ExecuteFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetMetaFields_InputMessage">
     <wsdl:part name="parameters" element="tns:GetMetaFields" />
@@ -173,10 +185,10 @@
     <wsdl:part name="parameters" element="tns:GetMetaFieldsResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetMetaFields_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q24:TokenFault" />
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q26:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetMetaFields_ExecuteFaultFault_FaultMessage">
-    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q25:ExecuteFault" />
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q27:ExecuteFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_Request_InputMessage">
     <wsdl:part name="parameters" element="tns:Request" />
@@ -185,10 +197,10 @@
     <wsdl:part name="parameters" element="tns:RequestResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_Request_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q26:TokenFault" />
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q28:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_Request_ExecuteFaultFault_FaultMessage">
-    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q27:ExecuteFault" />
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q29:ExecuteFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_RequestNSAsync_InputMessage">
     <wsdl:part name="parameters" element="tns:RequestNSAsync" />
@@ -197,7 +209,7 @@
     <wsdl:part name="parameters" element="tns:RequestNSAsyncResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_RequestNSAsync_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q28:TokenFault" />
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q30:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetRequestStatus_InputMessage">
     <wsdl:part name="parameters" element="tns:GetRequestStatus" />
@@ -206,10 +218,10 @@
     <wsdl:part name="parameters" element="tns:GetRequestStatusResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetRequestStatus_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q29:TokenFault" />
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q31:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetRequestStatus_ExecuteFaultFault_FaultMessage">
-    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q30:ExecuteFault" />
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q32:ExecuteFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetRequestResult_InputMessage">
     <wsdl:part name="parameters" element="tns:GetRequestResult" />
@@ -218,7 +230,7 @@
     <wsdl:part name="parameters" element="tns:GetRequestResultResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetRequestResult_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q31:TokenFault" />
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q33:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetFeatures_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFeatures" />
@@ -227,10 +239,10 @@
     <wsdl:part name="parameters" element="tns:GetFeaturesResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetFeatures_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q32:TokenFault" />
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q34:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetFeatures_ExecuteFaultFault_FaultMessage">
-    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q33:ExecuteFault" />
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q35:ExecuteFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetCartographicElements_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCartographicElements" />
@@ -239,7 +251,7 @@
     <wsdl:part name="parameters" element="tns:GetCartographicElementsResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetCartographicElements_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q34:TokenFault" />
+    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q36:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_StartEditing_InputMessage">
     <wsdl:part name="parameters" element="tns:StartEditing" />
@@ -248,10 +260,10 @@
     <wsdl:part name="parameters" element="tns:StartEditingResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_StartEditing_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q35:TokenFault" />
+    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q37:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_StartEditing_ExecuteFaultFault_FaultMessage">
-    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q36:ExecuteFault" />
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q38:ExecuteFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_StopEditing_InputMessage">
     <wsdl:part name="parameters" element="tns:StopEditing" />
@@ -260,10 +272,10 @@
     <wsdl:part name="parameters" element="tns:StopEditingResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_StopEditing_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q37:TokenFault" />
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q39:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_StopEditing_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q38:SessionFault" />
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q40:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_SaveEditingAsync_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveEditingAsync" />
@@ -272,10 +284,10 @@
     <wsdl:part name="parameters" element="tns:SaveEditingAsyncResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_SaveEditingAsync_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q39:TokenFault" />
+    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q41:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_SaveEditingAsync_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q40:SessionFault" />
+    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q42:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_AddFeatures_InputMessage">
     <wsdl:part name="parameters" element="tns:AddFeatures" />
@@ -284,10 +296,10 @@
     <wsdl:part name="parameters" element="tns:AddFeaturesResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_AddFeatures_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q41:TokenFault" />
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q43:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_AddFeatures_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q42:SessionFault" />
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q44:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_EditFeatures_InputMessage">
     <wsdl:part name="parameters" element="tns:EditFeatures" />
@@ -296,10 +308,10 @@
     <wsdl:part name="parameters" element="tns:EditFeaturesResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_EditFeatures_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q43:TokenFault" />
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q45:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_EditFeatures_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q44:SessionFault" />
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q46:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_DeleteFeatures_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteFeatures" />
@@ -308,10 +320,10 @@
     <wsdl:part name="parameters" element="tns:DeleteFeaturesResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_DeleteFeatures_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q45:TokenFault" />
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q47:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_DeleteFeatures_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q46:SessionFault" />
+    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q48:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_AddCartographicElements_InputMessage">
     <wsdl:part name="parameters" element="tns:AddCartographicElements" />
@@ -320,10 +332,10 @@
     <wsdl:part name="parameters" element="tns:AddCartographicElementsResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_AddCartographicElements_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q47:TokenFault" />
+    <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q49:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_AddCartographicElements_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q48:SessionFault" />
+    <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q50:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_EditCartographicElements_InputMessage">
     <wsdl:part name="parameters" element="tns:EditCartographicElements" />
@@ -332,10 +344,10 @@
     <wsdl:part name="parameters" element="tns:EditCartographicElementsResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_EditCartographicElements_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q49:TokenFault" />
+    <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q51:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_EditCartographicElements_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q50:SessionFault" />
+    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q52:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_DeleteCartographicElements_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteCartographicElements" />
@@ -344,10 +356,10 @@
     <wsdl:part name="parameters" element="tns:DeleteCartographicElementsResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_DeleteCartographicElements_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q51:TokenFault" />
+    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q53:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_DeleteCartographicElements_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q52:SessionFault" />
+    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q54:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_AddCartographicModels_InputMessage">
     <wsdl:part name="parameters" element="tns:AddCartographicModels" />
@@ -356,10 +368,10 @@
     <wsdl:part name="parameters" element="tns:AddCartographicModelsResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_AddCartographicModels_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q53:TokenFault" />
+    <wsdl:part xmlns:q55="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q55:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_AddCartographicModels_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q54:SessionFault" />
+    <wsdl:part xmlns:q56="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q56:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_EditCartographicModels_InputMessage">
     <wsdl:part name="parameters" element="tns:EditCartographicModels" />
@@ -368,10 +380,10 @@
     <wsdl:part name="parameters" element="tns:EditCartographicModelsResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_EditCartographicModels_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q55="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q55:TokenFault" />
+    <wsdl:part xmlns:q57="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q57:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_EditCartographicModels_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q56="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q56:SessionFault" />
+    <wsdl:part xmlns:q58="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q58:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_DeleteCartographicModels_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteCartographicModels" />
@@ -380,10 +392,10 @@
     <wsdl:part name="parameters" element="tns:DeleteCartographicModelsResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_DeleteCartographicModels_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q57="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q57:TokenFault" />
+    <wsdl:part xmlns:q59="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q59:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_DeleteCartographicModels_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q58="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q58:SessionFault" />
+    <wsdl:part xmlns:q60="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q60:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_AddStyles_InputMessage">
     <wsdl:part name="parameters" element="tns:AddStyles" />
@@ -392,10 +404,10 @@
     <wsdl:part name="parameters" element="tns:AddStylesResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_AddStyles_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q59="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q59:TokenFault" />
+    <wsdl:part xmlns:q61="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q61:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_AddStyles_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q60="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q60:SessionFault" />
+    <wsdl:part xmlns:q62="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q62:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_EditStyles_InputMessage">
     <wsdl:part name="parameters" element="tns:EditStyles" />
@@ -404,10 +416,10 @@
     <wsdl:part name="parameters" element="tns:EditStylesResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_EditStyles_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q61="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q61:TokenFault" />
+    <wsdl:part xmlns:q63="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q63:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_EditStyles_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q62="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q62:SessionFault" />
+    <wsdl:part xmlns:q64="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q64:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_DeleteStyles_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteStyles" />
@@ -416,10 +428,10 @@
     <wsdl:part name="parameters" element="tns:DeleteStylesResponse" />
   </wsdl:message>
   <wsdl:message name="ISODBService_DeleteStyles_TokenFaultFault_FaultMessage">
-    <wsdl:part xmlns:q63="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q63:TokenFault" />
+    <wsdl:part xmlns:q65="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q65:TokenFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_DeleteStyles_SessionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q64="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q64:SessionFault" />
+    <wsdl:part xmlns:q66="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions" name="detail" element="q66:SessionFault" />
   </wsdl:message>
   <wsdl:message name="ISODBService_GetGeometry_InputMessage">
     <wsdl:part name="parameters" element="tns:GetGeometry" />
@@ -477,6 +489,12 @@
       <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassSchemaResponse" message="tns:ISODBService_GetFeatureClassSchema_OutputMessage" />
       <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassSchemaTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetFeatureClassSchema_TokenFaultFault_FaultMessage" />
       <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassSchemaExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_GetFeatureClassSchema_ExecuteFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMetadataClassSchemas">
+      <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetMetadataClassSchemas" message="tns:ISODBService_GetMetadataClassSchemas_InputMessage" />
+      <wsdl:output wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetMetadataClassSchemasResponse" message="tns:ISODBService_GetMetadataClassSchemas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetMetadataClassSchemasTokenFaultFault" name="TokenFaultFault" message="tns:ISODBService_GetMetadataClassSchemas_TokenFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetMetadataClassSchemasExecuteFaultFault" name="ExecuteFaultFault" message="tns:ISODBService_GetMetadataClassSchemas_ExecuteFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetFeatureClassMetaData">
       <wsdl:input wsaw:Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassMetaData" message="tns:ISODBService_GetFeatureClassMetaData_InputMessage" />

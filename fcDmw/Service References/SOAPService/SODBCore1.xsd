@@ -184,7 +184,6 @@
           <xs:element minOccurs="0" name="MDID" type="xs:int" />
           <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="MetadataType" type="q14:MetaDataType" />
           <xs:element minOccurs="0" name="Metadata_Cl_Id" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Metadata_ClassId" type="xs:int" />
           <xs:element minOccurs="0" name="ParentKey" nillable="true" type="xs:string" />
           <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/SODBCore.Enums" minOccurs="0" name="Status" type="q15:EditableStatus" />
           <xs:element minOccurs="0" name="Values" nillable="true" type="tns:ArrayOfMetaValue" />
@@ -326,6 +325,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfMetaField" nillable="true" type="tns:ArrayOfMetaField" />
+  <xs:complexType name="ArrayOfMetadataClassSchema">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MetadataClassSchema" nillable="true" type="tns:MetadataClassSchema" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMetadataClassSchema" nillable="true" type="tns:ArrayOfMetadataClassSchema" />
   <xs:complexType name="ArrayOfCartographicModel">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="CartographicModel" nillable="true" type="tns:CartographicModel" />

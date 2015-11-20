@@ -11,6 +11,7 @@ using Convert;
 using classMsg;
 using ofiles;
 using xmap;
+using tsObjects;
 
 namespace tsDmw
 {
@@ -35,7 +36,7 @@ namespace tsDmw
 
         int fadded, fupdated, fdeleted;
 
-        List<string> fGeometry = new List<string>();
+        List<Geometry> fGeometry = new List<Geometry>();
 
         TTextWrite ferr = new TTextWrite();
 
@@ -442,7 +443,7 @@ namespace tsDmw
                 case 2:
                     return move_edge(mf1,mf2,0,key);
                 case 3:
-                    break;
+                    return move_surface(mf1, mf2, key);
                 }
             }
 
@@ -593,8 +594,19 @@ namespace tsDmw
                 foreach (var g in fGeometry)
                 {
                     fwriter.WriteStartObject();
-                    writeValues("ref", g);
-                    writeNullObject("scaleRange");
+
+                    if (g.lower == g.upper)
+                        writeNullObject("scaleRange");
+                    else
+                    {
+                        fwriter.WritePropertyName("scaleRange");
+                        fwriter.WriteStartObject();
+                        writeValuef("lower", g.lower);
+                        writeValuef("upper", g.upper);
+                        fwriter.WriteEndObject();
+                    }
+
+                    writeValues("ref", g.key);
                     fwriter.WriteEndObject();
                 }
 
@@ -615,12 +627,20 @@ namespace tsDmw
             fwriter.WriteEndObject();
         }
 
+        void __nextGeometry(string key, xmap.IFeature obj)
+        {
+            int lower, upper;
+            obj.GetScaleRange(out lower, out upper);
+            Geometry g = new Geometry(lower, upper, key);
+            fGeometry.Add(g);
+        }
+
         void add_feature(xmap.Ixmap_auto map, xmap.IFeature obj)
         {
             fGeometry.Clear();
             string s = shape(obj);
             if (convert.IsString(s)) {
-                fGeometry.Add(s);
+                __nextGeometry(s, obj);
 
                 int top;
                 int ptr = fmap.get_frst_geometry(obj.Offset, out top);
@@ -628,8 +648,8 @@ namespace tsDmw
                 {
                     fobj1.Get(ptr);
                     s = shape(fobj1);
-                    if (convert.IsString(s)) 
-                    fGeometry.Add(s);
+                    if (convert.IsString(s))
+                    __nextGeometry(s, fobj1);
 
                     ptr = fmap.get_next_geometry(ptr, top);
                 }
@@ -653,13 +673,13 @@ namespace tsDmw
             switch (obj.Loc % 100)
             {
                 case 1:
-                    fGeometry.Add(vcTag + key);
+                    __nextGeometry(vcTag + key,obj);
                     break;
                 case 2:
-                    fGeometry.Add(veTag + key);
+                    __nextGeometry(veTag + key,obj);
                     break;
                 case 3:
-                    fGeometry.Add(ssTag + key);
+                    __nextGeometry(ssTag + key,obj);
                     break;
             }
         }

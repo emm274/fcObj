@@ -119,7 +119,13 @@ namespace tsDmw
             if (fe.Geometry.Count > 0) {
                 writeKeyi("geometry", fe.Geometry.Count);
                 foreach (var g in fe.Geometry)
-                file.WriteLine(g.key);
+                {
+                    string s = g.key;
+                    if (g.lower != g.upper)
+                    s += String.Format(" [{0} : {1}>", g.lower, g.upper);
+
+                    file.WriteLine(s);
+                }
             }
 
             if (fe.Relations.Count > 0)

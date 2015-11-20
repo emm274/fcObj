@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using Convert;
 using xmap;
 
 namespace fcDmw
@@ -98,6 +99,47 @@ namespace fcDmw
      		return false;
      	}
 
+        void __metadata(sodb db, List<SOAPService.Metadata> list, int typ, string acronym, ref int count)
+        {
+            if (db.MetadataExists(list))
+            {
+                if (typ >= 0) 
+                    obj.begin_meta(typ,acronym);
+                else 
+                {
+                    obj.Reset(); obj.Loc = 30;
+                    obj.acronym = acronym;
+                }
+
+                xmap.IAttrs hf = obj.hf;
+                
+                foreach (var m in list) 
+                if (!m.IsCompositeAttribute) 
+                if (m.Values != null)
+                if (m.Values.Count > 0)
+                {
+                    SOAPService.MetaValue v = m.Values[0];
+                    if (convert.IsString(v.Value)) 
+                    hf.Add(m.Akronim,v.Value);
+                }
+
+                if (__obj(ref count))
+                {
+                    ulong pos = fmap.Position;
+                    int count1 = 1;
+
+                    foreach (var m in list)
+                    if (m.IsCompositeAttribute)
+                    if (m.CompositeMetadata != null)
+                    __metadata(db,m.CompositeMetadata, -1, m.Akronim,ref count1);
+
+                    fmap.Position = pos;
+                }
+
+                if (typ >= 0) obj.end_meta();
+            }
+        }
+
         string attrValue(sodb db, SOAPService.AttrValue v)
         {
             SOAPService.NumberStringAttrValue vv = v.Value;
@@ -110,8 +152,7 @@ namespace fcDmw
             return "";
         }
 
-        void fill_hf(sodb db, 
-                     SOAPService.Feature fe)
+        void fill_hf(sodb db, SOAPService.Feature fe)
         {
             xmap.IAttrs hf = obj.hf;
             hf.Add("Key", fe.Key);
@@ -171,55 +212,91 @@ namespace fcDmw
 
         }
 
+        bool BasePoint(SOAPService.Feature fe)
+        {
+            SOAPService.Point pt = fe.BaseShapePoint;
+            if (pt != null)
+            {
+                xmap.IPoly mf = obj.mf;
+                mf.AddPoint(pt.Y * DegToRad, pt.X * DegToRad);
+                mf.endContour(1);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        bool BasePolyline(SOAPService.Feature fe)
+        {
+            SOAPService.Polyline ln = fe.BaseShapePolyline;
+            if (ln != null)
+            if (ln.Paths.Count > 0) {
+                xmap.IPoly mf = obj.mf;
+                foreach (var path in ln.Paths)
+                __contour(mf, path.Points, 2);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        bool BasePolygon(SOAPService.Feature fe)
+        {
+            SOAPService.Polygon rgn = fe.BaseShapePolygon;
+
+            if (rgn != null)
+            if (rgn.Rings.Count > 0) {
+                xmap.IPoly mf = obj.mf;
+                foreach (var ring in rgn.Rings)
+                __contour(mf, ring.Points, 3);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        void Datatypes(sodb db,
+                      List<SOAPService.Feature> list,
+                      SOAPService.Feature dt,  
+                      int ptr) 
+        {
+            ulong pos = fmap.Position;
+            int count1 = 1;
+
+            List<SOAPService.Attribute> Attributes = dt.Attributes;
+
+            if (Attributes != null)
+            foreach (var a in Attributes)
+            if (a.IsCompositeAttribute)
+            foreach (var vv in a.Values)
+            if (vv.Value != null)
+            addDatatype(db,list, ptr, a.Attr_Id, vv, ref count1);
+
+            __metadata(db, dt.Metadata, 2, "", ref count1);
+
+            fmap.Position = pos;
+        }
+
         void Datatype(sodb db,
                       List<SOAPService.Feature> list,   
                       SOAPService.Feature dt,  
                       string Attr_id, 
                       ref int count)
         {
-            int loc = 0;
-
             obj.Reset();
 
-            xmap.IPoly mf = obj.mf;
-
-            if (loc == 0) {
-                SOAPService.Point pt = dt.BaseShapePoint;
-                if (pt != null) {
-                    loc = 1;
-                    mf.AddPoint(pt.Y * DegToRad, pt.X * DegToRad);
-                    mf.endContour(1);
-                }
-            }
-
-            if (loc == 0) {
-                SOAPService.Polyline ln = dt.BaseShapePolyline;
-                if (ln != null)
-                if (ln.Paths.Count > 0) {
-                    loc = 2;
-                    foreach (var path in ln.Paths)
-                    __contour(mf, path.Points, 2);
-                }
-            }
-
-            if (loc == 0) {
-				SOAPService.Polygon rgn = dt.BaseShapePolygon;
-
-				if (rgn != null)
-                if (rgn.Rings.Count > 0) {
-                    loc = 3;
-                    foreach (var ring in rgn.Rings)
-                    __contour(mf, ring.Points, 3);
-                }
-            }
+            int loc = 0;
+            if (BasePoint(dt))    loc = 1; else
+            if (BasePolyline(dt)) loc = 2; else
+            if (BasePolygon(dt))  loc = 3;
 
             obj.Loc = 30+loc;
             obj.acronym = Attr_id;
 
-            bool rc;
-
-            if (loc > 0)
-            {
+            if (loc > 0) {
                 __obj(ref count);
 
                 obj.Reset();
@@ -227,32 +304,19 @@ namespace fcDmw
                 obj.acronym = Attr_id;
                 fill_hf(db, dt);
 
-                int count1 = 1;
-                rc = __obj(ref count1);
-            }
-            else {
-                fill_hf(db, dt);
-                rc = __obj(ref count);
-            }
-
-            if (rc) {
-                int ptr = obj.Offset;
                 ulong pos = fmap.Position;
-
                 int count1 = 1;
 
-                List<SOAPService.Attribute> Attributes = dt.Attributes;
-
-                if (Attributes != null)
-                foreach (var a in Attributes)
-                if (a.IsCompositeAttribute)
-                foreach (var vv in a.Values)
-                if (vv.Value != null)
-                addDatatype(db,list, ptr, a.Attr_Id, vv, ref count1);
+                if (__obj(ref count1))
+                Datatypes(db, list, dt, obj.Offset);
 
                 fmap.Position = pos;
             }
-
+            else {
+                fill_hf(db, dt);
+                if (__obj(ref count)) 
+                Datatypes(db, list, dt, obj.Offset);
+            }
         }
 
         void addDatatype(sodb db, 
@@ -266,23 +330,46 @@ namespace fcDmw
                          ref int count)
         {
 
-            SOAPService.Feature dt = null;
-
             string key = attrValue(db, v);
+            if (convert.IsString(key)) {
 
-            if (key != null)
-            if (key.Length > 0)
+                SOAPService.Feature dt = null;
+                foreach (var fe in list)
+                if (fe.Key == key)
+                { dt = fe; break; }
 
-     		foreach(var fe in list)
-            if (fe.Key == key)
-            { dt = fe; break; }
+                if (dt != null)
+                    Datatype(db, list, dt, Attr_id, ref count);
+                else
+                {
+                    tnode node = new tnode(owner, Attr_id, key);
+                    nodes.Add(node);
+                }
 
-            if (dt != null) 
-                Datatype(db,list,dt,Attr_id,ref count);
-            else {
-                tnode node = new tnode(owner,Attr_id,key);
-                nodes.Add(node);
             }
+        }
+
+        bool obj_shape(sodb db, List<SOAPService.Metadata> meta, ref int count, ref int offset)
+        {
+            if (__obj(ref count))
+            {
+                if (count == 1)
+                {
+                    offset = obj.Offset;
+                    __metadata(db,meta, 1, "", ref count);
+                }
+                else
+                {
+                    ulong pos = fmap.Position;
+                    int count1 = 1;
+                    __metadata(db,meta, 1, "", ref count1);
+                    fmap.Position = pos;
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
      	public void Features(sodb db, List<SOAPService.Feature> list)
@@ -297,52 +384,53 @@ namespace fcDmw
 
 				SOAPService.Point pt = fe.BaseShapePoint;
 				SOAPService.Polyline ln = fe.BaseShapePolyline;
-				SOAPService.Polygon rgn = fe.BaseShapePolygon;
+                SOAPService.Polygon rgn = fe.BaseShapePolygon;
 
                 fill_hf(db,fe); 
 
      			fmap.SeekLayer(obj.Code);
 				int __count = 0;
                 int __offs = 0;
-				
-				if (rgn != null) 
-				if (rgn.Rings.Count > 0) {
-				
-					obj.Loc=3;
-					
-					foreach(var ring in rgn.Rings)
-					__contour(mf,ring.Points,3);
 
-					__obj(ref __count);
-				}
+                if (rgn != null)
+                if (rgn.Rings.Count > 0) {
+                    obj.Loc = 3;
 
-                if (__count == 1) __offs = obj.Offset;
-				
+                    foreach (var ring in rgn.Rings)
+                        __contour(mf, ring.Points, 3);
+
+                    obj_shape(db,rgn.Metadata, ref __count, ref __offs);
+                }
+
 				if (ln != null) 
 				if (ln.Paths.Count > 0) {
-					if (__count > 0) obj.Reset();
+
+                    obj.Loc = 2;
+                    if (__count > 0) { 
+                        obj.Reset(); obj.Loc = 102;
+                    }
 					
-					obj.Loc=2;
 					foreach(var path in ln.Paths) 
 					__contour(mf,path.Points,2);
 
-                    __obj(ref __count);
-				}
-
-                if (__count == 1) __offs = obj.Offset;
+                    obj_shape(db,ln.Metadata, ref __count, ref __offs);
+                }
 				
 				if (pt != null) {
-					if (__count > 0) obj.Reset();
-					obj.Loc=1;
+                    obj.Loc = 1;
+                    if (__count > 0) {
+                        obj.Reset(); obj.Loc = 101;
+                    }
+
 					mf.AddPoint(pt.Y*DegToRad,pt.X*DegToRad);
 					mf.endContour(1);
 
-                    __obj(ref __count);
-				}
+                    obj_shape(db,pt.Metadata, ref __count, ref __offs);
+                }
 
-                if (__count == 1) __offs = obj.Offset;
+                if (__offs > 0) {
 
-                if (__count > 0)  {
+                    __metadata(db,fe.Metadata, 0, "", ref __count);     
 
                     // datatypes + attrv
                     List<SOAPService.Attribute> Attributes = fe.Attributes;
@@ -356,7 +444,8 @@ namespace fcDmw
                         addDatatype(db, list, __offs, a.Attr_Id, v, ref __count);
                     else {
                         SOAPService.Geometry shp = v.Shape;
-                        if (shp != null) {
+                        if (shp != null)
+                        {
                             obj.Reset();
                             obj.acronym = a.Attr_Id;
                             attr_shape(shp);
@@ -364,14 +453,19 @@ namespace fcDmw
                             string s = attrValue(db, v);
 
                             if (s != null)
-                            if (s.Length > 0) {
-                                xmap.IAttrs hf = obj.hf;
-                                hf.Add("Key", shp.Key);
-                                hf.Add(a.Attr_Id, s);
+                                if (s.Length > 0)
+                                {
+                                    xmap.IAttrs hf = obj.hf;
+                                    hf.Add("Key", shp.Key);
+                                    hf.Add(a.Attr_Id, s);
 
-                                if (hf.Count > 1)
-                                __obj(ref __count);
-                            }
+                                    if (hf.Count > 1)
+                                        __obj(ref __count);
+                                }
+                        }
+                        else  {
+                            if (v.Metadata != null)
+                            __metadata(db, v.Metadata, 2, a.Attr_Id, ref __count);
                         }
                     }
 
@@ -409,11 +503,9 @@ namespace fcDmw
                         Datatype(db, list, fe, node.acronym, ref count);
                     }
 
-
                     nodes.Remove(node);
                     break;
                 }
-
             }
 		}
      	

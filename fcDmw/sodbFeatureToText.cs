@@ -21,6 +21,8 @@ namespace fcDmw
 		string fPath;
 		int fcount;
 
+        sodb fdb;
+
 		public sodbFeatureToText(string Path)
 		{
 			file=new System.IO.StreamWriter(Path);
@@ -59,7 +61,7 @@ namespace fcDmw
                 string s = Key + " \"" + Value + "\"";
 
                 if (status != SOAPService.EditableStatus.Unchanged)
-                    s += " " + __EditableStatus(status);
+                    s += " " + fdb.EditableStatusStr(status);
 
                 file.WriteLine(s);
             }
@@ -70,7 +72,7 @@ namespace fcDmw
             string v = String.Format(" {0:0}", Value);
 
             if (status != SOAPService.EditableStatus.Unchanged)
-            v += " " + __EditableStatus(status);
+            v += " " + fdb.EditableStatusStr(status);
 
             file.WriteLine(Key + v);
         }
@@ -120,27 +122,58 @@ namespace fcDmw
 			}
 		}
 
-        string __EditableStatus(SOAPService.EditableStatus status)
+        void writeMetaData(sodb db, SOAPService.Metadata m, string tab)
         {
-            string s = "--";
+            string s = tab + "\"" + m.Akronim + "\" \"" + m.Metadata_Cl_Id + "\"";
 
-            switch (status)
+            if (m.Status != SOAPService.EditableStatus.Unchanged)
+            s += " " + fdb.EditableStatusStr(m.Status);
+
+            if (m.IsCompositeAttribute)
             {
-                case SOAPService.EditableStatus.Added:
-                    s += "Added";
-                    break;
-                case SOAPService.EditableStatus.Deleted:
-                    s += "Deleted";
-                    break;
-                case SOAPService.EditableStatus.Modified:
-                    s += "Modified";
-                    break;
-                case SOAPService.EditableStatus.Unchanged:
-                    s += "Unchanged";
-                    break;
-            }
+                if (db.MetadataExists(m.CompositeMetadata))
+                {
+                    file.WriteLine(s);
+                    file.WriteLine(tab + "{");
 
-            return s;
+                    if (m.CompositeMetadata != null)
+                    if (m.CompositeMetadata.Count > 0)
+                    foreach (var m1 in m.CompositeMetadata)
+                    writeMetaData(db,m1, tab + "\t");
+
+                    file.WriteLine(tab + "}");
+                }
+            }
+            else
+            {
+                string t = "";    
+                if (m.Values != null)
+                    foreach (var v in m.Values)
+                    {
+                        if (t.Length > 0) t += " ";
+
+                        if (v.Status != SOAPService.EditableStatus.Unchanged)
+                        t += "/" + fdb.EditableStatusStr(v.Status) + "/ ";
+
+                        t+="\"" + v.Value + "\"";
+                    }
+
+                if (t.Length > 0)
+                file.WriteLine(s+" "+t);
+            }
+        }
+
+        void writeMetadatas(sodb db, List<SOAPService.Metadata> list, string capt)
+        {
+            if (db.MetadataExists(list)) 
+            {
+                file.WriteLine("metadata " + capt + " {");
+
+                foreach (var m in list)
+                    writeMetaData(db,m, "\t");
+
+                file.WriteLine("}");
+            }
         }
 
         void writeAttributes(sodb db, SOAPService.Feature fe, List<string> datatypes)
@@ -202,6 +235,8 @@ namespace fcDmw
                         writePolygon(rgn);
                     }
                 }
+
+                writeMetadatas(db,v.Metadata,a.Attr_Id);
            }
         }
 
@@ -218,18 +253,36 @@ namespace fcDmw
 
         void writeFeature(sodb db,  List<SOAPService.Feature> list, SOAPService.Feature fe)
         {
+            fdb = db;
+
             file.WriteLine("{");
 
             writeKey("Key", fe.Key);
             writeKey("Acronym", fe.Cl_Id);
 
+            writeMetadatas(db,fe.Metadata, "object");
+
             SOAPService.Point pt = fe.BaseShapePoint;
             SOAPService.Polyline ln = fe.BaseShapePolyline;
             SOAPService.Polygon rgn = fe.BaseShapePolygon;
 
-            if (pt != null) writePoint(pt);
-            if (ln != null) writePolyline(ln);
-            if (rgn != null) writePolygon(rgn);
+            if (pt != null)
+            {
+                writePoint(pt);
+                writeMetadatas(db,pt.Metadata, "point");
+            }
+
+            if (ln != null)
+            {
+                writePolyline(ln);
+                writeMetadatas(db,ln.Metadata, "polyline");
+            }
+
+            if (rgn != null)
+            {
+                writePolygon(rgn);
+                writeMetadatas(db,rgn.Metadata, "polygon");
+            }
 
             List<string> datatypes = new List<string>();
             writeAttributes(db, fe, datatypes);
@@ -243,7 +296,7 @@ namespace fcDmw
 
                 s = String.Format("relation {0} role={1}", relation.Key, relation.Role);
                 if (relation.Status != SOAPService.EditableStatus.Unchanged)
-                s += " " + __EditableStatus(relation.Status);
+                s += " " + fdb.EditableStatusStr(relation.Status);
 
                 file.WriteLine(s);
 
@@ -261,7 +314,6 @@ namespace fcDmw
             file.WriteLine("");
 
             writeDatatypes(db, list,datatypes);
-
         } 
 
 		public void Features(sodb db,  List<SOAPService.Feature> list) 

@@ -463,6 +463,25 @@ namespace fcDmw
             return false;
         }
 
+        public List<SOAPService.MetadataClassSchema> GetMetadataClassSchemas()
+        {
+            return service.GetMetadataClassSchemas(token);
+        }
+
+        public bool MetadataExists(List<SOAPService.Metadata> list)
+        {
+            if (list != null)
+            foreach(var m in list) 
+            if (m.IsCompositeAttribute) {
+                if (MetadataExists(m.CompositeMetadata)) return true;
+            } else
+            if (m.Values != null)
+            if (m.Values.Count > 0)
+                return true;
+
+            return false;
+        }
+
         public string NumberToStr(SOAPService.NumberValue v)
         {
             string s = "";
@@ -497,6 +516,17 @@ namespace fcDmw
             return s;
         }
 
+        public string ValueString(SOAPService.NumberStringAttrValue v) 
+        {
+            if (v is SOAPService.NumberValue)
+                return NumberToStr(v as SOAPService.NumberValue);
+            else 
+            if (v is SOAPService.StringValue)
+                return (v as SOAPService.StringValue).Text;
+
+            return "";
+        }
+
         public bool compAttrValue(SOAPService.AttrValue v1, SOAPService.AttrValue v2)
         {
             SOAPService.NumberStringAttrValue vv1 = v1.Value;
@@ -507,9 +537,45 @@ namespace fcDmw
                 string s1=(vv1 as SOAPService.StringValue).Text;
                 string s2=(vv2 as SOAPService.StringValue).Text;
                 return (s1 == s2);
+            } else
+
+            if ((vv1 is SOAPService.NumberValue) &&
+                (vv2 is SOAPService.NumberValue))
+            {
+                SOAPService.NumberValue n1 = (vv1 as SOAPService.NumberValue);
+                SOAPService.NumberValue n2 = (vv2 as SOAPService.NumberValue);
+
+                if ((n1.IncludeLower == n2.IncludeLower) &&
+                    (n1.IncludeUpper == n2.IncludeUpper) &&
+                    (n1.Lower == n2.Lower) &&
+                    (n1.Upper == n2.Upper))
+                    return true;
             }
 
             return false;
+        }
+
+        public string EditableStatusStr(SOAPService.EditableStatus status)
+        {
+            string s = "--";
+
+            switch (status)
+            {
+                case SOAPService.EditableStatus.Added:
+                    s += "Added";
+                    break;
+                case SOAPService.EditableStatus.Deleted:
+                    s += "Deleted";
+                    break;
+                case SOAPService.EditableStatus.Modified:
+                    s += "Modified";
+                    break;
+                case SOAPService.EditableStatus.Unchanged:
+                    s += "Unchanged";
+                    break;
+            }
+
+            return s;
         }
 
 	}

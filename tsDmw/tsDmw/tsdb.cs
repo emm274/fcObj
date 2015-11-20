@@ -71,6 +71,8 @@ namespace tsDmw
         string fcommitMsg = null;
         string fcommitID = null;
 
+        Task task = null;
+
         void __error(string capt, string message)
         {
             __message(capt,message);
@@ -99,6 +101,11 @@ namespace tsDmw
             fVersion = "";
             fBranches = new List<string>();
             fCommits = new Dictionary<string,string>();
+        }
+
+        public void waitTask()
+        {
+            if (task != null) Task.WaitAny(task);
         }
 
         protected override void value(string k, int index, JsonToken typ, Object v)
@@ -147,19 +154,19 @@ namespace tsDmw
         public void getVersion(tnotify notify)
         {
             __beginTask("get version");
-            Task.Run(() => __get("", tquery.getVersion, notify));
+            task = Task.Run(() => __get("", tquery.getVersion, notify));
         }
 
         public void getBranches(tnotify notify)
         {
             fBranches.Clear(); __beginTask("get branches");
-            Task.Run(() => __get("branches", tquery.getBranches, notify));
+            task = Task.Run(() => __get("branches", tquery.getBranches, notify));
         }
 
         public void getCommits(string name, tnotify notify)
         {
             fCommits.Clear(); __beginTask("get commits");
-            Task.Run(() => __get("branch/" + name + "/log", tquery.getCommits, notify));
+            task = Task.Run(() => __get("branch/" + name + "/log", tquery.getCommits, notify));
         }
 
         public void getContent(string name, string dest)
@@ -174,13 +181,13 @@ namespace tsDmw
             }
 
             __beginTask("get content: "+name);
-            Task.Run(() => __download("branch/" + name + "/content", path));
+            task = Task.Run(() => __download("branch/" + name + "/content", path));
         }
 
         public void commit(string name, string path, tnotify notify)
         {
             __beginTask("commit: " + name);
-            Task.Run(() => __postFile("/commit", path, tquery.post, notify) );
+            task = Task.Run(() => __postFile("/commit", path, tquery.post, notify));
         }
 
         public void undo_commit(string branch, string commit, tnotify notify)
@@ -203,16 +210,16 @@ namespace tsDmw
 
                 string what = "/branch/"+branch+"?force=true";
 
-                Task.Run(() => xmap_put(what, tmp, tquery.delete, notify));
+                task = Task.Run(() => xmap_put(what, tmp, tquery.delete, notify));
 
-//                Task.Run(() => __sendData(what, "PUT", data, null, tquery.delete, notify));
+//              task = Task.Run(() => __sendData(what, "PUT", data, null, tquery.delete, notify));
             }
         }
 
         public void json_to_text(string path, string dest)
         {
             __beginTask(Path.GetFileName(dest));
-            Task.Run(() => task_json_to_text(path,dest));
+            task = Task.Run(() => task_json_to_text(path,dest));
         }
 
         void task_json_to_text(string path, string dest)
@@ -231,7 +238,7 @@ namespace tsDmw
         public void json_to_map(string path, string dest)
         {
             __beginTask(Path.GetFileName(dest));
-            Task.Run(() => task_json_to_map(path, dest));
+            task = Task.Run(() => task_json_to_map(path, dest));
         }
 
         void task_json_to_map(string path, string dest)
@@ -462,8 +469,8 @@ namespace tsDmw
             if (File.Exists(response)) File.Delete(response);
 
             int rc;
-             fmap.HttpPost(Host + "/" + "commit", Login, Password, 
-                           "application/json", path, response, out rc);
+            fmap.HttpPost(Host + "/" + "commit", Login, Password, 
+                          "application/json", path, response, out rc);
 
              if (rc == 1)
              if (File.Exists(response))

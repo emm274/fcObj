@@ -347,7 +347,7 @@ namespace tsObjects
         }
 
         public void Reset() {
-            lower = 1; upper = 0; key = "";
+            lower = 0; upper = 0; key = "";
         }
 
         public bool Enabled {

@@ -229,6 +229,21 @@
         <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="GetMetadataClassSchemas">
+      <soap12:operation soapAction="http://oobd.gismap3d.ru/ISODBService/GetMetadataClassSchemas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="TokenFaultFault">
+        <soap12:fault use="literal" name="TokenFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ExecuteFaultFault">
+        <soap12:fault use="literal" name="ExecuteFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="GetFeatureClassMetaData">
       <soap12:operation soapAction="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassMetaData" style="document" />
       <wsdl:input>

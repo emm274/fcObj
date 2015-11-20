@@ -31,6 +31,19 @@ namespace Convert
 			return false;
 		}
 
+        public static bool CompareString(string s1, string s2)
+        {
+            if (s1 == null)
+                return (s2 == null);
+            else
+            if (s2 == null)
+                return false;
+            else
+            if (s1 != s2) return false;
+
+            return true;
+        }
+
         public static byte[] GetBytes(string str)
         {
             byte[] bytes = new byte[str.Length * sizeof(char)];

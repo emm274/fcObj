@@ -2073,9 +2073,6 @@ namespace fcDmw.SOAPService {
         private string Metadata_Cl_IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int Metadata_ClassIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ParentKeyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -2145,19 +2142,6 @@ namespace fcDmw.SOAPService {
                 if ((object.ReferenceEquals(this.Metadata_Cl_IdField, value) != true)) {
                     this.Metadata_Cl_IdField = value;
                     this.RaisePropertyChanged("Metadata_Cl_Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Metadata_ClassId {
-            get {
-                return this.Metadata_ClassIdField;
-            }
-            set {
-                if ((this.Metadata_ClassIdField.Equals(value) != true)) {
-                    this.Metadata_ClassIdField = value;
-                    this.RaisePropertyChanged("Metadata_ClassId");
                 }
             }
         }
@@ -5349,6 +5333,14 @@ namespace fcDmw.SOAPService {
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassSchema", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassSchemaResponse")]
         System.Threading.Tasks.Task<fcDmw.SOAPService.FeatureClassSchema> GetFeatureClassSchemaAsync(string token, string cl_id);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetMetadataClassSchemas", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetMetadataClassSchemasResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/GetMetadataClassSchemasTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.ExecuteFault), Action="http://oobd.gismap3d.ru/ISODBService/GetMetadataClassSchemasExecuteFaultFault", Name="ExecuteFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
+        System.Collections.Generic.List<fcDmw.SOAPService.MetadataClassSchema> GetMetadataClassSchemas(string token);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetMetadataClassSchemas", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetMetadataClassSchemasResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<fcDmw.SOAPService.MetadataClassSchema>> GetMetadataClassSchemasAsync(string token);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassMetaData", ReplyAction="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassMetaDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(fcDmw.SOAPService.TokenFault), Action="http://oobd.gismap3d.ru/ISODBService/GetFeatureClassMetaDataTokenFaultFault", Name="TokenFault", Namespace="http://schemas.datacontract.org/2004/07/SODBServices.CustomExceptions")]
         System.Collections.Generic.List<fcDmw.SOAPService.MetaValue> GetFeatureClassMetaData(string token, string cl_id);
@@ -5665,6 +5657,14 @@ namespace fcDmw.SOAPService {
         
         public System.Threading.Tasks.Task<fcDmw.SOAPService.FeatureClassSchema> GetFeatureClassSchemaAsync(string token, string cl_id) {
             return base.Channel.GetFeatureClassSchemaAsync(token, cl_id);
+        }
+        
+        public System.Collections.Generic.List<fcDmw.SOAPService.MetadataClassSchema> GetMetadataClassSchemas(string token) {
+            return base.Channel.GetMetadataClassSchemas(token);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<fcDmw.SOAPService.MetadataClassSchema>> GetMetadataClassSchemasAsync(string token) {
+            return base.Channel.GetMetadataClassSchemasAsync(token);
         }
         
         public System.Collections.Generic.List<fcDmw.SOAPService.MetaValue> GetFeatureClassMetaData(string token, string cl_id) {

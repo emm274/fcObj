@@ -182,7 +182,7 @@
             // AboutItem
             // 
             this.AboutItem.Name = "AboutItem";
-            this.AboutItem.Size = new System.Drawing.Size(152, 22);
+            this.AboutItem.Size = new System.Drawing.Size(150, 22);
             this.AboutItem.Text = "О программе...";
             this.AboutItem.Click += new System.EventHandler(this.AboutItem_Click);
             // 

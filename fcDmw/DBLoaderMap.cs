@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using xmap;
 using fcDmw.SOAPService;
 using ofiles;
@@ -10,6 +8,8 @@ using Convert;
 
 namespace fcDmw
 {
+    public enum LoaderMapMode { Load, Update, Compare };
+
     public class DBLoaderMap
     {
 
@@ -28,8 +28,21 @@ namespace fcDmw
 
         xmap.Ixmap_auto map = null;
         xmap.IFeature obj = null;
+        xmap.IFeature obj1 = null;
+        xmap.IFeature obj2 = null;
         string session = null;
+
+        int fadded1 = 0;
+        int fadded2 = 0;
+        int fupdated = 0;
+        int fdeleted = 0;
+
         int fcount = 0;
+        int fnot_found = 0;
+        int fmodified_sf = 0;
+        int fmodified_mf = 0;
+        int fmodified_hf = 0;
+        int fmodified_meta = 0;
 
         sodbFeatureToText flog = null;
         TTextWrite ferr = new TTextWrite();
@@ -37,12 +50,19 @@ namespace fcDmw
         sodb fdb = null;
         List<FeatureClassSchema> ffc = null;
 
-        bool fIsUpdate;
+        List<SOAPService.MetadataClassSchema> fmc = null;
+
+        LoaderMapMode fMode = LoaderMapMode.Load;
+
+        bool IsUpdate { get { return (fMode == LoaderMapMode.Update); } }
+        bool IsCompare { get { return (fMode == LoaderMapMode.Compare); } }
 
         public DBLoaderMap()
         {
             map = new xmap_autoClass();
             obj = map.Feature;
+            obj1 = map.Feature;
+            obj2 = map.Feature;
             ffc = new List<FeatureClassSchema>();
         }
 
@@ -155,9 +175,210 @@ namespace fcDmw
             return pp;
         }
 
-        SOAPService.FeatureClassSchema __Schema(string Cl_Id)
+        MetadataClassSchema GetMetaSchema(string Cl_Id)
         {
-            SOAPService.FeatureClassSchema fc = ffc.Where(x => x.Cl_Id == Cl_Id).FirstOrDefault();
+            if (fmc == null)
+                fmc = fdb.GetMetadataClassSchemas();
+
+            MetadataClassSchema mc = fmc.Where(x => x.Cl_Id == Cl_Id).FirstOrDefault();
+
+            if (mc == null)
+                Error(string.Format("metaClass <{0}> not found.", Cl_Id));
+
+            return mc;
+        }
+
+        MetadataClassSchema GetMetaCompositAcronim(MetadataClassSchema mc, string Acronym)
+        {
+            MetaField mf = mc.MetaFields.Where(x => x.Akronim == Acronym).FirstOrDefault();
+            if (mf == null)
+                Error(string.Format("metaSchema <{0}>: metaField <{1}> not found.", mc.Cl_Id, Acronym));
+            else
+                return GetMetaSchema(mf.CompositAttrAkronim);
+
+            return null;
+        }
+
+        Metadata metadata(string acronym, string owner)
+        {
+            Metadata m = new Metadata();
+            m.Akronim = acronym;
+            m.Metadata_Cl_Id = owner;
+            return m;
+        }
+
+        void fill_metadata(List<Metadata> list, int offs, MetadataClassSchema mc)
+        {
+            ulong pos = map.Position;
+
+            obj2.Get(offs);
+            offs = obj2.Offset;
+
+            xmap.IAttrs hf = obj2.hf;
+
+            int n = hf.Count;
+            for (int i = 0; i < n; i++)
+            {
+                string key, str;
+                double v1, v2; int op;
+                hf.GetValue(i, out key, out str, out v1, out v2, out op);
+
+                if (convert.IsString(key))
+                    if (convert.IsString(str))
+                    {
+                        Metadata m = metadata(key, mc.Cl_Id);
+
+                        m.IsCompositeAttribute = false;
+
+                        MetaValue v = new MetaValue();
+                        v.Value = str;
+
+                        m.Values = new List<MetaValue>();
+                        m.Values.Add(v);
+
+                        list.Add(m);
+                    }
+            }
+
+            if (map.get_Seek_Node(offs, "") > 0)
+                if (map.Goto_down > 0)
+                    do
+                    {
+                        obj2.Get(0);
+                        int loc = obj2.Loc;
+                        if (loc == 30)
+                        {
+                            string key = obj2.acronym;
+                            if (convert.IsString(key))
+                            {
+                                Metadata m = metadata(key, mc.Cl_Id);
+                                m.IsCompositeAttribute = true;
+                                m.CompositeMetadata = new List<Metadata>();
+
+                                MetadataClassSchema mc1 = GetMetaCompositAcronim(mc, key);
+
+                                if (mc1 != null)
+                                    fill_metadata(m.CompositeMetadata, obj2.Offset, mc1);
+
+                                list.Add(m);
+                            }
+                        }
+
+                    } while (map.Goto_right > 0);
+
+            map.Position = pos;
+        }
+
+        List<Metadata> __metadata(int ptr, int typ, string acronym)
+        {
+            List<Metadata> list = new List<Metadata>();
+
+            int ptr1 = map.get_metadata(ptr, typ, acronym);
+            if (ptr1 > 0)
+            {
+                MetadataClassSchema mc = GetMetaSchema("metadata");
+
+                if (mc != null)
+                    fill_metadata(list, ptr1, mc);
+            }
+
+            if (list.Count > 0) return list;
+            return null;
+        }
+
+        bool MetadataExist(Metadata m)
+        {
+            if (m.IsCompositeAttribute)
+            {
+                if (m.CompositeMetadata != null)
+                if (m.CompositeMetadata.Count > 0)
+                return true;
+            }
+            else {
+                if (m.Values != null) 
+                if (m.Values.Count > 0)
+                return true;
+            }
+
+            return false;
+        }
+
+        bool __editMetadata(List<Metadata> list1, List<Metadata> list2, string path)
+        {
+            bool rc = false;
+            string path1 = path + ".";
+
+            if (list1 != null)
+            foreach (var m1 in list1)
+            {
+                Metadata m2 = null;
+
+                if (list2 != null)
+                    m2 = list2.Where(x => x.Akronim == m1.Akronim).FirstOrDefault();
+
+                if (m2 == null)
+                {
+                    m1.Status = EditableStatus.Added;
+                    rc = true;
+
+                    if (m1.IsCompositeAttribute)
+                        __editMetadata(m1.CompositeMetadata, null, path1 + m1.Akronim);
+                }
+                else
+                if (m1.IsCompositeAttribute)
+                {
+                    if (__editMetadata(m1.CompositeMetadata, m2.CompositeMetadata, path1 + m1.Akronim))
+                    {
+                        rc = true;
+                        m1.Status = EditableStatus.Modified;
+                    }
+                }
+                else
+                {
+                    int n1 = 0;
+                    if (m1.Values != null)
+                        n1 = m1.Values.Count;
+
+                    int n2 = 0;
+                    if (m2.Values != null)
+                        n2 = m2.Values.Count;
+
+                    if (n1 != n2)
+                    {
+
+                    }
+                    else
+                    {
+                        MetaValue v1 = m1.Values[0];
+                        MetaValue v2 = m2.Values[0];
+                        if (!convert.CompareString(v1.Value,v2.Value)) {
+                            v1.Status=EditableStatus.Modified;
+                            rc = true;
+                        }
+
+                    }
+                }
+
+                if (m2 != null) list2.Remove(m2);
+            }
+
+            if (list2 != null)
+            if (list2.Count > 0)
+            {
+                if (IsCompare)
+                foreach (var m2 in list2)
+                if (MetadataExist(m2)) {
+                    Error(String.Format("meta {0}{1} not found.", path1, m2.Akronim));
+                    rc = true;
+                }
+            }
+
+            return rc;
+        } 
+        
+        FeatureClassSchema __Schema(string Cl_Id)
+        {
+            FeatureClassSchema fc = ffc.Where(x => x.Cl_Id == Cl_Id).FirstOrDefault();
             if (fc == null)
             {
                 fc = fdb.GetFeatureClassSchema(Cl_Id);
@@ -167,9 +388,9 @@ namespace fcDmw
             return fc;
         }
 
-        SOAPService.RelationRule __Rule(string Cl_Id,string Rule_Id)
+        RelationRule __Rule(string Cl_Id,string Rule_Id)
         {
-            SOAPService.FeatureClassSchema fc = __Schema(Cl_Id);
+            FeatureClassSchema fc = __Schema(Cl_Id);
             if (fc != null) 
             if (fc.Relations != null)
             foreach(var rule in fc.Relations) 
@@ -190,6 +411,7 @@ namespace fcDmw
             SOAPService.FeatureClassSchema fc = __Schema(Cl_Id);
 
             if (fc != null) 
+            if (fc.Fields != null)
             f = fc.Fields.Where(x => x.Attr_Id == Attr_Id).FirstOrDefault();
 
             if (f == null)
@@ -216,13 +438,9 @@ namespace fcDmw
 
         SOAPService.AttrValue __attrValue(SOAPService.Attribute a, string str, double v1, double v2, int op)
         {
-
             if (a != null)
-
-            if (str != null)
-            if (str.Length > 0)
+            if (convert.IsString(str))
             {
-
                 var v = new SOAPService.AttrValue();
 
                 if ((a.Type == DataType.String) ||
@@ -272,25 +490,23 @@ namespace fcDmw
                     }
                 }
 
-                if (v.Value != null) {
+                if (v.Value != null) { 
 
+                    v.Metadata = __metadata(obj.Offset, 2, a.Attr_Id);
+                
                     if (a.Values == null)
-                    a.Values = new List<SOAPService.AttrValue>();
+                    a.Values = new List<AttrValue>();
 
                     a.Values.Add(v);
                     return v;
                 }
             }
-
+        
             return null;
         }
 
-        void addAttrs(string Cl_Id,
-                      SOAPService.Feature main_ft,
-                      int main_code, int main_loc,  
-                      List<SOAPService.Attribute> attrs)
+        void addAttrs(string Cl_Id, List<SOAPService.Attribute> attrs)
         {
-
             xmap.IAttrs hf = obj.hf;
 
             int n = hf.Count;
@@ -303,8 +519,7 @@ namespace fcDmw
                 if (a != null) __attrValue(a, str, v1, v2, op);
             }
 
-            childs(Cl_Id, main_ft,main_code,main_loc, attrs);
-
+            childs(Cl_Id,attrs);
         }
 
         bool frst_Datatype(int code)
@@ -369,7 +584,7 @@ namespace fcDmw
             return false;
         }
 
-        bool __compPoints(List<Point> src, List<Point> dst)
+        bool __compPoints(List<Point> src, List<Point> dst, bool swap)
         {
             int n = src.Count;
             if (n != dst.Count)
@@ -378,7 +593,10 @@ namespace fcDmw
             {
                 for (int i = 0; i < n; i++)
                 {
-                    Point p1 = src[i], p2 = dst[i];
+                    int j = i;
+                    if (swap) j = n - 1 - i;
+
+                    Point p1 = src[i], p2 = dst[j];
                     double d;
                     
                     d = Math.Abs(p2.X - p1.X);
@@ -407,7 +625,7 @@ namespace fcDmw
                     List<Point> p1 = src.Paths[i].Points;
                     List<Point> p2 = dst.Paths[i].Points;
 
-                    bool rc = __compPoints(p1, p2);
+                    bool rc = __compPoints(p1, p2,false);
                     if (!rc) return false;
                 }
 
@@ -432,7 +650,7 @@ namespace fcDmw
                     List<Point> p1 = src.Rings[i].Points;
                     List<Point> p2 = dst.Rings[i].Points;
 
-                    bool rc = __compPoints(p1, p2);
+                    bool rc = __compPoints(p1, p2,i == 0);
                     if (!rc) return false;
                 }
 
@@ -652,6 +870,7 @@ namespace fcDmw
                 fe.BaseShapePoint.Status = SOAPService.EditableStatus.Modified;
                 bool rc = __syncPoint(fe.BaseShapePoint,_fe.BaseShapePoint);
                 if (rc) fe.BaseShapePoint.Status = SOAPService.EditableStatus.Unchanged;
+                __editMetadata(fe.BaseShapePoint.Metadata, _fe.BaseShapePoint.Metadata, "point");
             }
 
             if (fe.BaseShapePolyline == null)
@@ -671,6 +890,7 @@ namespace fcDmw
                     fe.BaseShapePolyline.Status = SOAPService.EditableStatus.Modified;
                     bool rc = _PolylineToPolyline(fe.BaseShapePolyline, _fe.BaseShapePolyline);
                     if (rc) fe.BaseShapePolyline.Status = SOAPService.EditableStatus.Unchanged;
+                    __editMetadata(fe.BaseShapePolyline.Metadata, _fe.BaseShapePolyline.Metadata, "polyline");
                 }
 
             if (fe.BaseShapePolygon == null)
@@ -690,11 +910,26 @@ namespace fcDmw
                     fe.BaseShapePolygon.Status = SOAPService.EditableStatus.Modified;
                     bool rc = _PolygonToPolygon(fe.BaseShapePolygon, _fe.BaseShapePolygon);
                     if (rc) fe.BaseShapePolygon.Status = SOAPService.EditableStatus.Unchanged;
+                    __editMetadata(fe.BaseShapePolygon.Metadata, _fe.BaseShapePolygon.Metadata, "polygon");
                 }
         }
 
-        void __editAttrValues(Feature fe, Feature _fe)
+        void compMsg(int offset, SOAPService.Attribute a, AttrValue v)
         {
+            if (IsCompare)
+            {
+                string s = a.Attr_Id + "=" + 
+                           fdb.ValueString(v.Value) + " " + 
+                           fdb.EditableStatusStr(v.Status);
+
+                Error1(offset, s);
+            }
+        }
+
+        bool __editAttrValues(Feature fe, Feature _fe, int offset)
+        {
+            bool rc = false;
+
             if (fe.Attributes != null)
             foreach (var a1 in fe.Attributes) 
             {
@@ -710,28 +945,52 @@ namespace fcDmw
                 {
                     v1.Status = EditableStatus.Added;
 
+                    SOAPService.AttrValue vv2 = null;
+
                     if (a2 != null) 
+                    if (a2.Values != null)
                     foreach (var v2 in a2.Values) {
                         v1.Id = v2.Id;
 
+                        bool rc1 = false;
+
                         v1.Status = EditableStatus.Modified;
-                        if (fdb.compAttrValue(v1, v2))
-                        v1.Status = EditableStatus.Unchanged;
+                        if (fdb.compAttrValue(v1, v2)) {
+                            v1.Status = EditableStatus.Unchanged;
+                            rc1 = true;
+                        }
 
                         if (v1.Shape != null) {
                             _syncGeometry(v1.Shape, fe,_fe);
                             v1.Shape.Status = EditableStatus.Modified;
-                            if (_compShape(v1.Shape,v2.Shape)) 
-                            v1.Shape.Status = EditableStatus.Unchanged;
+                            if (_compShape(v1.Shape, v2.Shape))
+                                v1.Shape.Status = EditableStatus.Unchanged;
+                            else
+                                rc1 = false;
                         }
 
-                        a2.Values.Remove(v2);
-                        break;
+                        if (rc1) {
+                            vv2 = v2; break;
+                        }
+                        else {
+                            if (vv2 == null) vv2 = v2;
+                        }
+                    }
+
+                    if (vv2 != null) {
+                        __editMetadata(v1.Metadata, vv2.Metadata, a1.Attr_Id);
+                        a2.Values.Remove(vv2);
                     }
 
                     if (v1.Status == EditableStatus.Added) 
                     if (v1.Shape != null) 
                     _syncGeometry(v1.Shape, fe,_fe);
+
+                    if (v1.Status != EditableStatus.Unchanged)
+                    {
+                        if (IsCompare) compMsg(offset, a1, v1);
+                        rc = true;
+                    }
                 }
 
                 if (a2 != null)
@@ -741,6 +1000,10 @@ namespace fcDmw
                     if (a1.Values == null)
                     a1.Values = new List<SOAPService.AttrValue>();
                     a1.Values.Add(v2);
+
+                    if (IsCompare) compMsg(offset, a1, v2);
+
+                    rc = true;
                 }
 
                 if (a2 != null)
@@ -753,13 +1016,19 @@ namespace fcDmw
             if (a.Values.Count > 0)
             {
                 foreach (var v in a.Values)
-                v.Status = SOAPService.EditableStatus.Deleted;
+                {
+                    v.Status = SOAPService.EditableStatus.Deleted;
+                    if (IsCompare) compMsg(offset, a,v);
+                }
 
                 if (fe.Attributes == null)
                 fe.Attributes = new List<SOAPService.Attribute>();
 
                 fe.Attributes.Add(a);
+                rc = true;
             }
+
+            return rc;
         }
 
         void __editRelations(SOAPService.Feature fe, SOAPService.Feature _fe)
@@ -825,6 +1094,47 @@ namespace fcDmw
             }
         }
 
+        bool compShapes(Feature fe1, Feature fe2)
+        {
+            Point p1 = fe1.BaseShapePoint;
+            Point p2 = fe2.BaseShapePoint;
+
+            if (p1 == null) {
+                if (p2 != null) return false;
+            }
+            else
+            if (p2 == null)
+                return false;
+            else
+            if (!__syncPoint(p1, p2)) return false;
+
+            Polyline c1 = fe1.BaseShapePolyline;
+            Polyline c2 = fe2.BaseShapePolyline;
+
+            if (c1 == null) {
+                if (c2 != null) return false;
+            }
+            else
+            if (c2 == null)
+                return false;
+            else
+            if (!_compPolyline(c1,c2)) return false;
+
+            Polygon s1 = fe1.BaseShapePolygon;
+            Polygon s2 = fe2.BaseShapePolygon;
+
+            if (s1 == null) {
+                if (s2 != null) return false;
+            }
+            else
+            if (s2 == null)
+                return false;
+            else
+            if (!_compPolygon(s1, s2)) return false;
+
+            return true;
+        }
+
         void sync_fe_relations(Feature fe)
         {
             if (fe.Relations != null)
@@ -855,11 +1165,36 @@ namespace fcDmw
 
             uc &= 0xffff;   // off tx_uc_new for feature childs 
 
+            if (IsCompare) {
+                if (convert.IsString(key)) {
+                    Feature _fe = fdb.GetFeature(key);
+
+                    if (_fe == null)
+                        fnot_found++;
+                    else  {
+                        if (!convert.CompareString(fe.Cl_Id, _fe.Cl_Id)) fmodified_sf++;
+                        if (!compShapes(fe, _fe))
+                        {
+                            Error1(offset, "compare shapes");
+                            fmodified_mf++;
+                        }
+
+                        if (__editMetadata(fe.Metadata,_fe.Metadata, "object")) fmodified_meta++;
+                        if (__editAttrValues(fe, _fe, offset)) fmodified_hf++;
+                    }
+                }
+            } else
+
             if (uc == 0)
             {
                 sync_fe_relations(fe);
-                key = fdb.addFeature(session, fe);
-                if (key != null) fe.Key = key;
+                string key1 = fdb.addFeature(session, fe);
+                if (convert.IsString(key1)) {
+                    map.set_guid(offset, key1);
+                    fe.Key = key1;
+                    if (fe.IsRealFeature) fadded1++;
+                    else fadded2++;
+                }
             }
             else
             if (!convert.IsString(key))
@@ -872,6 +1207,7 @@ namespace fcDmw
             if ((uc & 2) != 0) {
                 fdb.deleteFeature(session, fe.Key);
                 msg = "delete"; key = null;
+                fdeleted++;
             }
             else 
             if (uc != 1) {
@@ -882,11 +1218,12 @@ namespace fcDmw
                 }
 
                 __editBaseShapes(fe, _fe);
-                __editAttrValues(fe, _fe);
+                __editAttrValues(fe, _fe, offset);
                 __editRelations(fe, _fe);
+                __editMetadata(fe.Metadata,_fe.Metadata, "object");
 
                 fdb.editFeature(session, fe);
-                msg = "edit";
+                msg = "edit"; fupdated++;
             }
 
             if (uc != 1) log_fe(fe, msg);
@@ -900,59 +1237,76 @@ namespace fcDmw
             return key;
         }
 
-        void __baseShape(SOAPService.Feature fe, int loc)
+        void __baseShape(SOAPService.Feature fe,
+                         xmap.IFeature obj, int loc)
         {
             if ((loc >= 1) && (loc <= 3))
             {
+                int offs = obj.Offset;
                 xmap.IPoly mf = obj.mf;
                 mf.IsWGS = 1;
 
                 if (mf.PartCount > 0)
-                    switch (loc)
-                    {
-                        case 1:
-                            if (fe.BaseShapePoint == null)
+                switch (loc)
+                {
+                    case 1:
+                        if (fe.BaseShapePoint == null)
+                        {
                             fe.BaseShapePoint = __point(mf);
-                            break;
-                        case 2:
-                            if (fe.BaseShapePolyline == null)
+                            if (fe.BaseShapePoint != null)
+                            fe.BaseShapePoint.Metadata = __metadata(offs,1,"");
+                        }
+                        break;
+                    case 2:
+                        if (fe.BaseShapePolyline == null)
+                        {
                             fe.BaseShapePolyline = __polyline(mf);
-                            break;
-                        case 3:
-                            if (fe.BaseShapePolygon == null)
+                            if (fe.BaseShapePolyline != null)
+                            fe.BaseShapePolyline.Metadata = __metadata(offs,1,"");
+                        }
+                        break;
+                    case 3:
+                        if (fe.BaseShapePolygon == null)
+                        {
                             fe.BaseShapePolygon = __polygon(mf);
-                            break;
-                    }
+                            if (fe.BaseShapePolygon != null)
+                            fe.BaseShapePolygon.Metadata = __metadata(offs,1,"");
+                        }
+                        break;
+                }
             }
         }
 
-        SOAPService.AttrValue __datatype(int code, int loc, SOAPService.Attribute a ) 
+        SOAPService.AttrValue __datatype(int code, int loc, SOAPService.Attribute a) 
         {
             SOAPService.AttrValue v = null;
 
             string acronym = a.CompositAttrCl_Id;
             var fe = new SOAPService.Feature() { Cl_Id = acronym, IsRealFeature = false };
 
-            int offset = obj.Offset;
+            int offs = obj.Offset;
+
+            if (loc == 0)
+             fe.Metadata = __metadata(offs, 2, "");
 
             if ((loc >= 1) && (loc <= 3))
             {
-                __baseShape(fe, loc);
+                __baseShape(fe,obj,loc);
                 if (!frst_Datatype(code)) return null;
             }
 
             int uc = 0;    // add feature
-            if (fIsUpdate) uc = obj.UpdateCode;
+            if (IsUpdate) uc = obj.UpdateCode;
 
             fe.Key = obj.guid;
 
             var attrs = new List<SOAPService.Attribute>();
-            addAttrs(acronym, null, 0, 0, attrs);
+            addAttrs(acronym,attrs);
 
             if (attrs.Count > 0) {
                 fe.Attributes = attrs;
 
-                string key = db_fe(fe, offset, uc);
+                string key = db_fe(fe, offs, uc);
 
                 if (key != null)
                 if (key.Length > 0) 
@@ -971,10 +1325,7 @@ namespace fcDmw
             return v;
         }
 
-        void childs(string Cl_Id, 
-                    SOAPService.Feature main_fe,
-                    int main_code, int main_loc,
-                    List<SOAPService.Attribute> attrs)  
+        void childs(string Cl_Id, List<SOAPService.Attribute> attrs)  
         {
             ulong pos = map.Position;
 
@@ -986,18 +1337,11 @@ namespace fcDmw
                 int code = obj.Code;
                 int loc = obj.Loc;
 
-                if ((loc >= 1) && (loc <= 3)) {
-
-                    if (main_fe != null)
-                    if (code == main_code)
-                    __baseShape(main_fe, loc);
-
-                } else
-
                 if ((loc >= 30) && (loc <= 33)) {
 
                     code = code % 100000;
 
+                    if (code < 32000)
                     if ((code < 995) || (code > 1000))
                     {
 
@@ -1040,7 +1384,6 @@ namespace fcDmw
                                                 {
                                                     case 1:
                                                         v.Shape = __point(mf);
-                                                        v.Shape.Type = SOAPService.GeometryType.Point;
                                                         break;
                                                     case 2:
                                                         v.Shape = __polyline(mf);
@@ -1066,44 +1409,65 @@ namespace fcDmw
                         }
                     }
 
-                } else
-
-                if ((loc >= 40) && (loc <= 43)) {
-
-                    if (main_fe != null)
-                    {
-                        int locid2, dir, typ;
-                        string guid2;
-                        string rule_Id;
-                        string name;
-
-                        obj.GetRole(out locid2, out guid2, out dir, out typ, out rule_Id, out name);
-
-                        if (dir == 1)   // source
-                        if (guid2 != null)
-                        if (guid2.Length > 0)
-                        {
-                            SOAPService.RelationRule rule = __Rule(main_fe.Cl_Id, rule_Id);
-                            if (rule != null)
-                            {
-                                SOAPService.Relation relation = new SOAPService.Relation();
-                                relation.Key = guid2;
-                                relation.Role = 0;
-                                relation.RelationRule = rule;
-
-                                if (main_fe.Relations == null)
-                                main_fe.Relations = new List<Relation>();
-
-                                main_fe.Relations.Add(relation);
-                            }
-                        }
-                    }
-                }
+                } 
 
                 map.Position = pos1;
             } while (map.Goto_right > 0);
 
             map.Position = pos;
+        }
+
+        void __relations(Feature fe, int offset)
+        {
+            int top = 0;
+            int ptr = map.get_frst_relation(offset,out top);
+            while (ptr > 0)
+            {
+                obj1.Get(ptr);
+
+                int locid2, dir, typ;
+                string guid2;
+                string rule_Id;
+                string name;
+
+                obj1.GetRole(out locid2, out guid2, out dir, out typ, out rule_Id, out name);
+
+                if (dir == 1)   // source
+                if (convert.IsString(guid2))
+                {
+                    RelationRule rule = __Rule(fe.Cl_Id, rule_Id);
+                    if (rule != null)
+                    {
+                        Relation relation = new Relation();
+                        relation.Key = guid2;
+                        relation.Role = 0;
+                        relation.RelationRule = rule;
+
+                        if (fe.Relations == null)
+                        fe.Relations = new List<Relation>();
+
+                        fe.Relations.Add(relation);
+                    }
+                }
+
+                ptr = map.get_next_relation(ptr, top);
+            }
+        }
+
+        void __geometry(Feature fe, int parent)
+        {
+            int top;
+            int run = map.get_frst_geometry(parent, out top);
+            while (run > 0)
+            {
+                obj1.Get(run);
+
+                int loc = obj.Loc % 100;
+                if ((loc >= 1) && (loc <= 3))
+                __baseShape(fe,obj1,loc);
+
+                run = map.get_next_geometry(run, top);
+            }
         }
 
         void objects()
@@ -1116,31 +1480,39 @@ namespace fcDmw
                 ulong pos1 = map.Position;
 
                 obj.Get(0);
-                int offset = obj.Offset;
+                int offs = obj.Offset;
                 string acronym = obj.acronym;
                 int code = obj.Code, loc = obj.Loc;
 
                 int uc = 0;    // add feature
-                if (fIsUpdate) uc = obj.UpdateCode;
+                if (IsUpdate) uc = obj.UpdateCode;
 
-                if (acronym != null)
-                if (acronym.Length > 0)
+                if (convert.IsString(acronym))
                 if ((loc >= 1) && (loc <= 3)) 
                 {
-                    var fe = new SOAPService.Feature() { Cl_Id=acronym, IsRealFeature = true };
+                    var fe = new Feature() { Cl_Id=acronym, IsRealFeature = true };
                     fe.Key = obj.guid;
 
-                    __baseShape(fe, loc);
+                    if (!IsCompare || convert.IsString(fe.Key)) {
 
-                    map.Position = pos1;
+                        __baseShape(fe, obj, loc);
+                        fe.Metadata = __metadata(offs, 0, "");
 
-                    var attrs = new List<SOAPService.Attribute>();
-                    addAttrs(acronym,fe,code,loc, attrs);
+                        map.Position = pos1;
 
-                    if (attrs.Count > 0)
-                    fe.Attributes = attrs;
+                        var attrs = new List<SOAPService.Attribute>();
+                        addAttrs(acronym, attrs);
 
-                    db_fe(fe, offset, uc); fcount++;
+                        if (attrs.Count > 0)
+                            fe.Attributes = attrs;
+
+                        __relations(fe, offs);
+                        __geometry(fe, offs);
+
+                        db_fe(fe, offs, uc);
+
+                        if (IsCompare) fcount++;
+                    }
                 }    
 
                 map.Position = pos1;
@@ -1164,10 +1536,10 @@ namespace fcDmw
             map.WorkDir = s;
         }
 
-        public void exec(string path, sodb db, sodbFeatureToText Alog, bool AIsUpdate)
+        public void exec(string path, sodb db, sodbFeatureToText Alog, LoaderMapMode Amode)
         {
 
-            map.OpenMap(path); fdb = db; flog = Alog; fIsUpdate = AIsUpdate; 
+            map.OpenMap(path); fdb = db; flog = Alog; fMode = Amode; 
 
             if (map.Enabled != 1)
                 __message(String.Format("open map '{0}' false.",path));
@@ -1198,20 +1570,57 @@ namespace fcDmw
 
                         ferr.close();
 
-                        if (fcount > 0)
+                        if (IsCompare)
+                        {
+                            if (fcount == 0)
+                                __message("Objects not found.");
+                            else {
+                                __message(String.Format("Verify {0} objects.", fcount));
 
-                            if (fIsUpdate)
-                            {
-                                __message(String.Format("Update {0} objects.", fcount));
-                                __message("apply Update");
+                                if (fnot_found + fmodified_sf + fmodified_mf + fmodified_hf + fmodified_meta == 0)
+                                    __message("OK.");
+                                {
+                                    if (fnot_found > 0)
+                                        __message(String.Format("*** not found {0} objects.", fnot_found));
+
+                                    if (fmodified_sf > 0)
+                                    __message(String.Format("*** acronym: {0} objects.", fmodified_sf));
+
+                                    if (fmodified_mf > 0)
+                                    __message(String.Format("*** shapes: {0} objects.", fmodified_mf));
+
+                                    if (fmodified_hf > 0)
+                                        __message(String.Format("*** attributes: {0} objects.", fmodified_hf));
+
+                                    if (fmodified_meta > 0)
+                                        __message(String.Format("*** metadata: {0} objects.", fmodified_meta));
+                                }
+                            }
+
+
+                        } else
+
+                        if (fadded1 + fadded2 + fdeleted + fupdated > 0)
+                        {
+                            if (fadded1 > 0) 
+                            __message(String.Format("Add {0} objects.", fadded1));
+
+                            if (fadded2 > 0) 
+                            __message(String.Format("Add {0} datatypes.", fadded2));
+
+                            if (fdeleted > 0) 
+                            __message(String.Format("Delete {0} objects.", fdeleted));
+
+                            if (fupdated > 0) 
+                            __message(String.Format("Update {0} objects.", fupdated));
+
+                            __message("apply Update");
+
+                            if (IsUpdate)
                                 db.applyUpdate(session, "UpdateObjects");
-                            }
                             else
-                            {
-                                __message(String.Format("Add {0} objects.", fcount));
-                                __message("apply Update");
                                 db.applyUpdate(session, "LoaderMap");
-                            }
+                        }
 
                         db.endUpdate(session);
                         __message("end session");

@@ -165,6 +165,7 @@ namespace fcDmw
             btGet.Enabled = conn;
             btLoad.Enabled = conn;
             btUpdate.Enabled = conn;
+            btComp.Enabled = conn;
             btListLoad.Enabled = conn;
             btListSave.Enabled = conn;
         }
@@ -365,7 +366,7 @@ namespace fcDmw
             if (Directory.Exists(fdataDir))
             dlg.InitialDirectory = fdataDir;
         	
-			dlg.Title="Save fragment as";
+			dlg.Title="Сохранить фрагмент как";
             dlg.Filter = "Files (*.dm)|*.dm|Files (*.txt)|*.txt";
 		    dlg.RestoreDirectory = true;
         	
@@ -455,7 +456,7 @@ namespace fcDmw
                 loader.message = __message;
                 loader.workDir( dmw.WorkDir() );
 
-                loader.exec(path,fsodb,doc,false);
+                loader.exec(path, fsodb, doc, LoaderMapMode.Load);
 
                 doc.Close(); doc = null;
 
@@ -484,12 +485,42 @@ namespace fcDmw
                 loader.message = __message;
                 loader.workDir(dmw.WorkDir());
 
-                loader.exec(path, fsodb, doc,true);
+                loader.exec(path, fsodb, doc, LoaderMapMode.Update);
 
                 doc.Close(); doc = null;
 
                 endProcess();
             }
+        }
+
+        private void btComp_Click(object sender, EventArgs e)
+        {
+            string path = "";
+
+            if (sodb_Connected())
+                if (XFiles.dialFile(ref fdataDir,
+                                    "Files (*.dm)|*.dm",
+                                    "Сравнить карту",
+                                    null, true, out path))
+                {
+                    string s = Path.GetFileName(path) + "...";
+                    beginProcess(s);
+
+                    DBLoaderMap loader = new DBLoaderMap();
+
+                    string log = Path.ChangeExtension(path, ".log");
+                    var doc = new sodbFeatureToText(log);
+
+                    loader.message = __message;
+                    loader.workDir(dmw.WorkDir());
+
+                    loader.exec(path, fsodb, doc, LoaderMapMode.Compare);
+
+                    doc.Close(); doc = null;
+
+                    endProcess();
+                }
+
         }
 
         private void x1__TextChanged(object sender, EventArgs e)

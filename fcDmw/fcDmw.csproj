@@ -126,6 +126,9 @@
     <None Include="Service References\SOAPService\fcDmw.SOAPService.Geometry.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\SOAPService\fcDmw.SOAPService.MetadataClassSchema.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\SOAPService\fcDmw.SOAPService.MetaField.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
