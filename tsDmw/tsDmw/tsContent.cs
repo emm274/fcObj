@@ -384,6 +384,7 @@ namespace tsContent
             switch(k) 
             {
                 case "attributes":
+                    if (!fIsRelations)
                     doc.startDumpBlock();
                     break;
                 case "geometry":
@@ -398,16 +399,21 @@ namespace tsContent
         public override void endObject(XJson doc, string k)
         {
             if (k == "attributes") {
-                fe.attrs = doc.stopDumpBlock();
 
-#if (test_enabled) 
-                bool rc = new XJson().ParseFromString(fe.attrs);
-                if (!rc)
+                if (!fIsRelations)
                 {
-                    doc.__message(fe.Name(), "attributes parse error");
-                    doc.__message(null, fe.attrs);
-                }
+                    fe.attrs = doc.stopDumpBlock();
+
+#if (test_enabled)
+                    bool rc = new XJson().ParseFromString(fe.attrs);
+                    if (!rc)
+                    {
+                        doc.__message(fe.Name(), "attributes parse error");
+                        doc.__message(null, fe.attrs);
+                    }
 #endif
+                }
+
             } else
 
             if (k == "geometry") {

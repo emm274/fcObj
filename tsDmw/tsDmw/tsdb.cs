@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.ComponentModel;
 
@@ -11,7 +9,6 @@ using System.Diagnostics;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 using otypes;
 using Convert;
@@ -24,7 +21,24 @@ namespace tsDmw
 {
     public delegate void tnotify(object sender, EventArgs e);
     public delegate void tnotifyTask(object sender, tnotify cb);
-    
+
+    class Progress : xmap.Progress
+    {
+        tmessage fProgress;
+
+        public Progress(tmessage AProgress)
+        {
+            fProgress = AProgress;
+        }
+
+        public void Percent(int v)
+        {
+            string s = String.Format("{0}%...", v);
+            if (fProgress != null)
+            fProgress(this, s);
+        }
+    }
+
     class tsdb: XJson {
 
         const int bufferSize = 0x4000;
@@ -67,6 +81,7 @@ namespace tsDmw
 
         string fdata;
         string fdest;
+        string fworkDir;
 
         string fcommitMsg = null;
         string fcommitID = null;
@@ -169,9 +184,9 @@ namespace tsDmw
             task = Task.Run(() => __get("branch/" + name + "/log", tquery.getCommits, notify));
         }
 
-        public void getContent(string name, string dest)
+        public void getContent(string name, string dest, string workDir)
         {
-            File.Delete(dest); fdest = null;
+            File.Delete(dest); fdest = null; fworkDir = workDir;
 
             string path = dest;
             if (Path.GetExtension(dest) != "json")
@@ -181,7 +196,8 @@ namespace tsDmw
             }
 
             __beginTask("get content: "+name);
-            task = Task.Run(() => __download("branch/" + name + "/content", path));
+//            task = Task.Run(() => __download("branch/" + name + "/content", path));
+            task = Task.Run(() => xmap_download("branch/" + name + "/content", path));
         }
 
         public void commit(string name, string path, tnotify notify)
@@ -206,12 +222,10 @@ namespace tsDmw
                 string tmp = OFiles.GetTmpPath("send");
                 OFiles.dumpData(tmp, data);
 
-                __beginTask(String.Format("{0}: undo commit {1}", branch, commit));
-
                 string what = "/branch/"+branch+"?force=true";
 
+                __beginTask(String.Format("{0}: undo commit {1}", branch, commit));
                 task = Task.Run(() => xmap_put(what, tmp, tquery.delete, notify));
-
 //              task = Task.Run(() => __sendData(what, "PUT", data, null, tquery.delete, notify));
             }
         }
@@ -244,6 +258,8 @@ namespace tsDmw
         void task_json_to_map(string path, string dest)
         {
             tsContentToMap map = new tsContentToMap(dest);
+            map.Progress = fProgress;
+            map.workDir(fworkDir);
 
             jsonContent json = new jsonContent(null, map);
             json.ParseFile(path, message);
@@ -266,9 +282,9 @@ namespace tsDmw
         {
             Stream stream = response.GetResponseStream();
 
-            if (stream != null) { 
+            if (stream != null) {
                 StreamReader reader = new StreamReader(stream,Encoding.UTF8);
-                fquery = query; Parse(reader); return true;
+                fquery = query; return Parse(reader); 
             }
 
             return false;
@@ -278,8 +294,16 @@ namespace tsDmw
         {
             WebResponse response = e.Response;
             if (response != null) {
-                bool rc = response_json(response, tquery.error);
-                response.Close(); return rc;
+
+                string typ = response.ContentType;
+                if (typ == "application/json")
+                {
+                    skipExceptionMsg = true;
+                    bool rc = response_json(response, tquery.error);
+                    skipExceptionMsg = false;
+
+                    response.Close(); return rc;
+                }
             }
 
             return false;
@@ -468,9 +492,12 @@ namespace tsDmw
             string response = Path.GetDirectoryName(path) + "\\response";
             if (File.Exists(response)) File.Delete(response);
 
+            Progress progress = new Progress(fProgress);
+
             int rc;
             fmap.HttpPost(Host + "/" + "commit", Login, Password, 
-                          "application/json", path, response, out rc);
+                          "application/json", path, response, 
+                          progress, out rc);
 
              if (rc == 1)
              if (File.Exists(response))
@@ -483,13 +510,13 @@ namespace tsDmw
 
         void xmap_put(string what, string path, tquery query, tnotify notify)
         {
-            xmap.Ixmap_auto fmap = new xmap_auto();
+            xmap.Ixmap_auto map = new xmap_auto();
 
             string response = Path.GetDirectoryName(path) + "\\response";
             if (File.Exists(response)) File.Delete(response);
 
             int rc;
-            fmap.HttpPut(Host + "/" + what, Login, Password,
+            map.HttpPut(Host + "/" + what, Login, Password,
                          "application/json", path, response, out rc);
 
             if (rc == 1)
@@ -515,19 +542,40 @@ namespace tsDmw
                 __sendData(what,"POST",  File.ReadAllBytes(path), null, query, notify);
         }
 
+        bool xmap_download(string what, string path)
+        {
+            fdata = path;
+
+            Progress progress = new Progress(fProgress);
+
+            xmap.Ixmap_auto map = new xmap_auto();
+            int rc;
+            map.HttpDownload(Host + "/" + what, Login, Password,
+                          "application/json", path, progress, out rc);
+
+            if (rc == 1)
+            {
+                DownloadCompletedCallback(null, null);
+                return true;
+            }
+
+            return false;
+        }
+
         bool __download(string what, string path)
         {
             fdata = path;
 
             WebClient client = new WebClient();
             client.Credentials = new NetworkCredential(Login, Password);
+ 
             Uri uri = new Uri(Host + "/" + what);
             try
             {
                 if (fProgress == null)
                 {
                     client.DownloadFile(uri, path);
-                    __endTask(this, Path.GetFileName(path) + ".");
+                    DownloadCompletedCallback(null, null);
                 }
                 else
                 {

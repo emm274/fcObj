@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
@@ -131,14 +126,18 @@ namespace tsDmw
 
         void api_version(object sender, EventArgs e)
         {
-            statusApiVersion.Text = fdb.version;
+            statusApiVersion.Text = "{" + fdb.version + "}";
             fdb.getBranches(branches);
         }
 
         void branches(object sender, EventArgs e)
         {
-            statusApiVersion.Text = fdb.version;
+            statusApiVersion.Text = "{" + fdb.version + "}";
+
+            lbBranches.Items.Clear();
             XEdits.FillListBox(lbBranches, fdb.branches);
+            lbCommit.Items.Clear();
+
             if (lbBranches.Items.Count > 0)
             {
                 lbBranches.SelectedIndex = 0;
@@ -195,7 +194,7 @@ namespace tsDmw
                     fini.WriteInt("saveIndex", rc);
 
                     lbMsg.Clear();
-                    fdb.getContent(br, dest);
+                    fdb.getContent(br, dest, fworkDir);
                 }
             }
         }

@@ -34,7 +34,7 @@ namespace tsDmw
 
         JsonTextWriter fwriter;
 
-        int fadded, fupdated, fdeleted;
+        int fadded, fupdated, fdeleted, fno_acronym, fno_guid;
 
         List<Geometry> fGeometry = new List<Geometry>();
 
@@ -711,79 +711,90 @@ namespace tsDmw
                     ulong pos1 = fmap.Position;
 
                     fobj.Get(0);
-                    int offset = fobj.Offset;
-                    string code = fobj.acronym;
-                    string guid = fobj.guid;
+                    int code = fobj.Code;
                     int loc = fobj.Loc;
 
-                    int uc = 0;    // add feature
-                    if (fIsUpdate) uc = fobj.UpdateCode;
-                    uc &= 0xffff;   // off tx_uc_new for feature childs 
+                    string acronym = fobj.acronym;
+                    string guid = fobj.guid;
 
-                    fGeometry.Clear();
+                    if ((code != 0) || (loc != 1))
 
-                    if (convert.IsString(code))
-                    if (convert.IsString(guid))
-                    if ((loc >= 1) && (loc <= 3))
+                    if (((loc >= 1) && (loc <= 3)) || (loc == 10))
 
-                    if (uc == 0)
-                        add_feature(fmap,fobj);
+                    if (!convert.IsString(acronym))
+                        fno_acronym++;
+                    else
+                    if (!convert.IsString(guid))
+                        fno_guid++;
                     else {
-                        int rc = fbase_map.get_Seek_Node(0, guid);
-                        if (rc == 0)
-                            Error(String.Format("guid {0} not found.", guid));
+                        int offset = fobj.Offset;
+
+                        int uc = 0;    // add feature
+                        if (fIsUpdate) uc = fobj.UpdateCode;
+                        uc &= 0xffff;   // off tx_uc_new for feature childs 
+
+                        fGeometry.Clear();
+
+                        if (uc == 0)
+                            add_feature(fmap, fobj);
                         else
                         {
-                            fbase_obj.Get(0);
-
-                            if ((uc & 2) != 0)
-                            {
-                                fwriter.WritePropertyName(feTag + guid);
-                                fwriter.WriteStartArray();
-
-                                ref_feature(fbase_map, fbase_obj,fbase_obj1);
-
-                                fwriter.WriteValue(0);
-                                fwriter.WriteValue(0);
-
-                                fwriter.WriteEndArray();
-                                fdeleted++;
-                            }
+                            int rc = fbase_map.get_Seek_Node(0, guid);
+                            if (rc == 0)
+                                Error(String.Format("guid {0} not found.", guid));
                             else
                             {
-                                bool upd = false;
+                                fbase_obj.Get(0);
 
-                                if ((uc & 0x10) != 0)       // mf
-                                    if (move_shape(fbase_obj, fobj)) upd = true;
-
-                                if ((uc & 0x100) != 0)      // geoms 
-                                {
-                                    int rc1 = move_geoms(fbase_obj.Offset,
-                                                         fbase_map,
-                                                         fbase_obj1, 
-                                                         
-                                                         offset,
-                                                         fmap,
-                                                         fobj1);
-
-                                    if (rc1 != 0) upd = true;
-                                    if ((rc1 & 2) == 0)
-                                    uc &= 0xfeff; 
-                                }
-
-                                if ((uc & 0x1a4) != 0)   // code, hf, roles, geoms
+                                if ((uc & 2) != 0)
                                 {
                                     fwriter.WritePropertyName(feTag + guid);
                                     fwriter.WriteStartArray();
 
-                                    ref_feature(fbase_map, fbase_obj,fbase_obj1);
-                                    ref_feature(fmap, fobj,fobj1);
+                                    ref_feature(fbase_map, fbase_obj, fbase_obj1);
+
+                                    fwriter.WriteValue(0);
+                                    fwriter.WriteValue(0);
 
                                     fwriter.WriteEndArray();
-                                    upd = true;
+                                    fdeleted++;
                                 }
+                                else
+                                {
+                                    bool upd = false;
 
-                                if (upd) fupdated++;
+                                    if ((uc & 0x10) != 0)       // mf
+                                        if (move_shape(fbase_obj, fobj)) upd = true;
+
+                                    if ((uc & 0x100) != 0)      // geoms 
+                                    {
+                                        int rc1 = move_geoms(fbase_obj.Offset,
+                                                                fbase_map,
+                                                                fbase_obj1,
+
+                                                                offset,
+                                                                fmap,
+                                                                fobj1);
+
+                                        if (rc1 != 0) upd = true;
+                                        if ((rc1 & 2) == 0)
+                                            uc &= 0xfeff;
+                                    }
+
+                                    if ((uc & 0x1a4) != 0)   // code, hf, roles, geoms
+                                    {
+                                        fwriter.WritePropertyName(feTag + guid);
+                                        fwriter.WriteStartArray();
+
+                                        ref_feature(fbase_map, fbase_obj, fbase_obj1);
+                                        ref_feature(fmap, fobj, fobj1);
+
+                                        fwriter.WriteEndArray();
+                                        upd = true;
+                                    }
+
+                                    if (upd) fupdated++;
+                                }
                             }
                         }
                     }
@@ -801,10 +812,10 @@ namespace tsDmw
             } while (fmap.Goto_right > 0);
         }
 
-        public void workDir(string s)
+        public void workDir(string dir)
         {
-            if (s != null)
-                fmap.WorkDir = s;
+            if (convert.IsString(dir))
+                fmap.WorkDir = dir;
         }
 
         bool open_map(xmap.Ixmap_auto map, string path)
@@ -835,9 +846,10 @@ namespace tsDmw
             {
                 double x1, y1, x2, y2;
                 int pps = fmap.get_Bound(out x1, out y1, out x2, out y2);
+
                 if (pps != 1)
                     _message("expected world coordinate system.");
-                else 
+                else
                 if (fmap.Goto_root == 0)
                     _message("Goto_root == 0");
                 else {
@@ -854,8 +866,8 @@ namespace tsDmw
 
                             fwriter.WriteStartObject();
 
-                            writeValues("branch",branch);
-                            writeValues("message",comment);
+                            writeValues("branch", branch);
+                            writeValues("message", comment);
 
                             fwriter.WritePropertyName("patch");
                             fwriter.WriteStartObject();
@@ -863,6 +875,8 @@ namespace tsDmw
                             fadded = 0;
                             fupdated = 0;
                             fdeleted = 0;
+                            fno_acronym = 0;
+                            fno_guid = 0;
 
                             ferr.open(Path.ChangeExtension(path, ".err"));
 
@@ -878,26 +892,32 @@ namespace tsDmw
 
                             int rc1 = fadded + fupdated + fdeleted;
 
-                            if (rc1 > 0) { 
-
+                            if (rc1 > 0)
+                            {
                                 if (fadded > 0)
-                                __message(null, String.Format("Add {0} objects.", fadded));
+                                    __message(null, String.Format("Add {0} objects.", fadded));
 
                                 if (fupdated > 0)
-                                __message(null,String.Format("Update {0} objects.", fupdated));
+                                    __message(null, String.Format("Update {0} objects.", fupdated));
 
                                 if (fdeleted > 0)
                                     __message(null, String.Format("Delete {0} objects.", fdeleted));
 
                                 rc = true;
                             }
-                        }
 
+                            if (fno_guid > 0)
+                                __message(null, String.Format("no guid: {0} objects.", fno_guid));
+
+                            if (fno_acronym > 0)
+                                __message(null, String.Format("no acronym: {0} objects.", fno_acronym));
+                        }
                     }
                     catch (Exception e)
                     {
                         _message(e.Message);
                     }
+
                 }
             }
 

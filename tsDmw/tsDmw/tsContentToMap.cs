@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
+using otypes;
 using Convert;
 using tsObjects;
 using xmap;
@@ -26,6 +24,9 @@ namespace tsDmw
 
         public int Count { get { return fCount; } }
 
+        tmessage fProgress = null;
+        public tmessage Progress { set { fProgress = value; } }
+
         public tsContentToMap(string Path)
 		{
 			fmap = new xmap_auto();
@@ -36,13 +37,27 @@ namespace tsDmw
 
         public bool Enabled() { return fEnabled;  }
 
+        public void workDir(string dir)
+        {
+            if (convert.IsString(dir))
+                fmap.WorkDir = dir;
+        }
+
         public void Close() 
         {
             fmap.Close();
         }
 
         public int GetStageCount() { return 4; }
-        public void SetStage(int value) { fStage = value; }
+
+        public void SetStage(int value) {
+            fStage = value;
+            if (fProgress != null)
+            {
+                string s = String.Format("stage {0}",fStage);
+                fProgress(this, s);
+            }
+        }
 
         public bool Bound(double x1, double y1, double x2, double y2)
         {
@@ -110,6 +125,12 @@ namespace tsDmw
             if (fEnabled && fe.Enabled()) 
             {
                 obj.Reset();
+
+////////////////////
+                if (fe.guid == "61A8CB9F-CA15-4903-B7AB-6F7ABB5F9CE4")
+                {
+                    string s = fe.guid;
+                }
 
                 if (convert.IsString(fe.attrs))
                     obj.Info = fe.attrs;

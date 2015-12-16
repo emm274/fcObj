@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 using classMsg;
 using Convert;
@@ -33,6 +31,8 @@ namespace xjson
         bool fIsDumpBlock = false;
         StringBuilder fdumpBlock = new StringBuilder();
         JsonTextWriter fwriter;
+
+        public bool skipExceptionMsg = false;
 
         public bool status_success()
         {
@@ -293,6 +293,7 @@ namespace xjson
             }
             catch (Exception e)
             {
+                if (!skipExceptionMsg)
                 __message("json", e.Message);
                 return false;
             }
