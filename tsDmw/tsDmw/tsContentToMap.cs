@@ -126,12 +126,6 @@ namespace tsDmw
             {
                 obj.Reset();
 
-////////////////////
-                if (fe.guid == "61A8CB9F-CA15-4903-B7AB-6F7ABB5F9CE4")
-                {
-                    string s = fe.guid;
-                }
-
                 if (convert.IsString(fe.attrs))
                     obj.Info = fe.attrs;
 

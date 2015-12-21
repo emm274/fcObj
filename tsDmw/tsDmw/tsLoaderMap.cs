@@ -586,32 +586,29 @@ namespace tsDmw
 
         void write_geometry()
         {
-            if (fGeometry.Count > 0)
+            fwriter.WritePropertyName("geometry");
+            fwriter.WriteStartArray();
+
+            foreach (var g in fGeometry)
             {
-                fwriter.WritePropertyName("geometry");
-                fwriter.WriteStartArray();
+                fwriter.WriteStartObject();
 
-                foreach (var g in fGeometry)
+                if (g.lower == g.upper)
+                    writeNullObject("scaleRange");
+                else
                 {
+                    fwriter.WritePropertyName("scaleRange");
                     fwriter.WriteStartObject();
-
-                    if (g.lower == g.upper)
-                        writeNullObject("scaleRange");
-                    else
-                    {
-                        fwriter.WritePropertyName("scaleRange");
-                        fwriter.WriteStartObject();
-                        writeValuef("lower", g.lower);
-                        writeValuef("upper", g.upper);
-                        fwriter.WriteEndObject();
-                    }
-
-                    writeValues("ref", g.key);
+                    writeValuef("lower", g.lower);
+                    writeValuef("upper", g.upper);
                     fwriter.WriteEndObject();
                 }
 
-                fwriter.WriteEndArray();
+                writeValues("ref", g.key);
+                fwriter.WriteEndObject();
             }
+
+            fwriter.WriteEndArray();
         }
 
         void feature(xmap.Ixmap_auto map, xmap.IFeature obj)
