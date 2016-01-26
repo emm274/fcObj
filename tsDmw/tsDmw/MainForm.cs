@@ -327,6 +327,32 @@ namespace tsDmw
             }
         }
 
+
+        private void MapToJsonItem_Click(object sender, EventArgs e)
+        {
+            string filter = String.Format("Files (*.{0})|*.{0}", "dm");
+            string title = "Экспорт карты в json";
+            string path;
+            bool rc = XFiles.dialFile(ref fdataDir, filter, title, null, true, out path);
+
+            if (rc)
+            {
+                tsLoaderMap loader = new tsLoaderMap();
+
+                string json = Path.ChangeExtension(path, ".json");
+                string msg = Path.GetFileName(json);
+
+                message(String.Format("Export to json \"{0}\"", msg));
+
+                string branch = "export";
+                string comment = Path.GetFileName(json);
+
+                loader.message = task_msg;
+                loader.workDir(fworkDir);
+                loader.exec(path, null, json, branch, comment);
+            }
+        }
+
         private void lbMsg_SizeChanged(object sender, EventArgs e)
         {
             btClear.Left = lbMsg.Left + lbMsg.Width - 24 - btClear.Width;
@@ -384,6 +410,5 @@ namespace tsDmw
             AboutBox about = new AboutBox();
             about.ShowDialog();
         }
-
     }
 }

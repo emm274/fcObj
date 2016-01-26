@@ -55,6 +55,8 @@
             this.lbBranches = new System.Windows.Forms.ListBox();
             this.btClear = new System.Windows.Forms.Button();
             this.lbMsg = new System.Windows.Forms.TextBox();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.MapToJsonItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -88,86 +90,88 @@
             this.loadUpdates,
             this.dialWorkDir,
             this.toolStripMenuItem1,
+            this.MapToJsonItem,
+            this.toolStripMenuItem2,
             this.ExitItem});
             this.fileMenu.Name = "fileMenu";
-            this.fileMenu.Size = new System.Drawing.Size(45, 20);
+            this.fileMenu.Size = new System.Drawing.Size(48, 20);
             this.fileMenu.Text = "Файл";
             this.fileMenu.Click += new System.EventHandler(this.fileMenu_Click);
             // 
             // LoginItem
             // 
             this.LoginItem.Name = "LoginItem";
-            this.LoginItem.Size = new System.Drawing.Size(202, 22);
+            this.LoginItem.Size = new System.Drawing.Size(225, 22);
             this.LoginItem.Text = "Авторизация...";
             this.LoginItem.Click += new System.EventHandler(this.LoginItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(222, 6);
             // 
             // deleteCommit
             // 
             this.deleteCommit.Name = "deleteCommit";
-            this.deleteCommit.Size = new System.Drawing.Size(202, 22);
+            this.deleteCommit.Size = new System.Drawing.Size(225, 22);
             this.deleteCommit.Text = "Удалить последний патч";
             this.deleteCommit.Click += new System.EventHandler(this.deleteCommit_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(222, 6);
             // 
             // dumpItem
             // 
             this.dumpItem.Name = "dumpItem";
-            this.dumpItem.Size = new System.Drawing.Size(202, 22);
+            this.dumpItem.Size = new System.Drawing.Size(225, 22);
             this.dumpItem.Text = "Сохранить как...";
             this.dumpItem.Click += new System.EventHandler(this.dumpItem_Click);
             // 
             // saveJsonAs
             // 
             this.saveJsonAs.Name = "saveJsonAs";
-            this.saveJsonAs.Size = new System.Drawing.Size(202, 22);
+            this.saveJsonAs.Size = new System.Drawing.Size(225, 22);
             this.saveJsonAs.Text = "save json as...";
             this.saveJsonAs.Click += new System.EventHandler(this.saveJsonAs_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(222, 6);
             // 
             // LoadMap
             // 
             this.LoadMap.Name = "LoadMap";
-            this.LoadMap.Size = new System.Drawing.Size(202, 22);
+            this.LoadMap.Size = new System.Drawing.Size(225, 22);
             this.LoadMap.Text = "Загрузить карту...";
             this.LoadMap.Click += new System.EventHandler(this.LoadMap_Click);
             // 
             // loadUpdates
             // 
             this.loadUpdates.Name = "loadUpdates";
-            this.loadUpdates.Size = new System.Drawing.Size(202, 22);
+            this.loadUpdates.Size = new System.Drawing.Size(225, 22);
             this.loadUpdates.Text = "Загрузить изменения...";
             this.loadUpdates.Click += new System.EventHandler(this.loadUpdates_Click);
             // 
             // dialWorkDir
             // 
             this.dialWorkDir.Name = "dialWorkDir";
-            this.dialWorkDir.Size = new System.Drawing.Size(202, 22);
+            this.dialWorkDir.Size = new System.Drawing.Size(225, 22);
             this.dialWorkDir.Text = "Рабочая папка...";
             this.dialWorkDir.Click += new System.EventHandler(this.dialWorkDir_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(199, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(222, 6);
             // 
             // ExitItem
             // 
             this.ExitItem.Name = "ExitItem";
             this.ExitItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.X)));
-            this.ExitItem.Size = new System.Drawing.Size(202, 22);
+            this.ExitItem.Size = new System.Drawing.Size(225, 22);
             this.ExitItem.Text = "Выход";
             this.ExitItem.Click += new System.EventHandler(this.ExitItem_Click);
             // 
@@ -182,7 +186,7 @@
             // AboutItem
             // 
             this.AboutItem.Name = "AboutItem";
-            this.AboutItem.Size = new System.Drawing.Size(150, 22);
+            this.AboutItem.Size = new System.Drawing.Size(158, 22);
             this.AboutItem.Text = "О программе...";
             this.AboutItem.Click += new System.EventHandler(this.AboutItem_Click);
             // 
@@ -295,6 +299,18 @@
             this.lbMsg.TabIndex = 0;
             this.lbMsg.SizeChanged += new System.EventHandler(this.lbMsg_SizeChanged);
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(222, 6);
+            // 
+            // MapToJsonItem
+            // 
+            this.MapToJsonItem.Name = "MapToJsonItem";
+            this.MapToJsonItem.Size = new System.Drawing.Size(209, 22);
+            this.MapToJsonItem.Text = "Экспорт карты в json...";
+            this.MapToJsonItem.Click += new System.EventHandler(this.MapToJsonItem_Click);
+            // 
             // DfmTsDmw
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -352,6 +368,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem deleteCommit;
         private System.Windows.Forms.ToolStripMenuItem loadUpdates;
+        private System.Windows.Forms.ToolStripMenuItem MapToJsonItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
     }
 }
 

@@ -7,7 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-#define dll_ddw1
+#define dll_ddw
 
 using System;
 using System.Text;
@@ -134,25 +134,17 @@ namespace DmwAuto
 
         public void Connect()
         {
-#if (dll_ddw)
             dmw_connect();
-#endif
         }
 
         public void Disconnect()
         {
-#if (dll_ddw)
             dmw_disconnect();
-#endif
         }
 
 		public void pick_Caption(string Capt) 
         {
-#if (dll_ddw)
             dmw_PickCaption(StringToBytes(Capt));
-#else
-			dmw_pick.Pick_Caption=Capt;
-#endif
 		}
 		
 		public void pick(int pen, int p1, int p2) 
