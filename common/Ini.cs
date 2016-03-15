@@ -137,7 +137,10 @@ namespace Ini
         public string ReadStr(string def, string Key)
         {
             string s = ReadValue("Strs", Key);
-            if (s.Length > 0) return s;
+
+            if (convert.IsString(s))
+                return s;
+
             return def;
         }
 

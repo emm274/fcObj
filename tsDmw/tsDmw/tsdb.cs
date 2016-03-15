@@ -168,8 +168,11 @@ namespace tsDmw
 
         public void getVersion(tnotify notify)
         {
-            __beginTask("get version");
-            task = Task.Run(() => __get("", tquery.getVersion, notify));
+            if (convert.IsString(Login) && convert.IsString(Password))
+            {
+                __beginTask("get version");
+                task = Task.Run(() => __get("", tquery.getVersion, notify));
+            }
         }
 
         public void getBranches(tnotify notify)
