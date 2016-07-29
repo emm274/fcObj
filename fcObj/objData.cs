@@ -22,8 +22,6 @@ namespace objData
 	
 	public class objDB
 	{
-		const bool clone_parent_roles = true;
-		
 		xobj.Ixobj_auto fobj;
 		xobj.Iattr fidx;
 		xobj.Ienum fenum;
@@ -466,20 +464,8 @@ namespace objData
 			foreach (var parent in parents) {
 				FC.FeatureType up=parent.Supertype;
 				if (up != null) {
-					
-					if (clone_parent_roles) {
-						count+=addRoles(obj,up,roles);
-					}
-/*					
-					else {
-						string s=up.Code;
-						if (convert.IsString(s)) {
-							int rc;
-							roles.role("{inherited}",3,s,"","","",out rc);
-							if (rc < 0) __err(); else count++;
-						}
-					}
-*/					
+                    count += syncParentRoles(up, roles);
+					count += addRoles(obj,up,roles);
 				}
 			}
 			
