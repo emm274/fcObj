@@ -43,7 +43,9 @@ namespace fcDmw
   		sodbFeatureToIntf fdoc;
   		
 		Stack<string> fgetList = new Stack<string>();
-    	
+
+        int dm_x1, dm_y1, dm_x2, dm_y2;
+
 		public MainForm()
 		{
 			//
@@ -176,7 +178,6 @@ namespace fcDmw
 			dmw.pick(dmw.pick_rect,0,0);
 		}
 		
-		
 		private void displayFrag(object o, EventArgs e)
         {
 			x1_.Text=String.Format("{0:0.000000}", fsouth); 
@@ -194,16 +195,22 @@ namespace fcDmw
             dmw.draw_Vector(1, 2, 13 + (3 << 8), mf, null);
 
         }
+
+        void __frag(int x1, int y1, int x2, int y2)
+        {
+            dm_x1 = x1; dm_y1 = y1; dm_x2 = x2; dm_y2 = y2;
+            this.Invoke(new EventHandler(fragEvent));
+        }
 		
-		void __frag(int x1, int y1, int x2, int y2) {
-			
+        void fragEvent(object o, EventArgs e)
+        {
 			int[] x = new int[4];
 			int[] y = new int[4];
 			
-			x[0]=x1; y[0]=y1;
-			x[1]=x2; y[1]=y1;
-			x[2]=x2; y[2]=y2;
-			x[3]=x1; y[3]=y2;
+			x[0]=dm_x1; y[0]=dm_y1;
+			x[1]=dm_x2; y[1]=dm_y1;
+			x[2]=dm_x2; y[2]=dm_y2;
+			x[3]=dm_x1; y[3]=dm_y2;
 			
 			double b,l;
 			int i;
