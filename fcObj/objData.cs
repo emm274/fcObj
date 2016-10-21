@@ -55,7 +55,7 @@ namespace objData
 	  	public delegate int tlog(string message);
 	  	public delegate void tprogress(int pos, int max);
 	
-		private tlog flog;
+		private tlog flog = null;
 		private tprogress fprogress;
 		
 		public tlog log {
@@ -85,15 +85,17 @@ namespace objData
 		public objDB()
 		{
 			fobj = new xobj_autoClass();
-			flog=null;
 			
 			fdtList = new List<string>();
 			fdtList0 = new List<string>();
 			fattrList = new List<string>();
 		}
 		
-		public int Open(string path) {
-			
+		public int Open(string path)
+        {
+            if (fobj == null)
+                return 0;
+
 			fobj.Open(path);
 			fidx=fobj.GetAttributes;
 			fenum=fobj.GetEnum;
@@ -102,8 +104,10 @@ namespace objData
 			return fobj.FeatureCount;
 		}
 		
-		public void Close() {
-			fobj.Close();
+		public void Close()
+        {
+            if (fobj != null)
+                fobj.Close();
 		}
 		
 		public int getFeatureTypes(ListBox.ObjectCollection list)
@@ -411,12 +415,47 @@ namespace objData
 
 			return true;
 		}
-		
+
+         // добавить связи от связи
+        int addRolesFromRole(
+            FC.FeatureType owner,
+            FC.AssociationRole role,
+            FC.FeatureType dest,
+            string Nset,
+            xobj.Iroles roles)
+        {
+            if (dest == null)
+                return 0;
+
+            int count = 0;
+
+            var childs = dest.InheritsTo;
+            if (childs != null)
+                if (childs.Count == 0)
+                    childs = null;
+
+            if (childs == null)
+            {
+                bool rc = addRole(roles, owner, role, dest, Nset);
+                if (rc) count++;
+            }
+            else
+            {
+                foreach (var child in childs)
+                {
+                    FC.FeatureType dest1 = child.Subtype;
+                    count += addRolesFromRole(owner, role, dest1, Nset, roles);                 
+                }
+            }
+
+            return count;
+        }
+
 		// добавить связи объекта  
 		int addRoles(FC.FeatureType owner,
 					 FC.FeatureType obj,
-		             xobj.Iroles roles) {
-			
+		             xobj.Iroles roles)
+        {
 			int count=0;
 				
 			foreach (var binding in obj.Bindings) {
@@ -424,29 +463,7 @@ namespace objData
 						
 				if (role != null) 
 				if (role.IsNavigable) {
-						
-					FC.FeatureType dest = role.ValueType;
-					if (dest != null) {
-
-  						string Nset=binding.Cardinality;
-						
-						var childs = dest.InheritsTo;
-						if (childs != null) 
-						if (childs.Count == 0)
-						childs=null;
-						
-						if (childs == null) {
-	  						bool rc=addRole(roles,owner,role,dest,Nset);
-	  						if (rc) count++;
-						} 
-						else {
-							foreach(var child in childs) {
-								FC.FeatureType dest1=child.Subtype;
-		  						bool rc=addRole(roles,owner,role,dest1,Nset);
-		  						if (rc) count++;
-							}
-						}
-					}
+                        count += addRolesFromRole(owner, role, role.ValueType, binding.Cardinality, roles);
   				}
 			}
 			
@@ -455,17 +472,17 @@ namespace objData
 		
 
 		// синхронизация родительских связей
-		int syncParentRoles(FC.FeatureType obj, xobj.Iroles roles) {
-			
+		int syncParentRoles(FC.FeatureType fe, xobj.Iroles roles)
+        {
 			var count=0;
-			
-			var parents = obj.InheritsFrom;
+
+			var parents = fe.InheritsFrom;
 			if (parents != null) 
 			foreach (var parent in parents) {
 				FC.FeatureType up=parent.Supertype;
 				if (up != null) {
                     count += syncParentRoles(up, roles);
-					count += addRoles(obj,up,roles);
+					count += addRoles(fe, up, roles);
 				}
 			}
 			
@@ -473,15 +490,16 @@ namespace objData
 		}
 		
 		// синхронизация связей объекта 
-		void syncRoles(FC.FeatureType obj, xobj.Iroles roles) {
-			
+		void syncRoles(FC.FeatureType fe, xobj.Iroles roles)
+        {
+		
 			roles.beginUpdate(); 
 			
-			int count=syncParentRoles(obj,roles);
-			count+= addRoles(obj,obj,roles);
+			int count=syncParentRoles(fe,roles);
+			count+= addRoles(fe,fe,roles);
 
 			int rc;
-			roles.endUpdate(obj.Code,out rc);
+			roles.endUpdate(fe.Code,out rc);
 
 			if (rc < 0) __err(); else {
 				if (count > 0) froleCount++;
@@ -491,11 +509,13 @@ namespace objData
 		}
 			
 		// синхронизация объектов 
-		void syncFE(FC.FeatureCatalogue catalog, int mode) {
-			
-			if ((mode & 1) != 0) __log("объекты...");
-			else			     __log("связи...");
-				
+		void syncFE(FC.FeatureCatalogue catalog, int mode)
+        {
+            if ((mode & 1) != 0)
+                __log("объекты...");
+            else
+                __log("связи...");
+
 			__progress(0,catalog.FeatureTypes.Count);
 			
 			var roles = fobj.GetRoles;
@@ -503,16 +523,20 @@ namespace objData
 			IList<FC.FeatureType> ftlist=catalog.GetFeatureTypesInHierarchicalOrder();
 			
 			if (ftlist != null) 
-			foreach(var ft in ftlist) {
-				if (!ft.IsDataType()) {
+			foreach(var ft in ftlist) 
+            {
+
+				if (!ft.IsDataType()) 
+                {
 					string key=ft.Code;
-					if (convert.IsString(key)) {
-						
-						if ((mode & 1) != 0) {
-						
+					if (convert.IsString(key)) 
+                    {
+						if ((mode & 1) != 0) 
+                        {
 							int loc=0;
 							var c = ft.ConstrainedBy.GetConstraint(typeof(GeometryConstraint)) as GeometryConstraint;
-							if (c != null) {
+							if (c != null) 
+                            {
 								if (c.Pt) loc+=1;
 								if (c.Ln) loc+=2;
 								if (c.Pl) loc+=4;
@@ -528,7 +552,8 @@ namespace objData
 							fobjCount++; syncDT(ft);
 						}
 						
-						if ((mode & 2) != 0) {
+						if ((mode & 2) != 0) 
+                        {
 							if (roles != null) syncRoles(ft,roles);
 						}
 					}

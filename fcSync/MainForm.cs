@@ -164,8 +164,8 @@ namespace fcSync
 				ds.Open(DBpath);
 				
 				var cat = ds.GetCatalogues().FirstOrDefault();
-				if (cat != null) {
-					
+				if (cat != null)
+                {
 					var OBJ = new objDB();
 					OBJ.Open(OBJpath);
 					
